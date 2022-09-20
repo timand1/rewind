@@ -9,10 +9,10 @@ header {
     left: 0;
     width: 100%;
     min-height: 10vh;
-    background-color: variables.$font-color;
+    background-color: variables.$secondary-bg;
     z-index: 10;
     box-shadow: 0px 9px 10px rgba(0, 0, 0, 0.13);
-    color: variables.$nav-color;
+    color: variables.$font-color;
 
     .logo {
         max-width: 10vw;
@@ -39,7 +39,7 @@ header {
         span {
             width: 30px;
             height: 4px;
-            background: rgb(255, 255, 255);    
+            background: variables.$font-color;    
             transition: 300ms ease-in-out;
             transform-origin: top left;
         } 
@@ -54,7 +54,7 @@ header {
         }
     }
     .nav {
-        background: rgba(47, 79, 79, 0.98);
+        background: variables.$secondary-bg;
         inset: 0 0 0 30%;
         @include variables.flexContainer();
         justify-content: center;
@@ -81,6 +81,8 @@ header {
     }
     .open {
         transform: translateX(0);
+        box-shadow: -6px 0px 16px rgba(0, 0, 0, 0.25);
+
     }
 }
 

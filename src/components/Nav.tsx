@@ -59,9 +59,9 @@ export default function Nav() {
             </div>
             <nav className={menuOpen ? 'nav open' : 'nav'}>
                 <ul className="link-container">
-                    <NavLink className="link" to="/" onClick={handleHome} >HEM</NavLink >
-                    <NavLink className="link" to="/" onClick={scrollToAnimals} >DJUREN</NavLink>
-                    <NavLink className="link" to="/about"  onClick={changeUrl} >OM OSS</NavLink>
+                    <NavLink className="link" to="/" onClick={handleHome} >LEADERBOARD</NavLink >
+                    <NavLink className="link" to="/" onClick={scrollToAnimals} >ADD GAME</NavLink>
+                    <NavLink className="link" to="/about"  onClick={changeUrl} >ABOUT REWIND</NavLink>
                 </ul>
             </nav>      
         </header>
