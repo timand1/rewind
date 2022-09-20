@@ -1,0 +1,125 @@
+@use 'variables';
+
+header {
+    @include variables.flexContainer(row);
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 10vh;
+    background-color: variables.$font-color;
+    z-index: 10;
+    box-shadow: 0px 9px 10px rgba(0, 0, 0, 0.13);
+    color: variables.$nav-color;
+
+    .logo {
+        max-width: 10vw;
+        max-height: 5vh;
+        margin-left: 2em;
+        cursor: pointer;
+        z-index: 10;
+    }
+    h2 {
+        font-size: 1em;
+    }
+    
+    .menu-btn {
+        display: block;
+        border: none;
+        background-color: transparent;
+        z-index: 9999; 
+        height: 20px;
+        width: 30px;
+        margin-right: 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+        span {
+            width: 30px;
+            height: 4px;
+            background: rgb(255, 255, 255);    
+            transition: 300ms ease-in-out;
+            transform-origin: top left;
+        } 
+        .menu-btn--mid {
+            opacity: 0;
+        }
+        .menu-btn--top {
+            transform: rotateZ(45deg);    
+        }
+        .menu-btn--bottom {
+            transform: rotateZ(-45deg);    
+        }
+    }
+    .nav {
+        background: rgba(47, 79, 79, 0.98);
+        inset: 0 0 0 30%;
+        @include variables.flexContainer();
+        justify-content: center;
+        position: fixed;
+        width: 100%;    
+        z-index: 100; 
+        transform: translateX(100%);
+        transition: 300ms ease-in-out;
+
+        .link-container {   
+            @include variables.flexContainer();
+            justify-content: flex-end;
+            list-style: none;
+            gap: 4em;   
+            margin-right: 2em; 
+
+            .link {
+                font-size: 1.2rem;
+                position: relative; 
+                color: variables.$nav-color;
+                text-decoration: none;
+            }   
+        }
+    }
+    .open {
+        transform: translateX(0);
+    }
+}
+
+@media screen and (min-width: 786px) {
+    header {    
+        .logo-container {
+            gap: 2em;
+        }
+        .menu-btn {
+            display: none;
+        }
+        .nav {
+            position: relative;
+            background: transparent;
+            inset: 0;    
+            transform: translateX(0); 
+    
+            .link-container {   
+                flex-direction: row;
+                justify-content: flex-end;
+
+                .link {
+                    &:hover::after {
+                        opacity: 1;
+                    }
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        bottom: -0.4em;
+                        left: 0px;
+                        width: 100%;
+                        height: 8px;
+                        opacity: 0;
+                        background: variables.$adopted-color;   
+                        transition: all 300ms ease-in-out;     
+                    }
+                }   
+            }
+            
+        }
+    }
+}
