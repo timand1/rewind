@@ -1,10 +1,10 @@
 $primary-bg: #1C242D;
 $secondary-bg: #242F39;
 $font-color: #FFFFFF;
-$adopted-color: #975252;
-$continue-color: #358f4e;
-$nav-color: #FFFFFF;
-$hero-text-color: #dad0ee;
+$link-color: #529761;
+$button-color: #488783;
+$shadow-color: rgba(0, 0, 0, 0.25);
+
 $primary-font: 'Roboto', sans-serif;
 $header-font: 'Jost', sans-serif;
 $box-shadow: 9px 10px 0px rgba(0, 0, 0, 0.34);
@@ -13,12 +13,6 @@ $mobile-card-width: 90vw;
 %app-size {
     max-width: 70vw;
     margin: 0 auto;
-}
-
-%bg-image {
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 
 @mixin flexContainer($dir: column) {

@@ -19,10 +19,18 @@ html,
     
     .App {
         height: 100%;
+        margin-top: 8em;
         overflow-x: hidden;
         @include variables.flexContainer();
         justify-content: space-between;
-        margin-top: 8em;
     }
   }
+}
+
+@media screen and (min-width: 786px) {
+  .App {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
 }

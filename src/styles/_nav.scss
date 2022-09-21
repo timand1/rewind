@@ -22,7 +22,8 @@ header {
         z-index: 10;
     }
     h2 {
-        font-size: 1em;
+        font-size: 2em;
+        margin: 0 1em;
     }
     
     .menu-btn {
@@ -74,7 +75,7 @@ header {
             .link {
                 font-size: 1.2rem;
                 position: relative; 
-                color: variables.$nav-color;
+                color: variables.$font-color;
                 text-decoration: none;
             }   
         }
@@ -116,7 +117,7 @@ header {
                         width: 100%;
                         height: 8px;
                         opacity: 0;
-                        background: variables.$adopted-color;   
+                        background: variables.$link-color;   
                         transition: all 300ms ease-in-out;     
                     }
                 }   

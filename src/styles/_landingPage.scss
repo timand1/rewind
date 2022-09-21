@@ -1,0 +1,59 @@
+@use 'variables';
+@use 'buttons';
+@use "sass:color";
+
+.landingpage {
+    height: 100%;
+    @include variables.flexContainer();
+    align-items: center;
+    justify-content: space-between;
+    margin: 6em 0 2em 0;
+    img {
+        height: 20vh;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-top: 2em;
+    }
+
+    .input-container {
+        @include variables.flexContainer(); 
+        label {
+            font-size: 1.2em;
+        }
+        input {
+            font-size: 1.2em;
+            width: 80vw;
+            height: 2em;
+            border-radius: 0.4em;
+            outline: none;
+        }
+    }
+    .sign-up {
+        font-size: 0.8em;
+
+        span {
+            color: steelblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+    p:last-of-type {
+        color: color.scale(variables.$font-color, $blackness: 80%);
+    }
+    button {
+        @include buttons.button();
+        margin-top: 3em;
+    }
+    h3 {
+        cursor: pointer;
+    }
+}
+
+@media screen and (min-width: 786px) {
+    input {
+        // max-width: 30vw;
+    }
+
+}

@@ -1,0 +1,19 @@
+@use 'variables';
+@use 'sass:color';
+
+.leaderboard-user {
+    width: 100%;
+    @include variables.flexContainer(row);
+    justify-content: space-between;
+    padding: 1em 0.9em;
+    &:nth-child(odd) {
+        background-color: variables.$secondary-bg;
+    }
+    p {
+        flex: 1;
+    }
+    &:hover{
+        background-color: color.scale(variables.$primary-bg, $lightness: 30%);
+        cursor: pointer;
+    }
+}

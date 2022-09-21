@@ -1,0 +1,137 @@
+{
+    "games": [
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team1": ["Tim", "William"],
+            "team2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": ["Hampus"],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },
+        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        },        {
+            "game": "Dota 2",
+            "duration": "34:18",
+            "team-1": ["Tim", "William"],
+            "team-2": [],
+            "date": "27/04-2022",
+            "win": "",
+            "lost": "team1"
+        }
+    ],
+    "users": [
+        {
+            "name": "Tim",
+            "win": 100,
+            "lost": 0,
+            "userId": "789"
+        },
+        {
+            "name": "William",
+            "win": 2,
+            "lost": 432,
+            "userId": "123"
+        },
+        {
+            "name": "Christian",
+            "win": 0,
+            "lost": 8080,
+            "userId": "101"
+        },
+        {
+            "name": "Hampus",
+            "win": 13,
+            "lost": 37,
+            "userId": "65633"
+        }
+    ]
+}

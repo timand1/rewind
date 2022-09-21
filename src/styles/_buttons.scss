@@ -1,0 +1,19 @@
+@use 'variables';
+@use "sass:color";
+
+
+@mixin button($bg: variables.$button-color, $text-color: variables.$font-color) {
+    background-color: $bg;
+    color: $text-color;
+    font-size: 1em;
+    border: none;
+    border-radius: 0.4em;
+    font-weight: 500;
+    padding: 0.8em 3em;
+    transition: all 400ms;
+    box-shadow: 4px 8px 6px variables.$shadow-color;
+    // font family
+    &:hover {
+        background: color.scale($bg, $lightness: 30%);
+    }
+}

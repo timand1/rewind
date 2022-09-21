@@ -1,5 +1,5 @@
 import '../styles/_nav.scss';
-// import logo from '../assets/LOGO.png'
+import logo from '../assets/logo.svg'
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -50,7 +50,7 @@ export default function Nav() {
 
     return (         
         <header>             
-            {/* <img className='logo' onClick={(handleHome)} src={logo} alt="img" /> */}
+            <img className='logo' onClick={(handleHome)} src={logo} alt="img" />
             <h2>REWIND</h2>
             <div className="menu-btn" onClick={handleMenu}>
                 <span className={menuOpen ? 'menu-btn--top' : ''}></span>
