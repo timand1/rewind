@@ -1,14 +1,10 @@
 import { combineReducers } from "redux";
-// import { reducer as animalsReducer } from './animalReducer';
-// import { reducer as adoptedListReducer } from './adoptedReducer';
 import { reducer as userReducer } from './userReducer';
-// import { reducer as chosenReducer } from './chosenReducer';
+import { reducer as gameReducer } from './gameReducer';
 
 const rootReducer = combineReducers({
-    // animals: animalsReducer,
-    // adoptedList: adoptedListReducer,
+    games: gameReducer,
     users: userReducer,
-    // chosen: chosenReducer
 });
 
 export { rootReducer };

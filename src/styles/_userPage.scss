@@ -1,0 +1,32 @@
+@use 'variables';
+
+.userpage {
+    @include variables.flexContainer();
+    gap: 1em;
+    margin: 0 1em;
+    margin-top: 8em;
+    .stats {
+        margin-top: auto;
+    }
+    select {
+        @include variables.selectContainer();
+    }
+    .headlines {
+        @include variables.headlineContainer();
+        position: relative;
+        .info {
+            cursor: pointer;
+        }
+        .info-box {
+            position: absolute;
+            right: 1em;
+            top: 2em;
+            background: variables.$secondary-bg;
+            border: 1px solid variables.$font-color;
+            padding: 1em;
+            border-radius: 1em;
+            box-shadow: 4px 8px 6px variables.$shadow-color;
+        }
+    }
+    
+}

@@ -1,21 +1,60 @@
 import '../styles/_leaderboard.scss';
+import { useState } from 'react';
 import { User } from '../models/data';
 import { RootState } from '../store';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import DisplayUser from '../components/DisplayUser';
 
+import { useDispatch } from 'react-redux';
+import {actions as userActions} from '../features/userReducer'
+import jsonData from '../data/data.json';
+
 function Leaderboard() {
-    const navigate = useNavigate();
-    const users:User[] = useSelector((state: RootState) => state.users);
-    const userElement = users.map((user) =>  <DisplayUser key={user.userId} user={user} />)
+    const dispatch = useDispatch();
+
+    const [searchInput, setSearchInput] = useState<string>('')
+    const users:User[] = useSelector((state: RootState) => state.users);   
+    let userElement = users.map((user) =>  <DisplayUser key={user.userId} user={user} />)
+
+    const initialUserList : User[] = jsonData.users;
+    const checkSearch = users < initialUserList ? true : false
+
+    const handleInput: (e:any) => void = (e) => {  
+      setSearchInput(e.target.value)
+    } 
+
+    const handleSearch: () => void = () => {         
+      if(searchInput.length > 0) {
+        searchInput.toLowerCase();
+        setSearchInput('')
+        dispatch(userActions.searchUser(searchInput))
+      }
+    } 
+    
+    const handleName: () => void = () => {       
+      dispatch(userActions.sortByName())
+    } 
+    
+    const handleWin: () => void = () => { 
+      dispatch(userActions.sortByWin())
+    } 
+    
+    const handleLoss: () => void = () => { 
+      dispatch(userActions.sortByLoss())
+    } 
+
+    const resetSearch: () => void = () => { 
+      dispatch(userActions.allUsers())
+    } 
+    
 
     return (
       <div className="leaderboard">
         <h2>Leaderboard</h2>
         <div className='search-bar'>
-            <input type="text" name="search" id="search" placeholder='Search players...'/>
-            <label htmlFor="search">&#x1F50D;</label>
+            <input type="text" name="search" id="search" value={searchInput} placeholder='Search players...' onChange={(e) => { handleInput(e) }}/>
+            {checkSearch ? <p className='clear-search' onClick={resetSearch}>X</p> : ''}
+            <label htmlFor="search" onClick={handleSearch} >&#x1F50D;</label>
         </div>
         <select defaultValue={'all'} name="games" id="games">
             <option value="all">All games</option>
@@ -24,9 +63,9 @@ function Leaderboard() {
             <option value="td">Tower Defence</option>
         </select>
         <div className='headlines'>
-          <h3>Player</h3>
-          <h3>Wins</h3>
-          <h3>Loss</h3>
+          <h3 onClick={handleName}>Player</h3>
+          <h3 onClick={handleWin}>Wins</h3>
+          <h3 onClick={handleLoss}>Loss</h3>
           <h3>Win %</h3>
         </div>
         <div className='users'>

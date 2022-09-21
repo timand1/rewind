@@ -14,6 +14,22 @@ function LandingPage() {
         navigate('/leaderboard');
     } 
 
+    // async function login() {
+    //   const account: object = {
+    //     username: loginUsername,
+    //     password: loginPassword
+    //   }
+
+    //   const response = await fetch('https://localhost:8080/login', {
+    //     method: 'POST',
+    //     body: JSON.stringify(account),
+    //     headers: { 'Content-Type': 'application/json' }
+      
+    //   });
+
+    //   const data = await response.json();
+    // }
+
     return (
       <div className="landingpage">
         <img src={logo} alt="rewind logo" />

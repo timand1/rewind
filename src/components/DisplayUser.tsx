@@ -17,7 +17,7 @@ export default function DisplayUser(props: UserProps) {
     const handleuser: () => void = () => {
 
         navigate(`/user/${userId}`)
-        console.log(name)
+        
     };
 
 

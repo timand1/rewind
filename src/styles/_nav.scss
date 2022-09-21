@@ -10,7 +10,7 @@ header {
     width: 100%;
     min-height: 10vh;
     background-color: variables.$secondary-bg;
-    z-index: 10;
+    z-index: 1000;
     box-shadow: 0px 9px 10px rgba(0, 0, 0, 0.13);
     color: variables.$font-color;
 
