@@ -7,7 +7,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "123"
         },
         {
             "game": "Dota 2",
@@ -16,7 +17,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "2222"
         },
         {
             "game": "Dota 2",
@@ -25,7 +27,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "121113"
         },
         {
             "game": "Dota 2",
@@ -34,7 +37,8 @@
             "team2": ["Hampus"],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "123222"
         },
         {
             "game": "Dota 2",
@@ -43,7 +47,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "121231233"
         },
         {
             "game": "Dota 2",
@@ -52,7 +57,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "team1",
-            "lost": ""
+            "lost": "",
+            "gameId": "21323"
         },
         {
             "game": "Dota 2",
@@ -61,7 +67,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "1223213"
         },
         {
             "game": "Dota 2",
@@ -70,7 +77,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "1232123"
         },
         {
             "game": "Dota 2",
@@ -79,7 +87,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "12323"
         },
         {
             "game": "Dota 2",
@@ -88,7 +97,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "1231223"
         },
         {
             "game": "Dota 2",
@@ -97,7 +107,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "123123"
         },        {
             "game": "Dota 2",
             "duration": "34:18",
@@ -105,7 +116,8 @@
             "team2": [],
             "date": "27/04-2022",
             "win": "",
-            "lost": "team1"
+            "lost": "team1",
+            "gameId": "1223213"
         }
     ],
     "users": [
