@@ -8,9 +8,15 @@
     .stats {
         margin-top: auto;
     }
-    select {
-        @include variables.selectContainer();
+    .game-options {
+        @include variables.flexContainer();
+        justify-content: space-between;
+        
+        select {
+            @include variables.selectContainer();
+        }
     }
+
     .headlines {
         @include variables.headlineContainer();
         position: relative;

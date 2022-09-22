@@ -1,4 +1,5 @@
 import '../styles/_leaderboard.scss';
+import Nav from '../components/Nav';
 import { useState } from 'react';
 import { User } from '../models/data';
 import { RootState } from '../store';
@@ -50,6 +51,7 @@ function Leaderboard() {
 
     return (
       <div className="leaderboard">
+        <Nav />
         <h2>Leaderboard</h2>
         <div className='search-bar'>
             <input type="text" name="search" id="search" value={searchInput} placeholder='Search players...' onChange={(e) => { handleInput(e) }}/>

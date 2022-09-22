@@ -1,4 +1,5 @@
 import '../styles/_userPage.scss';
+import Nav from '../components/Nav';
 import { Games } from '../models/data';
 import DisplayGame from '../components/DisplayGame';
 import infoIcon from '../assets/info.svg';
@@ -32,17 +33,25 @@ function UserPage() {
 
     return (
       <div className="userpage">
-          <h2>{singleUser.name}'s profile</h2>
-          <div className='stats'>
-            <p>Stats -</p>
-            <p>{amountOfGames} games - {singleUser.win} wins - {winPercentage}% winrate</p>
-          </div>
-          <select defaultValue={'all'} name="games" id="games">
+        <Nav />
+        <h2>{singleUser.name}'s profile</h2>
+        <div className='stats'>
+          <p>Stats -</p>
+          <p>{amountOfGames} games - {singleUser.win} wins - {winPercentage}% winrate</p>
+        </div>
+        <div className='game-options'>
+          <select defaultValue={'all'} name="game-type" id="game-type">
             <option value="all">All games</option>
             <option value="dota">Dota 2</option>
             <option value="wow">World of Warcraft</option>
             <option value="td">Tower Defence</option>
-        </select>
+          </select>
+          <select defaultValue={'all'} name="games" id="games">
+            <option value="all">All matches</option>
+            <option value="last-ten">Last 10 games</option>
+            <option value="no-win">Games without a winner</option>
+          </select>
+        </div>
         <div className='headlines'>
           <h3>Game</h3>
           <h3>Time</h3>

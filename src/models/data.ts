@@ -5,7 +5,8 @@ export interface Games {
     team2: Array<string>,
     date: string,
     win: string,
-    lost: string
+    lost: string,
+    gameId: string
 }
 
 export interface User {
