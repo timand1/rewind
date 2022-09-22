@@ -2,31 +2,33 @@ import '../styles/_displayGame.scss';
 import cross from '../assets/cross.svg';
 import { Games } from '../models/data'
 
-import { useNavigate } from 'react-router-dom';
-
 interface GameProps {
     game: Games,
-    user: string
+    username: string
 }
 
 export default function DisplayGame(props: GameProps) { 
-    const { game, date, duration, win, lost, team1, team2 } = props.game;
-
-    let gameResult;
+    const { game, date, duration, win } = props.game;
+    const slicedDate = date.slice(2)
     
-     if(win == 'team1' && team1.includes(props.user)) {
-        console.log('WINNNNS')
-        gameResult = true;
-    } else if(win == 'team2' && team2.includes(props.user)) {
-        console.log('LOOOOOSSSSSSS')
-        gameResult = false;
-    }
+    let gameResult = false;    
+    
+    props.game.team1.forEach(player => {
+        if(Object.values(player).indexOf(props.username) > -1 && win == 'team1') {
+            gameResult = true;
+        } 
+    })
+    props.game.team2.forEach(player => {
+        if(Object.values(player).indexOf(props.username) > -1 && win == 'team2') {
+            gameResult = true;
+        } 
+    })
 
     return (         
         <section className='user-games'>             
             <p>{game}</p>
             <p>{duration}</p>
-            <p>{date}</p>
+            <p>{slicedDate}</p>
             <p>{gameResult ? 'W' : 'L'}</p>
             <img src={cross} alt="" />
         </section>

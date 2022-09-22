@@ -1,41 +1,64 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { Games } from '../models/data';
-import jsonData from '../data/data.json';
 
-const initialState : Games[] = jsonData.games;
+const initialState : Games[] = [] 
 
-// const initialState : User = {name: '', win: 0, lost: 0, userId: ''};
 
 const addGame = createAction<Games>('Add game');
-const allGames = createAction('All games');
-const getGames = createAction<string>('Get games')
+const setAllGames = createAction<Games[]>('Set all games');
+const getUserGames = createAction<string>('Get user games');
+const getAllGames = createAction('Get all games');
 
 
-const actions = { addGame, allGames, getGames };
+const actions = { addGame, setAllGames, getUserGames, getAllGames };
 
 const reducer = createReducer(initialState, {
     [addGame.toString()]: ( state, action) => {
         const arrCopy = [...state]
         arrCopy.push(action.payload)
-
-        return arrCopy;
-    },
-    [allGames.toString()]: ( state, action) => {
-        const arrCopy = [...initialState]
         
         return arrCopy;
     },
-    [getGames.toString()]: ( state, action) => {
-        const arrCopy = [...initialState];
-        const newGamesArray:Array<Games> = []
-        arrCopy.forEach(game => {
-            if(game.team1.includes(action.payload) || game.team2.includes(action.payload)) {
-                newGamesArray.push(game)
-            }
+    [setAllGames.toString()]: ( state, action) => {
+      const gamesArr = [...action.payload]
+        gamesArr.sort(function(a,b) {
+          return b.date.localeCompare(a.date);
         });
+
+        localStorage.setItem('games', JSON.stringify(action.payload));
+        state = [...action.payload]
         
-        return newGamesArray;
-    }
+        return state;
+    },
+    [getUserGames.toString()]: ( state, action ) => {
+        const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
+        const newGamesArray:Array<Games> = [];
+
+        for (const game of allGames) {
+            game.team1.forEach(player => {
+              if(Object.values(player).indexOf(action.payload) > -1) {
+                newGamesArray.push(game)
+              }
+            })
+            game.team2.forEach(player => {
+                if(Object.values(player).indexOf(action.payload) > -1) {
+                  newGamesArray.push(game)
+                }
+              })
+        }       
+        
+        return newGamesArray
+    },
+    [getAllGames.toString()]: ( state, action) => {
+      const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
+
+      allGames.sort(function(a,b){
+        return b.date.localeCompare(a.date);
+      })
+      
+      return allGames;
+    },
+
 });
 
 export { reducer, actions };

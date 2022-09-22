@@ -1,17 +1,15 @@
 import '../styles/_landingPage.scss';
 import logo from '../assets/logo.svg';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {actions as gameActions} from '../features/gameReducer'
+import {actions as userActions} from '../features/userReducer'
+
 
 function LandingPage() {
     const navigate = useNavigate();
-
-    // useEffect(() => {
-    //   let accountKey:string = JSON.parse(localStorage.getItem('accountKey') || '');
-    //   if(accountKey) {
-    //     navigate(`/user/${accountKey}`)
-    //   }
-    // })
+    const dispatch = useDispatch();
 
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
@@ -28,9 +26,16 @@ function LandingPage() {
         navigate('/signup');
     } 
 
-    const handleNoLogin: () => void = () => { 
-        navigate('/leaderboard');
-    } 
+    // const handleNoLogin: () => void = () => { 
+    //   getGames(); 
+    //   navigate('/leaderboard');
+    // } 
+
+    async function handleNoLogin() {
+      await getGames()
+      dispatch(userActions.allUsers())
+      navigate('/leaderboard');
+    }
 
     async function login() {
       if(loginUsername.length > 2 && loginPassword.length > 2) {
@@ -47,10 +52,35 @@ function LandingPage() {
         if (data.success) {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.key.accountId);
-          navigate(`/user/${data.key.accountId}`);
+          navigate(`/user/${loginUsername}`);
+          getGames(); 
         }
       }
     }
+
+    async function getGames() {
+      const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+      headers: {'Content-Type': 'application/json'}
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        dispatch(gameActions.setAllGames(data.matches))
+      }
+    }
+
+    // async function removeAll() {
+    //   const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+    //   method: 'DELETE',
+    //   headers: {'Content-Type': 'application/json'}
+    //   });
+    //   const data = await response.json();
+      
+    //   if (data.success) {
+    //     // dispatch(gameActions.setAllGames(data.matches))
+    //     console.log(data);        
+    //   }
+    // }
 
     return (
       <div className="landingpage">
@@ -72,4 +102,4 @@ function LandingPage() {
     )
   }
   
-export default LandingPage
+export default LandingPage;

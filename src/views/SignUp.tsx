@@ -35,7 +35,7 @@ function SignUp() {
         console.log(data);
         if (data.success) {
           localStorage.setItem('accountKey', data.accountId);
-          navigate(`/user/${data.accountId}`);
+          navigate(`/user/${loginUsername}`);
         }
       }
     }

@@ -14,38 +14,13 @@ export default function Nav() {
         setMenuOpen(!menuOpen);       
     };
 
-    const changeUrl: () => void = () => {
-        showAll()
-        setMenuOpen(false)
-        const root:any = document.querySelector('#root');
-        root.scrollIntoView({
-            behavior: 'smooth'
-          });
-    };
-
     const handleHome: () => void = () => {
-        showAll();
         navigate('/');
         setMenuOpen(false);
         const root:any = document.querySelector('#root');
         root.scrollIntoView({
             behavior: 'smooth'
           });
-    };
-
-   const scrollToAnimals: () => void = () => {
-        showAll();
-        setMenuOpen(false);
-        setTimeout(() => {
-            const divider:any = document.querySelector('#divider');
-            divider.scrollIntoView({
-                behavior: 'smooth'
-                });
-        }, 100);       
-    };
-
-    const showAll: () => void = () => {
-        // dispatch(animalActions.allAnimals())
     };
 
     return (         
@@ -59,9 +34,9 @@ export default function Nav() {
             </div>
             <nav className={menuOpen ? 'nav open' : 'nav'}>
                 <ul className="link-container">
-                    <NavLink className="link" to="/" onClick={handleHome} >LEADERBOARD</NavLink >
-                    <NavLink className="link" to="/" onClick={scrollToAnimals} >ADD GAME</NavLink>
-                    <NavLink className="link" to="/about"  onClick={changeUrl} >ABOUT REWIND</NavLink>
+                    <NavLink className="link" to="/leaderboard" >LEADERBOARD</NavLink >
+                    <NavLink className="link" to="/addgame" >ADD GAME</NavLink>
+                    <NavLink className="link" to="/games" >MATCHES</NavLink>
                 </ul>
             </nav>      
         </header>

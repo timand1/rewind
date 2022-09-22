@@ -19,7 +19,6 @@ html,
     
     .App {
         height: 100%;
-        overflow-x: hidden;
         @include variables.flexContainer();
         justify-content: space-between;
     }

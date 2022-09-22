@@ -1,0 +1,141 @@
+@use 'variables';
+@use 'buttons';
+@use 'sass:color';
+
+.add-game {
+    width: 90%;
+    margin: 0 auto;    
+    margin-top: 8em;
+    position: relative;
+
+    .added-container {
+        @include variables.flexContainer();
+        gap: 1em;
+        position: fixed;
+        left: 0; 
+        right: 0; 
+        top: 0;
+        bottom: 0;
+        width: fit-content;
+        height: fit-content;
+        padding: 1em 2em;
+        margin: auto;
+        background-color: color.scale(variables.$secondary-bg, $lightness: 30%);
+        border-radius: 0.5em;
+        box-shadow: 4px 8px 6px variables.$shadow-color;
+        button {
+            @include buttons.button($bg: variables.$secondary-bg,);
+            padding: 1em 1.4em;
+            align-self: center;
+        }
+    }
+
+    .loading {
+        position: fixed;
+        left: 0; 
+        right: 0; 
+        top: 0;
+        bottom: 0;
+        width: 4em;
+        height: 4em;
+        margin: auto;
+        border-radius: 50px;
+        border: 0.5em solid color.scale(variables.$secondary-bg, $lightness: 80%);;
+        &:after {
+            content: '';
+            position: absolute;
+            top: -0.5em; 
+            left: -0.5em;
+            bottom: -0.5em;
+            right: -0.5em;
+            border-radius: 50px;
+            border: 0.5em solid transparent;
+            border-top-color: variables.$button-color;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            @keyframes spin {
+                0%{ -webkit-transform: rotate(0deg); tranform: rotate(0deg);}
+              100%{ -webkit-transform: rotate(360deg); tranform: rotate(360deg);}
+          }
+        }
+    }
+
+    form {
+        @include variables.flexContainer();
+        gap: 2em;
+        .teams {
+            @include variables.flexContainer();
+            gap: 3em;
+            
+            .team-container {
+                flex: 1;
+                @include variables.flexContainer();
+                gap: 1em;
+            }
+            .team-divider {
+                height: 0.2em;
+                width: 100%;
+                background-color: variables.$font-color;
+            }
+        }
+        .player-container {
+            @include variables.flexContainer();
+            gap: 1em;
+        }
+
+        .form-container {
+            @include variables.flexContainer(row);
+            justify-content: space-between;
+            textarea, input {
+                width: 40vw;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+        }
+        .toggle-team {
+            background-color: variables.$secondary-bg;
+            padding: 1em 2em;
+            border-radius: 0.5em;
+            align-self: center;
+            box-shadow: 4px 8px 6px variables.$shadow-color;
+        }
+        .divider {
+            height: 0.2em;
+            width: 100%;
+            background-color: variables.$font-color;
+        }
+        button {
+            @include buttons.button();
+            align-self: center;
+            margin: 4em 0;
+        }
+    }
+}
+
+@media screen and (min-width: 786px) {
+    .add-game {
+        form {
+
+            .teams {
+                @include variables.flexContainer(row); 
+                justify-content: space-between;
+                gap: 1em;
+                position: relative;
+                height: 100%;
+                .team-container {
+                    flex: 1;
+                }
+                .team-divider {
+                    width: 0.1em;
+                    height: 500px;
+                }
+            }
+            .form-container {
+                textarea, input {
+                    max-width: 200px;
+                }
+            }
+        }
+    }
+}

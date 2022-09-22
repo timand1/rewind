@@ -1,6 +1,6 @@
 import '../styles/_leaderboard.scss';
 import Nav from '../components/Nav';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '../models/data';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
@@ -8,17 +8,18 @@ import DisplayUser from '../components/DisplayUser';
 
 import { useDispatch } from 'react-redux';
 import {actions as userActions} from '../features/userReducer'
-import jsonData from '../data/data.json';
 
 function Leaderboard() {
     const dispatch = useDispatch();
-
+  
     const [searchInput, setSearchInput] = useState<string>('')
-    const users:User[] = useSelector((state: RootState) => state.users);   
-    let userElement = users.map((user) =>  <DisplayUser key={user.userId} user={user} />)
 
-    const initialUserList : User[] = jsonData.users;
-    const checkSearch = users < initialUserList ? true : false
+    const users:Array<any> = useSelector((state: RootState) => state.users);   
+     
+    
+    let userElement = users.map((user, index) =>  <DisplayUser key={index} user={user} />)
+
+    const checkSearch = users < users ? true : false
 
     const handleInput: (e:any) => void = (e) => {  
       setSearchInput(e.target.value)
@@ -42,6 +43,10 @@ function Leaderboard() {
     
     const handleLoss: () => void = () => { 
       dispatch(userActions.sortByLoss())
+    } 
+
+    const handleWinRate: () => void = () => { 
+      dispatch(userActions.sortByWinRate())
     } 
 
     const resetSearch: () => void = () => { 
@@ -68,7 +73,7 @@ function Leaderboard() {
           <h3 onClick={handleName}>Player</h3>
           <h3 onClick={handleWin}>Wins</h3>
           <h3 onClick={handleLoss}>Loss</h3>
-          <h3>Win %</h3>
+          <h3 onClick={handleWinRate}>Win %</h3>
         </div>
         <div className='users'>
           {userElement}
