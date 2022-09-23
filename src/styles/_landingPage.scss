@@ -8,6 +8,9 @@
     align-items: center;
     justify-content: space-between;
     margin: 6em 0 2em 0;
+    .loading {
+        @include variables.loader();
+    }
     img {
         height: 20vh;
     }

@@ -1,7 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { User, Games } from '../models/data';
 
-const initialState : User[] = []
+const initialState : User[] = JSON.parse(localStorage.getItem('users') || '');
 
 
 const sortByWinRate = createAction('Sort winrate');
@@ -102,9 +102,11 @@ const reducer = createReducer(initialState, {
                 amountOfGames: amountOfGames,
                 winRate : parseInt(winRate.toFixed(1))
             }
-            
             userGameList.push(userObj)
         })
+
+        localStorage.setItem('users', JSON.stringify(userGameList));
+
     
         return userGameList;
         

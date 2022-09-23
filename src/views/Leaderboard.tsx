@@ -52,7 +52,7 @@ function Leaderboard() {
     const resetSearch: () => void = () => { 
       dispatch(userActions.allUsers())
     } 
-    
+   
 
     return (
       <div className="leaderboard">

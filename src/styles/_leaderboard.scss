@@ -8,7 +8,7 @@
     h2 {
         font-size: 2em;
     }
-
+    
     .search-bar {
         width: 90vw;
         position: relative;
@@ -34,11 +34,11 @@
             color: black;
         }
     }
-
+    
     select {
         @include variables.selectContainer()
     }
-
+    
     .headlines {
         @include variables.headlineContainer()
     }
@@ -54,9 +54,10 @@
         .headlines {
             width: 100%;
         }
+        .users {
+            width: 100%;
+            
+        }
     }
 
-    .users {
-        width: 100%;
-    }
 }

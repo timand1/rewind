@@ -1,0 +1,81 @@
+@use 'variables';
+@use 'buttons';
+
+.full-game {
+    margin: 0 auto;
+    margin-top: 8em;
+    padding: 1em;
+    width: 100%;
+
+    .loading {
+        @include variables.loader();
+    }
+
+    .game-container {
+        @include variables.flexContainer();
+        gap: 2em;
+
+        .game-info {
+            @include variables.flexContainer(row);
+            justify-content: space-between;
+            div {
+                @include variables.flexContainer(column);
+                gap: 0.4em;
+            }
+            .change-game {
+                cursor: pointer;
+            }
+        }
+
+        .team-list {
+            h3 {
+                border-bottom: 1px solid variables.$font-color;
+                padding-bottom: 1em;
+            }
+            .teams {
+                div {
+                    @include variables.flexContainer(column);
+                    gap: 0.4em;
+                    input {
+                        max-width: 30vw;
+                    }
+                }
+            }
+        }
+        .button-container {
+            @include variables.flexContainer(row);
+            justify-content: space-around;
+            button {
+                margin-bottom: 4em;
+                cursor: pointer;
+                @include buttons.button();
+                &:first-child {
+                    background-color: rgb(160, 80, 80);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 786px) {
+    .full-game {
+        max-width: 1000px;
+
+        .game-container {
+            .game-info {
+                div {
+                    flex-direction: row;
+                    gap: 2em;
+                }
+            }
+            .team-list {
+                .teams {
+                    div {
+                        flex-direction: row;
+                        gap: 2em;
+                    }
+                }
+            }
+        }
+    }
+}

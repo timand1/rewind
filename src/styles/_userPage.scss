@@ -9,11 +9,12 @@
         margin-top: auto;
     }
     .game-options {
-        @include variables.flexContainer();
+        @include variables.flexContainer(row);
         justify-content: space-between;
         
         select {
             @include variables.selectContainer();
+            width: 40vw;
         }
     }
 
@@ -34,5 +35,20 @@
             box-shadow: 4px 8px 6px variables.$shadow-color;
         }
     }
+
+    .games-list {
+        @include variables.oddListColor();
+    }
     
+}
+
+@media screen and (min-width: 786px) {
+
+    .userpage {
+        .game-options {
+           select {
+                width: 20vw;
+            }
+        }
+    }
 }

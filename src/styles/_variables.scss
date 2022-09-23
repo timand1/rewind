@@ -55,8 +55,41 @@ $mobile-card-width: 90vw;
     p {
         flex: 1;
     }
-    &:hover{
+}
+
+@mixin hoverLink() {
+    &:hover {
         background-color: color.scale($primary-bg, $lightness: 30%);
         cursor: pointer;
+    }
+}
+
+@mixin loader() {
+    position: fixed;
+    left: 0; 
+    right: 0; 
+    top: 0;
+    bottom: 0;
+    width: 4em;
+    height: 4em;
+    margin: auto;
+    border-radius: 50px;
+    border: 0.5em solid color.scale($secondary-bg, $lightness: 80%);;
+    &:after {
+        content: '';
+        position: absolute;
+        top: -0.5em; 
+        left: -0.5em;
+        bottom: -0.5em;
+        right: -0.5em;
+        border-radius: 50px;
+        border: 0.5em solid transparent;
+        border-top-color: $button-color;
+        -webkit-animation: spin 1s linear infinite;
+        animation: spin 1s linear infinite;
+        @keyframes spin {
+            0%{ -webkit-transform: rotate(0deg); tranform: rotate(0deg);}
+          100%{ -webkit-transform: rotate(360deg); tranform: rotate(360deg);}
+      }
     }
 }

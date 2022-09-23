@@ -13,6 +13,7 @@ function LandingPage() {
 
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleUsername: (e:any) => void = (e) => { 
       setLoginUsername(e.target.value)
@@ -26,18 +27,15 @@ function LandingPage() {
         navigate('/signup');
     } 
 
-    // const handleNoLogin: () => void = () => { 
-    //   getGames(); 
-    //   navigate('/leaderboard');
-    // } 
-
     async function handleNoLogin() {
+      setLoading(true)
       await getGames()
       dispatch(userActions.allUsers())
       navigate('/leaderboard');
     }
 
     async function login() {
+      setLoading(true)
       if(loginUsername.length > 2 && loginPassword.length > 2) {
         const account: object = {
           username: loginUsername,
@@ -53,7 +51,7 @@ function LandingPage() {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.key.accountId);
           navigate(`/user/${loginUsername}`);
-          getGames(); 
+          await getGames(); 
         }
       }
     }
@@ -66,6 +64,7 @@ function LandingPage() {
       
       if (data.success) {
         dispatch(gameActions.setAllGames(data.matches))
+        setLoading(false)
       }
     }
 
@@ -84,6 +83,10 @@ function LandingPage() {
 
     return (
       <div className="landingpage">
+        {loading ? 
+          <div className='loading'></div>
+          : ''
+        }
         <img src={logo} alt="rewind logo" />
         <h2>Login</h2>
         <div className='input-container'>

@@ -25,12 +25,11 @@ function UserPage() {
 
     const activeInfo:any = info ? infoActiveIcon : infoIcon;
 
-    const gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
+    let gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
 
     const users:Array<User> = useSelector((state: RootState) => state.users)
     const chosenUser = users.filter(user => user.name == username)[0];
     
-    const newGamesArray:Array<Games> = [];
     useEffect(() => {
       dispatch(gameActions.getUserGames(username))
     }, [])
@@ -42,19 +41,38 @@ function UserPage() {
     }
 
     const handleGame: (e:any) => void = (e) => { 
-      if(e.target.value == 'all') {
+      const { value } = e.target;
+
+      if(value == 'all') {
+        dispatch(gameActions.getUserGames(username))
+      } else {
+        const filterSearch: object = {
+          filter : value,
+          username : username
+        }
+        dispatch(gameActions.filterGames(filterSearch))
         
-      }
-      newGamesArray.filter(game => {
-        game.game == e.target.value
-      })
+      } 
     } 
+
+    const handleGameSetting: (e:any) => void = (e) => {
+      const { value } = e.target;
+      if(value == 'all') {        
+        dispatch(gameActions.getUserGames(username))
+      } else if(value == 'last-ten') {
+        dispatch(gameActions.lastTen(username))
+        gamesList = gamesList.slice(0, 1)
+      } else if(value == 'no-win') {
+        dispatch(gameActions.noWin(username))
+      }
+    }
 
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} username={username} /> );
 
     return (
       <div className="userpage">
         <Nav />
+        
         <h2>{username}'s profile</h2>
         <div className='stats'>
           <p>Stats -</p>
@@ -69,7 +87,7 @@ function UserPage() {
             <option value="World of Warcraft">World of Warcraft</option>
             <option value="Tower Defence">Tower Defence</option>
           </select>
-          <select defaultValue={'all'} name="games" id="games">
+          <select defaultValue={'all'} name="games" id="games" onChange={(e) => handleGameSetting(e)}>
             <option value="all">All matches</option>
             <option value="last-ten">Last 10 games</option>
             <option value="no-win">Games without a winner</option>
@@ -85,11 +103,12 @@ function UserPage() {
           {info ? <p className='info-box'>Click the cross to see players in a game</p> : ''}
         </div>
         {chosenUser ? 
-        <div>
+        <div className='games-list'>
           {gameElement}
         </div>
         : <p>No games yet!</p>
         }
+        {gamesList.length == 0 ? <p>No games, start gaming!</p> : ''}
       </div>
     )
   }

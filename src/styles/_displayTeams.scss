@@ -1,0 +1,8 @@
+@use 'variables';
+
+.teams {
+    @include variables.oddListColor();
+    @include variables.flexContainer(row);
+    justify-content: space-between;
+    padding: 1em;
+}
