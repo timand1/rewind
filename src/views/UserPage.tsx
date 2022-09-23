@@ -17,6 +17,18 @@ type MyParams = {
 function UserPage() {
     const { username } = useParams<keyof MyParams>() as MyParams;
     const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+    useEffect(() => {
+        const accountName = localStorage.getItem('user')
+        const accountId = localStorage.getItem('accountKey')
+        if(accountName && accountId && accountName == username) {
+            setLoggedIn(true)
+        }
+    }, [])
+
     const [info, setInfo] = useState<boolean>(false)   
 
     const handleInfo: () => void = () => { 
@@ -65,7 +77,15 @@ function UserPage() {
       } else if(value == 'no-win') {
         dispatch(gameActions.noWin(username))
       }
-    }
+    };
+
+    const handleLogOut: (e:any) => void = (e) => {
+      localStorage.removeItem('accountKey')
+      localStorage.removeItem('user')
+      navigate('/');
+    };
+
+
 
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} username={username} /> );
 
@@ -73,7 +93,10 @@ function UserPage() {
       <div className="userpage">
         <Nav />
         
-        <h2>{username}'s profile</h2>
+        <div className="header">
+          <h2>{username}'s profile</h2>
+          {loggedIn ? <p onClick={handleLogOut}>Log Out</p> : ''}
+        </div>
         <div className='stats'>
           <p>Stats -</p>
           {chosenUser ? 

@@ -22,7 +22,7 @@ header {
         z-index: 10;
     }
     h2 {
-        font-size: 2em;
+        font-size: 1.4em;
         margin: 0 1em;
     }
     
@@ -77,6 +77,8 @@ header {
                 position: relative; 
                 color: variables.$font-color;
                 text-decoration: none;
+                cursor: pointer;
+                font-size: 1em;
             }   
         }
     }

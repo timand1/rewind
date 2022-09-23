@@ -1,13 +1,24 @@
 import '../styles/_nav.scss';
 import logo from '../assets/logo.svg'
 import { useNavigate, NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { actions as animalActions } from '../features/animalReducer';
 
 export default function Nav() { 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+    useEffect(() => {
+        const username = localStorage.getItem('user')
+        const accountId = localStorage.getItem('accountKey')
+        if(username && accountId) {
+            setLoggedIn(true)
+        }
+    }, [])
+
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
     const handleMenu: () => void = () => {
@@ -21,6 +32,11 @@ export default function Nav() {
         root.scrollIntoView({
             behavior: 'smooth'
           });
+    };
+
+    const handleAccount: () => void = () => {
+        const username = localStorage.getItem('user')
+        navigate(`/user/${username}`)      
     };
 
     return (         
@@ -37,6 +53,10 @@ export default function Nav() {
                     <NavLink className="link" to="/leaderboard" >LEADERBOARD</NavLink >
                     <NavLink className="link" to="/addgame" >ADD GAME</NavLink>
                     <NavLink className="link" to="/games" >MATCHES</NavLink>
+                    {loggedIn ? 
+                        <p className="link" onClick={handleAccount}> ACCOUNT</p>                
+                        : ''
+                    }
                 </ul>
             </nav>      
         </header>

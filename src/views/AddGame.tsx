@@ -161,11 +161,7 @@ function AddGame() {
             </div> : '' }
             </div>
             <p className='toggle-team' onClick={handleShowTeams}>{showTeamTwo ? 'Remove' : 'Add'} Team Two</p>
-            <div className='divider'></div>
-            <div className='form-container'>
-                <label htmlFor="img">Select image:</label>
-                <input type="file" id="img" name="img" accept="image/*" />
-            </div>            
+            <div className='divider'></div>    
             <button type='submit'>Add Game</button>
         </form>
       </div>

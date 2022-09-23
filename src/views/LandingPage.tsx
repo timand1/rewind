@@ -1,6 +1,6 @@
 import '../styles/_landingPage.scss';
 import logo from '../assets/logo.svg';
-import {  useState } from 'react';
+import {  useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {actions as gameActions} from '../features/gameReducer'
@@ -10,6 +10,14 @@ import {actions as userActions} from '../features/userReducer'
 function LandingPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+      const username = localStorage.getItem('user')
+      const accountId = localStorage.getItem('accountKey')
+      if(username && accountId) {
+          navigate(`/user/${username}`)
+      }
+  }, [])
 
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
@@ -21,6 +29,10 @@ function LandingPage() {
     
     const handlePassword: (e:any) => void = (e) => { 
       setLoginPassword(e.target.value)
+
+      if(e.key == 'Enter') {
+        login()
+      }
     } 
 
     const handleSignUp: () => void = () => { 

@@ -43,7 +43,8 @@ function GamesList() {
         game.game == e.target.value
       })
     } 
-
+    // FIXA SORTERING DATUM OCH TID
+    // FIXA FILTRERING AV TYP AV SPEL 
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} username={username} /> );
 
     return (
@@ -62,7 +63,7 @@ function GamesList() {
           <h3>Game</h3>
           <h3>Time</h3>
           <h3>Date</h3>
-          <h3>W/L</h3>
+          <h3>Winner</h3>
           <img src={activeInfo} className='info' onClick={handleInfo} alt="info" />
   
           {info ? <p className='info-box'>Click the cross to see players in a game</p> : ''}

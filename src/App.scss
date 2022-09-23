@@ -19,6 +19,7 @@ html,
     
     .App {
         height: 100%;
+        margin-bottom: 6em;
         @include variables.flexContainer();
         justify-content: space-between;
     }

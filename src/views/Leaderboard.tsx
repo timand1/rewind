@@ -13,21 +13,27 @@ function Leaderboard() {
     const dispatch = useDispatch();
   
     const [searchInput, setSearchInput] = useState<string>('')
+    const [searched, setSearched] = useState<boolean>(false)
 
     const users:Array<any> = useSelector((state: RootState) => state.users);   
-     
     
     let userElement = users.map((user, index) =>  <DisplayUser key={index} user={user} />)
-
-    const checkSearch = users < users ? true : false
 
     const handleInput: (e:any) => void = (e) => {  
       setSearchInput(e.target.value)
     } 
 
+    const handleEnter: (e:any) => void = (e) => {
+      if(e.key == 'Enter') {       
+        handleSearch();
+      }
+    }
+
     const handleSearch: () => void = () => {         
       if(searchInput.length > 0) {
+        dispatch(userActions.allUsers())
         searchInput.toLowerCase();
+        setSearched(true)
         setSearchInput('')
         dispatch(userActions.searchUser(searchInput))
       }
@@ -50,17 +56,19 @@ function Leaderboard() {
     } 
 
     const resetSearch: () => void = () => { 
+      setSearched(false)
       dispatch(userActions.allUsers())
     } 
    
+    // SORTERA EFTER SPEL
 
     return (
       <div className="leaderboard">
         <Nav />
         <h2>Leaderboard</h2>
         <div className='search-bar'>
-            <input type="text" name="search" id="search" value={searchInput} placeholder='Search players...' onChange={(e) => { handleInput(e) }}/>
-            {checkSearch ? <p className='clear-search' onClick={resetSearch}>X</p> : ''}
+            <input type="text" name="search" id="search" value={searchInput} placeholder='Search players...'  onKeyUp={(e) => {handleEnter(e)}} onChange={(e) => { handleInput(e) }}/>
+            {searched ? <p className='clear-search' onClick={resetSearch}>X</p> : ''}
             <label htmlFor="search" onClick={handleSearch} >&#x1F50D;</label>
         </div>
         <select defaultValue={'all'} name="games" id="games">
