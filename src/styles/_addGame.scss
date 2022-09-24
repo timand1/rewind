@@ -91,7 +91,6 @@
 @media screen and (min-width: 786px) {
     .add-game {
         form {
-
             .teams {
                 @include variables.flexContainer(row); 
                 justify-content: space-between;

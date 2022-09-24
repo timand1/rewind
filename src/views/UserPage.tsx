@@ -24,19 +24,38 @@ function UserPage() {
     const [filterSetting, setFilterSetting] = useState<string>('all')    
 
     useEffect(() => {
+      async function loadUserGames() {        
+        await getGames()
+        
         const accountName = localStorage.getItem('user')
         const accountId = localStorage.getItem('accountKey')
-        if(accountName && accountId && accountName == username) {
-            const userObj: object = {
-              username: username,
-              game: 'all'
-            }
-            dispatch(gameActions.getUserGames(userObj))
-            setChosenGame('all')
-            setFilterSetting('all')
-            setLoggedIn(true)
+        const userObj: object = {
+          username: username,
+          game: 'all'
         }
-    }, [username])
+        if(accountName && accountId && accountName == username) {
+          setLoggedIn(true)          
+        }
+        
+        setChosenGame('all')
+        setFilterSetting('all')
+        dispatch(gameActions.getUserGames(userObj))
+      }
+      
+      loadUserGames();
+    }, [])
+
+    async function getGames() {
+      const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+      headers: {'Content-Type': 'application/json'}
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        localStorage.setItem('games', JSON.stringify(data.matches));
+        dispatch(gameActions.setAllGames(data.matches))                
+      }
+    }
 
     const [info, setInfo] = useState<boolean>(false)   
 
@@ -45,20 +64,12 @@ function UserPage() {
     } 
 
     const activeInfo:any = info ? infoActiveIcon : infoIcon;
-
-    let gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
+    
+    let gamesList:Array<Games> = useSelector((state: RootState) => state.games)      
 
     const users:Array<User> = useSelector((state: RootState) => state.users)
     const chosenUser = users.filter(user => user.name == username)[0];
     
-    useEffect(() => {
-      const userObj: object = {
-        username: username,
-        game: 'all'
-      }
-      dispatch(gameActions.getUserGames(userObj))
-    }, [])
-
     let winPercentage : string = '';
     if(chosenUser) {
 
@@ -69,17 +80,12 @@ function UserPage() {
       const { value } = e.target;
       setChosenGame(value)
       
-      // if(value == 'all') {
-      //   dispatch(gameActions.getUserGames(username))
-      // } else {
-        const filterSearch: object = {
-          filter : value,
-          username : username,
-          setting : filterSetting
-        }
-        dispatch(gameActions.filterUserGames(filterSearch))
-        
-      // } 
+      const filterSearch: object = {
+        filter : value,
+        username : username,
+        setting : filterSetting
+      }
+      dispatch(gameActions.filterUserGames(filterSearch))
     } 
 
     const handleGameSetting: (e:any) => void = (e) => {
@@ -156,14 +162,14 @@ function UserPage() {
         </div>
         <div className='headlines'>
           <h3>Game</h3>
-          <h3 onClick={sortDuration}>Time &#x25BC;</h3>
-          <h3 onClick={sortDate}>Date &#x25BC;</h3>
+          <h3 onClick={sortDuration}>Time <span>&#x25BC;</span></h3>
+          <h3 onClick={sortDate}>Date <span>&#x25BC;</span></h3>
           <h3>W/L</h3>
           <img src={activeInfo} className='info' onClick={handleInfo} alt="info" />
   
           {info ? <p className='info-box'>Click the cross to see players in a game</p> : ''}
         </div>
-        {chosenUser ? 
+        {gamesList.length > 0 ? 
         <div className='games-list'>
           {gameElement}
         </div>

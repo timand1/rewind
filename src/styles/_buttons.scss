@@ -9,8 +9,9 @@
     border: none;
     border-radius: 0.4em;
     font-weight: 500;
-    padding: 0.8em 3em;
+    padding: 0.8em 2em;
     transition: all 400ms;
+    text-align: center;
     box-shadow: 4px 8px 6px variables.$shadow-color;
     // font family
     &:hover {

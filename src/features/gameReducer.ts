@@ -38,7 +38,7 @@ const reducer = createReducer(initialState, {
         return state;
     },
     [getUserGames.toString()]: ( state, action ) => {
-        const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
+        const allGames:Games[] = [...state]
         let newGamesArray: Games[] = [];
 
         for (const game of allGames) {

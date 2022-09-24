@@ -17,6 +17,7 @@ export default function DisplayGame(props: GameProps) {
     const location = useLocation();
 
     const slicedDate = date.slice(2);
+    const slicedDuration = duration.slice(1)
     
     const [showInfo, setShowInfo] = useState<boolean>(false);
 
@@ -50,14 +51,14 @@ export default function DisplayGame(props: GameProps) {
         } 
     })
     
-    const showWinner = win ? win : 'No winner';
+    const showWinner = win ? win : '-';
     const showWinLoss  = gameResult ? 'W' : 'L';
 
     return (         
         <section className='user-games'>             
             <div className='game-info'>
                 <p onClick={handleGame}>{game}</p>
-                <p>{duration}</p>
+                <p>{slicedDuration}</p>
                 <p>{slicedDate}</p>
                 <p>{location.pathname == '/games' ? showWinner : showWinLoss}</p>
                 <img src={cross} alt="" className={activeInfoCss} onClick={handleInfo}/>

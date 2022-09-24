@@ -33,6 +33,7 @@ export default function Nav() {
 
     const handleAccount: () => void = () => {
         const username = localStorage.getItem('user')
+        setMenuOpen(false);
         navigate(`/user/${username}`)      
     };
 

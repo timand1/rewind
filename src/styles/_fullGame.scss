@@ -45,8 +45,10 @@
         .button-container {
             @include variables.flexContainer(row);
             justify-content: space-around;
+            gap: 2em;
             button {
                 margin-bottom: 4em;
+                max-width: 40vw;
                 cursor: pointer;
                 @include buttons.button();
                 &:first-child {

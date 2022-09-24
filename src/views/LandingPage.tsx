@@ -12,11 +12,16 @@ function LandingPage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-      const username = localStorage.getItem('user')
-      const accountId = localStorage.getItem('accountKey')
-      if(username && accountId) {
-          navigate(`/user/${username}`)
+      async function handleLoggedIn() {
+        const username = localStorage.getItem('user')
+        const accountId = localStorage.getItem('accountKey')
+        if(username && accountId) {
+            await getGames()
+            navigate(`/user/${username}`)
+        }
       }
+
+      handleLoggedIn()
   }, [])
 
     const [loginUsername, setLoginUsername] = useState<string>('');
@@ -63,8 +68,8 @@ function LandingPage() {
         if (data.success) {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.key.accountId);
-          navigate(`/user/${loginUsername}`);
           await getGames(); 
+          navigate(`/user/${loginUsername}`);
         }
       }
     }
@@ -76,6 +81,7 @@ function LandingPage() {
       const data = await response.json();
       
       if (data.success) {
+        localStorage.setItem('games', JSON.stringify(data.matches));
         dispatch(gameActions.setAllGames(data.matches))
         setLoading(false)
       }

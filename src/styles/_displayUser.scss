@@ -8,5 +8,16 @@
     padding: 1em 0.9em;
     @include variables.oddListColor();
     @include variables.hoverLink();  
-    
+    p {
+        font-size: 1em;
+        padding-right: 0.5em;
+    }    
+}
+
+@media screen and (max-width: 340px) {
+    .leaderboard-user {
+        p {
+            font-size: 0.8em;
+        }
+    }
 }
