@@ -173,9 +173,8 @@ function UserPage() {
         <div className='games-list'>
           {gameElement}
         </div>
-        : <p>No games yet!</p>
+        : <p>No games</p>
         }
-        {gamesList.length == 0 ? <p>No games, start gaming!</p> : ''}
       </div>
     )
   }

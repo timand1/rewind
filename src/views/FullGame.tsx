@@ -46,6 +46,9 @@ export default function FullGame() {
     const [newLoser, setNewLoser] = useState<string>(chosenGame.lost || '');
     const [changeGame, setChangeGame] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const slicedDate = chosenGame.date.slice(2);
+    const slicedDuration = chosenGame.duration.slice(1)
     
 
     const checkTeamTwo = chosenGame.team2.length > 0 ? true : false;
@@ -195,8 +198,8 @@ export default function FullGame() {
                     <img className='change-game' src={change} alt="change" onClick={handleChange}/>
                 </div>
                 <div className="game-info">
-                    <p>Duration : {chosenGame.duration}</p>
-                    <p>Game played : {chosenGame.date}</p>
+                    <p>Duration : {slicedDuration}</p>
+                    <p>Date : {slicedDate}</p>
                 </div>
                 <div className="game-info">
                     {chosenGame.win ? <p>Winner : {chosenGame.win}</p> : ''}

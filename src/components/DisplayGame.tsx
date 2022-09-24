@@ -58,9 +58,9 @@ export default function DisplayGame(props: GameProps) {
         <section className='user-games'>             
             <div className='game-info'>
                 <p onClick={handleGame}>{game}</p>
-                <p>{slicedDuration}</p>
-                <p>{slicedDate}</p>
-                <p>{location.pathname == '/games' ? showWinner : showWinLoss}</p>
+                <p onClick={handleGame}>{slicedDuration}</p>
+                <p onClick={handleGame}>{slicedDate}</p>
+                <p className='result' onClick={handleGame} >{location.pathname == '/games' ? showWinner : showWinLoss}</p>
                 <img src={cross} alt="" className={activeInfoCss} onClick={handleInfo}/>
             </div>
             {showInfo ?
