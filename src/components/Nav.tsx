@@ -2,11 +2,8 @@ import '../styles/_nav.scss';
 import logo from '../assets/logo.svg'
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-// import { actions as animalActions } from '../features/animalReducer';
 
 export default function Nav() { 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -42,7 +39,7 @@ export default function Nav() {
     return (         
         <header>             
             <img className='logo' onClick={(handleHome)} src={logo} alt="img" />
-            <h2>REWIND</h2>
+            <h2 className='nav-headline'>REWIND</h2>
             <div className="menu-btn" onClick={handleMenu}>
                 <span className={menuOpen ? 'menu-btn--top' : ''}></span>
                 <span className={menuOpen ? 'menu-btn--mid' : ''}></span>

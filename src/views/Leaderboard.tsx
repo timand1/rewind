@@ -1,20 +1,24 @@
 import '../styles/_leaderboard.scss';
 import Nav from '../components/Nav';
+import DisplayUser from '../components/DisplayUser';
 import { useEffect, useState } from 'react';
-import { User } from '../models/data';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
-import DisplayUser from '../components/DisplayUser';
-
 import { useDispatch } from 'react-redux';
 import {actions as userActions} from '../features/userReducer'
+
 
 function Leaderboard() {
     const dispatch = useDispatch();
   
     const [searchInput, setSearchInput] = useState<string>('')
     const [searched, setSearched] = useState<boolean>(false)
+    const [filterParams, setFilterParams] = useState<string>('all')
 
+    useEffect(() => {
+      dispatch(userActions.allUsers(filterParams))
+    }, [])
+    
     const users:Array<any> = useSelector((state: RootState) => state.users);   
     
     let userElement = users.map((user, index) =>  <DisplayUser key={index} user={user} />)
@@ -31,7 +35,7 @@ function Leaderboard() {
 
     const handleSearch: () => void = () => {         
       if(searchInput.length > 0) {
-        dispatch(userActions.allUsers())
+        dispatch(userActions.allUsers('all'))
         searchInput.toLowerCase();
         setSearched(true)
         setSearchInput('')
@@ -57,10 +61,13 @@ function Leaderboard() {
 
     const resetSearch: () => void = () => { 
       setSearched(false)
-      dispatch(userActions.allUsers())
+      dispatch(userActions.allUsers('all'))
     } 
    
-    // SORTERA EFTER SPEL
+    const handleGame: (e:any) => void = (e) => { 
+      setFilterParams(e.target.value)
+        dispatch(userActions.allUsers(e.target.value))
+    };
 
     return (
       <div className="leaderboard">
@@ -71,17 +78,17 @@ function Leaderboard() {
             {searched ? <p className='clear-search' onClick={resetSearch}>X</p> : ''}
             <label htmlFor="search" onClick={handleSearch} >&#x1F50D;</label>
         </div>
-        <select defaultValue={'all'} name="games" id="games">
-            <option value="all">All games</option>
-            <option value="dota">Dota 2</option>
-            <option value="wow">World of Warcraft</option>
-            <option value="td">Tower Defence</option>
+        <select defaultValue={'all'} name="games" id="games" onChange={(e) => {handleGame(e)}} >
+        <option value="all">All games</option> 
+            <option value="Dota 2">Dota 2</option>
+            <option value="World of Warcraft">World of Warcraft</option>
+            <option value="Tower Defence">Tower Defence</option>
         </select>
         <div className='headlines'>
-          <h3 onClick={handleName}>Player</h3>
-          <h3 onClick={handleWin}>Wins</h3>
-          <h3 onClick={handleLoss}>Loss</h3>
-          <h3 onClick={handleWinRate}>Win %</h3>
+          <h3 onClick={handleName}>Player &#x25BC;</h3>
+          <h3 onClick={handleWin}>Wins &#x25BC;</h3>
+          <h3 onClick={handleLoss}>Loss &#x25BC;</h3>
+          <h3 onClick={handleWinRate}>Win % &#x25BC;</h3>
         </div>
         <div className='users'>
           {userElement}

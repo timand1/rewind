@@ -1,14 +1,14 @@
 import '../styles/_userPage.scss';
-import Nav from '../components/Nav';
-import { Games, User } from '../models/data';
-import DisplayGame from '../components/DisplayGame';
 import infoIcon from '../assets/info.svg';
 import infoActiveIcon from '../assets/infoActive.svg';
+import Nav from '../components/Nav';
+import DisplayGame from '../components/DisplayGame';
+import { Games, User } from '../models/data';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
-import {actions as gameActions} from '../features/gameReducer'
+import {actions as gameActions} from '../features/gameReducer';
 
 type MyParams = {
   username: string;
@@ -20,14 +20,23 @@ function UserPage() {
     const navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [chosenGame, setChosenGame] = useState<string>('all')
+    const [filterSetting, setFilterSetting] = useState<string>('all')    
 
     useEffect(() => {
         const accountName = localStorage.getItem('user')
         const accountId = localStorage.getItem('accountKey')
         if(accountName && accountId && accountName == username) {
+            const userObj: object = {
+              username: username,
+              game: 'all'
+            }
+            dispatch(gameActions.getUserGames(userObj))
+            setChosenGame('all')
+            setFilterSetting('all')
             setLoggedIn(true)
         }
-    }, [])
+    }, [username])
 
     const [info, setInfo] = useState<boolean>(false)   
 
@@ -43,7 +52,11 @@ function UserPage() {
     const chosenUser = users.filter(user => user.name == username)[0];
     
     useEffect(() => {
-      dispatch(gameActions.getUserGames(username))
+      const userObj: object = {
+        username: username,
+        game: 'all'
+      }
+      dispatch(gameActions.getUserGames(userObj))
     }, [])
 
     let winPercentage : string = '';
@@ -54,28 +67,37 @@ function UserPage() {
 
     const handleGame: (e:any) => void = (e) => { 
       const { value } = e.target;
-
-      if(value == 'all') {
-        dispatch(gameActions.getUserGames(username))
-      } else {
+      setChosenGame(value)
+      
+      // if(value == 'all') {
+      //   dispatch(gameActions.getUserGames(username))
+      // } else {
         const filterSearch: object = {
           filter : value,
-          username : username
+          username : username,
+          setting : filterSetting
         }
-        dispatch(gameActions.filterGames(filterSearch))
+        dispatch(gameActions.filterUserGames(filterSearch))
         
-      } 
+      // } 
     } 
 
     const handleGameSetting: (e:any) => void = (e) => {
       const { value } = e.target;
+
+      setFilterSetting(value)
+
+      const searchParams: object = {
+        username : username,
+        game : chosenGame
+      }
       if(value == 'all') {        
-        dispatch(gameActions.getUserGames(username))
+        dispatch(gameActions.getUserGames(searchParams))
       } else if(value == 'last-ten') {
-        dispatch(gameActions.lastTen(username))
+        dispatch(gameActions.lastTen(searchParams))
         gamesList = gamesList.slice(0, 1)
       } else if(value == 'no-win') {
-        dispatch(gameActions.noWin(username))
+        dispatch(gameActions.noWin(searchParams))
       }
     };
 
@@ -85,7 +107,23 @@ function UserPage() {
       navigate('/');
     };
 
+    const sortDate: () => void = () => { 
+      const searchObj: object = {
+        username : username,
+        game: chosenGame,
+        setting : filterSetting
+      }
+      dispatch(gameActions.sortByDateUser(searchObj));
+    };
 
+    const sortDuration: () => void = () => { 
+      const searchObj: object = {
+        username : username,
+        game: chosenGame,
+        setting : filterSetting
+      }
+      dispatch(gameActions.sortByDurationUser(searchObj));
+    };
 
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} username={username} /> );
 
@@ -104,13 +142,13 @@ function UserPage() {
           : ''}
         </div>
         <div className='game-options'>
-          <select defaultValue={'all'} name="game-type" id="game-type" onChange={(e) => handleGame(e)} >
+          <select defaultValue={filterSetting} name="game-type" id="game-type" onChange={(e) => handleGame(e)} >
             <option value="all">All games</option>
             <option value="Dota 2">Dota 2</option>
             <option value="World of Warcraft">World of Warcraft</option>
             <option value="Tower Defence">Tower Defence</option>
           </select>
-          <select defaultValue={'all'} name="games" id="games" onChange={(e) => handleGameSetting(e)}>
+          <select defaultValue={filterSetting} name="games" id="games" onChange={(e) => handleGameSetting(e)}>
             <option value="all">All matches</option>
             <option value="last-ten">Last 10 games</option>
             <option value="no-win">Games without a winner</option>
@@ -118,8 +156,8 @@ function UserPage() {
         </div>
         <div className='headlines'>
           <h3>Game</h3>
-          <h3>Time</h3>
-          <h3>Date</h3>
+          <h3 onClick={sortDuration}>Time &#x25BC;</h3>
+          <h3 onClick={sortDate}>Date &#x25BC;</h3>
           <h3>W/L</h3>
           <img src={activeInfo} className='info' onClick={handleInfo} alt="info" />
   

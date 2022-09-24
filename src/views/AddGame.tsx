@@ -2,10 +2,14 @@ import '../styles/_addGame.scss';
 import Nav from '../components/Nav';
 import PlayerInput from '../components/PlayerInput';
 import { useState } from 'react';
-import { Games } from '../models/data'
+import { useDispatch } from 'react-redux';
+import {actions as gameActions} from '../features/gameReducer';
 
 function AddGame() {
+    const dispatch = useDispatch();
+
     const [showTeamTwo, setShowTeamTwo] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [teamOne, setTeamOne] = useState<Array<object>>([]);
     const [teamTwo, setTeamTwo] = useState<Array<object>>([]);
@@ -15,7 +19,6 @@ function AddGame() {
     const [date, setDate] = useState<string>('');
     const [duration, setDuration] = useState<string>('');
     const [addedGame, setAddedGame] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
 
     const handleSubmit: (e:any) => void = (e) => {
         e.preventDefault();
@@ -36,7 +39,7 @@ function AddGame() {
         addGame(newGame)
     }
 
-    async function addGame(newGame : object) {
+    async function addGame(newGame : object) {        
         setLoading(true)
         const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
         method: 'POST',
@@ -45,10 +48,22 @@ function AddGame() {
         });
         const data = await response.json();
         if (data.success) {
-            setLoading(false)
+            await getGames()
             setAddedGame(true)
         }
     }
+
+    async function getGames() {
+        const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+        headers: {'Content-Type': 'application/json'}
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          dispatch(gameActions.setAllGames(data.matches))
+          setLoading(false)
+        }
+      }
     
     const handleGame: (e:any) => void = (e) => {
         setGame(e.target.value);
@@ -113,8 +128,8 @@ function AddGame() {
             <select onChange={(e) => {handleGame(e)}} name="game" id="game" defaultValue='DEFAULT'>
                 <option value="DEFAULT">-- Choose a game --</option>
                 <option value="Dota 2">Dota 2</option>
-                <option value="Dota 2">World of Warcraft</option>
-                <option value="Dota 2">Tower Defence</option>
+                <option value="World of Warcraft">World of Warcraft</option>
+                <option value="Tower Defence">Tower Defence</option>
             </select>
         </div>
         <div className='form-container'>
@@ -122,8 +137,8 @@ function AddGame() {
             <input type="date" name="date" id="date" onChange={(e) => {handleDate(e)}} required/>
         </div>
         <div className='form-container'>
-            <label htmlFor="player">Duration (hh/mm)</label>
-            <input type="time" name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
+            <label htmlFor="player">Duration (hh/mm/ss)</label>
+            <input type="time" step={2} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
         </div>
         <div className='divider'></div>
         <div className="teams">

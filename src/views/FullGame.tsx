@@ -1,13 +1,13 @@
 import '../styles/_fullGame.scss';
+import change from '../assets/change.svg';
+import Nav from '../components/Nav';
+import DisplayTeams from '../components/DisplayTeams'
 import { Games } from '../models/data'
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import DisplayTeams from '../components/DisplayTeams'
-import Nav from '../components/Nav';
-import change from '../assets/change.svg';
 import {actions as gameActions} from '../features/gameReducer'
 
 type MyParams = {
@@ -26,7 +26,8 @@ interface UpdatedGame {
     win : string,
     lost : string,
     team1 : Array<teamArray>,
-    team2 : Array<teamArray>
+    team2 : Array<teamArray>,
+    gameId : string
 }
 
 
@@ -100,18 +101,19 @@ export default function FullGame() {
     const handleTeamOne: (e:any, index:number) => void = (e, index) => {
         const {name, value} = e.target
         if(name == 'player') {
-            teamOneArr[index][0] = value
+            teamOneArr[index][`player-${index+1}`] = value
         } else {
-            teamOneArr[index][1] = value
+            teamOneArr[index][`player-${index+1}-info`] = value
         }        
     }
 
     const handleTeamTwo: (e:any, index:number) => void = (e, index) => {
         const {name, value} = e.target
+        
         if(name == 'player') {
-            teamTwoArr[index][0] = value
+            teamTwoArr[index][`player-${index+6}`] = value
         } else {
-            teamTwoArr[index][1] = value
+            teamTwoArr[index][`player-${index+6}-info`] = value
         }        
     }
 
@@ -134,6 +136,18 @@ export default function FullGame() {
 
 
     async function updateGame() {
+        for(let i = 0; i < teamOneArr.length; i++) {           
+            if(teamOneArr[i][`player-${i+1}`] == '') {
+                teamOneArr.splice(i)
+            }
+        }
+        
+        for(let j = 0; j < teamTwoArr.length; j++) {                       
+            if(teamTwoArr[j][`player-${j+6}`] == '') {
+                teamTwoArr.splice(j)
+            }
+        }
+
         setLoading(true)
           const updatedGame: UpdatedGame = {
             game: newGame,
@@ -142,21 +156,21 @@ export default function FullGame() {
             win : newWinner,
             lost : newLoser,
             team1 : teamOneArr,
-            team2 : teamTwoArr
+            team2 : teamTwoArr,
+            gameId : chosenGame.gameId
           };
-        //   const response = await fetch(`https://wool-fir-ping.glitch.me/api/games${chosenGame.gameId}`, {
-        //     method: 'POST',
-        //     body: JSON.stringify(updatedGame),
-        //     headers: { 'Content-Type': 'application/json' }
-        //   });
-        //   const data = await response.json();
-        //   if (data.success) {
-        //     setLoading(false);
-        //     setChangeGame(false)
-        //     await getGames(); 
-        //   }
-            console.log(updatedGame);
-        
+          console.log(updatedGame);
+          
+          const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${chosenGame.gameId}`, {
+            method: 'POST',
+            body: JSON.stringify(updatedGame),
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const data = await response.json();
+          if (data.success) {
+            setChangeGame(false)
+            await getGames(); 
+          }        
     }
 
     async function getGames() {
@@ -219,7 +233,7 @@ export default function FullGame() {
                 <div className="game-info">
                     <div>
                         <p>Duration</p>
-                        <input type="time" name="duration" id="duration" defaultValue={chosenGame.duration} onChange={(e) => {handleDuration(e)}} required/>
+                        <input type="time" step={2} name="duration" id="duration" defaultValue={chosenGame.duration} onChange={(e) => {handleDuration(e)}} required/>
                     </div>
                     <div>
                         <p>Date</p>

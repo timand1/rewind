@@ -1,9 +1,9 @@
 import '../styles/_displayGame.scss';
 import cross from '../assets/cross.svg';
-import { useNavigate, useLocation } from 'react-router-dom'
+import PlayersGame from './PlayersGame'
 import { Games } from '../models/data'
 import { useState } from 'react';
-import PlayersGame from './PlayersGame'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 interface GameProps {
     game: Games,

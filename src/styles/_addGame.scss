@@ -23,6 +23,7 @@
         background-color: color.scale(variables.$secondary-bg, $lightness: 30%);
         border-radius: 0.5em;
         box-shadow: 4px 8px 6px variables.$shadow-color;
+        z-index: 10;
         button {
             @include buttons.button($bg: variables.$secondary-bg,);
             padding: 1em 1.4em;

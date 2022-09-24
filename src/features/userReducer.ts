@@ -5,52 +5,56 @@ const initialState : User[] = JSON.parse(localStorage.getItem('users') || '');
 
 
 const sortByWinRate = createAction('Sort winrate');
-const allUsers = createAction('All user');
+const allUsers = createAction<string>('All user');
 const sortByName = createAction('Sort name');
 const sortByWin = createAction('Sort win');
 const sortByLoss = createAction('Sort loss');
 const searchUser = createAction<string>('Search user');
-const getUser = createAction<string>('Get user');
 
 const actions = { sortByWinRate, sortByName, sortByWin, sortByLoss, searchUser, allUsers };
 
 const reducer = createReducer(initialState, {
     [sortByWinRate.toString()]: ( state, action) => {
-        const arrCopy = [...state]
+        const arrCopy: User[] = [...state]
         arrCopy.sort((a, b) => (a.winRate < b.winRate) ? 1 : ((b.winRate < a.winRate) ? -1 : 0))
 
         return arrCopy;
 
     },
     [sortByName.toString()]: ( state, action) => {
-        const arrCopy = [...state]
+        const arrCopy: User[] = [...state]
         arrCopy.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
         return arrCopy;
     },
     [sortByWin.toString()]: ( state, action) => {
-        const arrCopy = [...state]        
+        const arrCopy: User[] = [...state]        
         arrCopy.sort((a, b) => (a.win < b.win) ? 1 : ((b.win < a.win) ? -1 : 0))
 
         return arrCopy;
     },
     [sortByLoss.toString()]: ( state, action) => {
-        const arrCopy = [...state]
+        const arrCopy: User[] = [...state]
         arrCopy.sort((a, b) => (a.lost < b.lost) ? 1 : ((b.lost < a.lost) ? -1 : 0))
 
         return arrCopy;
     },
     [searchUser.toString()]: ( state, action) => {
-        const arrCopy = [...state]
+        const arrCopy: User[] = [...state]
         const searchedUsers = arrCopy.filter(user => user.name.toLowerCase() == action.payload)
         
         return searchedUsers;
     },
     [allUsers.toString()]: ( state, action) => {
         const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-        const userList: Array<any> = []
+        let arrCopy:Games[] = [...allGames]
+        if(action.payload != 'all') {
+            arrCopy = arrCopy.filter(game => game.game == action.payload)
+        }
         
-        for (const game of allGames) {
+        const userList: Array<any> = []
+
+        for (const game of arrCopy) {
             game.team1.forEach(player => {
                 userList.push(Object.values(player)[0]);
             })
@@ -59,13 +63,11 @@ const reducer = createReducer(initialState, {
               })
         }
         const uniqueUsers = userList.filter((user, index) => userList.indexOf(user) === index)
-        
-        const gamesList:Games[] = JSON.parse(localStorage.getItem('games') || '');
-        const userGameList:Array<User> = [];
+        const userGameList: User[] = [];
         
         uniqueUsers.forEach(user => {
-            const newGamesArray:Array<Games> = [];
-            for (const game of gamesList) {
+            const newGamesArray: Games[] = [];
+            for (const game of arrCopy) {
                 game.team1.forEach(player => {
                 if(Object.values(player).indexOf(user) > -1) {
                     newGamesArray.push(game)
@@ -78,7 +80,7 @@ const reducer = createReducer(initialState, {
                     }
                 })                 
             }            
-            const amountOfGames = newGamesArray.length;
+            const amountOfGames: number = newGamesArray.length;
             let win: number = 0;
             
             for (const game of newGamesArray) {
@@ -93,9 +95,9 @@ const reducer = createReducer(initialState, {
                     }
                   })
             }   
-            const winRate = (win / amountOfGames ) * 100;
+            const winRate: number = (win / amountOfGames ) * 100;
 
-            const userObj = {
+            const userObj: User = {
                 name: user,
                 win: win,
                 lost: amountOfGames - win,
@@ -106,6 +108,8 @@ const reducer = createReducer(initialState, {
         })
 
         localStorage.setItem('users', JSON.stringify(userGameList));
+
+        userGameList.sort((a, b) => (a.win < b.win) ? 1 : ((b.win < a.win) ? -1 : 0))
 
     
         return userGameList;

@@ -17,15 +17,14 @@ function SignUp() {
       setLoginPassword(e.target.value)
     } 
 
-    async function signUp() {
-      console.log(loginUsername);
-      
+    async function signUp() {      
       if(loginUsername.length > 2 && loginPassword.length > 2) {
+        
         const account: object = {
           username: loginUsername,
           password: loginPassword
         };
-        console.log(account)
+
         const response = await fetch('https://wool-fir-ping.glitch.me/api/signup', {
           method: 'POST',
           body: JSON.stringify(account),
@@ -34,6 +33,7 @@ function SignUp() {
         const data = await response.json();
         console.log(data);
         if (data.success) {
+          localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.accountId);
           navigate(`/user/${loginUsername}`);
         }

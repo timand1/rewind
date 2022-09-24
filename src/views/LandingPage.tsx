@@ -42,7 +42,7 @@ function LandingPage() {
     async function handleNoLogin() {
       setLoading(true)
       await getGames()
-      dispatch(userActions.allUsers())
+      dispatch(userActions.allUsers('all'))
       navigate('/leaderboard');
     }
 
@@ -59,6 +59,7 @@ function LandingPage() {
           headers: { 'Content-Type': 'application/json' }
         });
         const data = await response.json();
+        
         if (data.success) {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.key.accountId);
@@ -79,19 +80,6 @@ function LandingPage() {
         setLoading(false)
       }
     }
-
-    // async function removeAll() {
-    //   const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
-    //   method: 'DELETE',
-    //   headers: {'Content-Type': 'application/json'}
-    //   });
-    //   const data = await response.json();
-      
-    //   if (data.success) {
-    //     // dispatch(gameActions.setAllGames(data.matches))
-    //     console.log(data);        
-    //   }
-    // }
 
     return (
       <div className="landingpage">

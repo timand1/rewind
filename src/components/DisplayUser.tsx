@@ -1,29 +1,19 @@
 import '../styles/_displayUser.scss';
-import { User, Games } from '../models/data'
-import { useEffect } from 'react';
+import { User } from '../models/data'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { actions as gameActions } from '../features/gameReducer';
-import { actions as userActions } from '../features/userReducer';
 
 interface UserProps {
    user: User;
 }
 
 export default function DisplayUser(props: UserProps) { 
-    const { name, win, lost } = props.user
-    const dispatch = useDispatch();
-  
-    
+    const { name, win, lost } = props.user;
 
     const navigate = useNavigate();
     const winPercent = (win / (win + lost)) * 100;
 
     const handleuser: () => void = () => {
-
-        navigate(`/user/${name.toLowerCase()}`)
-        
+        navigate(`/user/${name.toLowerCase()}`);        
     };
 
     return (         
