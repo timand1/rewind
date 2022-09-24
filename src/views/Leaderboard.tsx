@@ -35,11 +35,10 @@ function Leaderboard() {
 
     const handleSearch: () => void = () => {         
       if(searchInput.length > 0) {
-        dispatch(userActions.allUsers('all'))
-        searchInput.toLowerCase();
-        setSearched(true)
-        setSearchInput('')
-        dispatch(userActions.searchUser(searchInput))
+      const searchLowerCase = searchInput.toLowerCase();      
+      setSearched(true)
+      setSearchInput('')
+      dispatch(userActions.searchUser(searchLowerCase))
       }
     } 
     
@@ -60,6 +59,7 @@ function Leaderboard() {
     } 
 
     const resetSearch: () => void = () => { 
+      setFilterParams('all')
       setSearched(false)
       dispatch(userActions.allUsers('all'))
     } 
@@ -78,7 +78,7 @@ function Leaderboard() {
             {searched ? <p className='clear-search' onClick={resetSearch}>X</p> : ''}
             <label htmlFor="search" onClick={handleSearch} >&#x1F50D;</label>
         </div>
-        <select defaultValue={'all'} name="games" id="games" onChange={(e) => {handleGame(e)}} >
+        <select value={filterParams} name="games" id="games" onChange={(e) => {handleGame(e)}} >
         <option value="all">All games</option> 
             <option value="Dota 2">Dota 2</option>
             <option value="World of Warcraft">World of Warcraft</option>
@@ -92,6 +92,7 @@ function Leaderboard() {
         </div>
         <div className='users'>
           {userElement}
+          {users.length > 0 ? '' : <p>Sorry, no user matched your search</p> }
         </div>
       </div>
     )

@@ -41,6 +41,7 @@ const reducer = createReducer(initialState, {
     },
     [searchUser.toString()]: ( state, action) => {
         const arrCopy: User[] = [...state]
+        
         const searchedUsers = arrCopy.filter(user => user.name.toLowerCase() == action.payload)
         
         return searchedUsers;
