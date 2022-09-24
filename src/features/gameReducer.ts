@@ -1,7 +1,8 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { Games } from '../models/data';
-const gamesLocal: Games[] = JSON.parse(localStorage.getItem('games') || '');
-const initialState : Games[] = gamesLocal;
+
+// const initialState : Games[] = JSON.parse(localStorage.getItem('games') || '');
+const initialState : Games[] = []
 
 const addGame = createAction<Games>('Add game');
 const setAllGames = createAction<Games[]>('Set all games');

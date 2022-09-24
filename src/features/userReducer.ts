@@ -1,7 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { User, Games } from '../models/data';
-const userLocal : User[] = JSON.parse(localStorage.getItem('users') || '');
-const initialState : User[] = userLocal;
+// const initialState : User[] = JSON.parse(localStorage.getItem('users') || '');
+const initialState : User[] = []
 
 
 const sortByWinRate = createAction('Sort winrate');
