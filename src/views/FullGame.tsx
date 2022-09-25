@@ -35,7 +35,6 @@ export default function FullGame() {
     const { id } = useParams<keyof MyParams>() as MyParams;
 
     const dispatch = useDispatch();
-
     const gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
     const chosenGame = gamesList.filter(game => game.gameId == id)[0]
 
@@ -173,6 +172,7 @@ export default function FullGame() {
           if (data.success) {
             setChangeGame(false)
             await getGames(); 
+            
           }        
     }
 
@@ -270,7 +270,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 1 info</p>
-                            <input type="text" name="player-info" id="player-1-info" defaultValue={teamOneArr[0]['player-10-info']} onKeyUp={(e) => {handleTeamOne(e, 0)}}/>
+                            <input type="text" name="player-info" id="player-1-info" defaultValue={teamOneArr[0]['player-1-info']} onKeyUp={(e) => {handleTeamOne(e, 0)}}/>
                         </div>
                     </div>
                     <div className="teams">
@@ -280,7 +280,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 2 info</p>
-                            <input type="text" name="player-info" id="player-2-info" defaultValue={teamOneArr[1]['player-21-info']} onKeyUp={(e) => {handleTeamOne(e, 1)}}/>
+                            <input type="text" name="player-info" id="player-2-info" defaultValue={teamOneArr[1]['player-2-info']} onKeyUp={(e) => {handleTeamOne(e, 1)}}/>
                         </div>
                     </div>
                     <div className="teams">

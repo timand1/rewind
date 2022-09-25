@@ -1,6 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { User, Games } from '../models/data';
-// const initialState : User[] = JSON.parse(localStorage.getItem('users') || '');
 const initialState : User[] = []
 
 

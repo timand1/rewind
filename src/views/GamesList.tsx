@@ -65,8 +65,8 @@ function GamesList() {
         </div>
         <div className='headlines'>
           <h3>Game</h3>
-          <h3 onClick={sortDuration}>Time <span>&#x25BC;</span></h3>
-          <h3 onClick={sortDate}>Date <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={sortDuration}>Time <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={sortDate}>Date <span>&#x25BC;</span></h3>
           <h3>Winner</h3>
           <img src={activeInfo} className='info' onClick={handleInfo} alt="info" />
   

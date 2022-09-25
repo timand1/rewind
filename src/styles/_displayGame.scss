@@ -35,6 +35,16 @@
     }     
 }
 
+@media screen and (min-width: 786px) {
+    .user-games {
+        .game-info {
+            .result {
+                text-align: left;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 340px) {
     .user-games {
         .game-info {

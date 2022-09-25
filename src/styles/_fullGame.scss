@@ -49,7 +49,6 @@
             button {
                 margin-bottom: 4em;
                 max-width: 40vw;
-                cursor: pointer;
                 @include buttons.button();
                 &:first-child {
                     background-color: rgb(160, 80, 80);

@@ -1,31 +1,21 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { Games } from '../models/data';
 
-// const initialState : Games[] = JSON.parse(localStorage.getItem('games') || '');
 const initialState : Games[] = []
 
-const addGame = createAction<Games>('Add game');
 const setAllGames = createAction<Games[]>('Set all games');
 const getUserGames = createAction<object>('Get user games');
 const getAllGames = createAction('Get all games');
 const filterUserGames = createAction<object>('Filter games');
-const lastTen = createAction<object>('Get last 10 games');
-const noWin = createAction<object>('Get no win user games');
+const filterGames = createAction<object>('Get no win user games');
 const filteredGames = createAction<string>('Get matches filtered by game');
 const sortByDate = createAction<string>('Sort games by date');
 const sortByDuration = createAction<string>('Sort games by duration');
-const sortByDurationUser = createAction<object>('Sort user games by duration');
-const sortByDateUser = createAction<object>('Sort user games by date');
+const sortByTimeUser = createAction<object>('Sort user games by date');
 
-const actions = { addGame, setAllGames, getUserGames, getAllGames, filterUserGames, noWin, lastTen, filteredGames, sortByDate, sortByDuration, sortByDateUser, sortByDurationUser };
+const actions = { setAllGames, getUserGames, getAllGames, filterUserGames, filterGames, filteredGames, sortByDate, sortByDuration, sortByTimeUser };
 
 const reducer = createReducer(initialState, {
-    [addGame.toString()]: ( state, action) => {
-        const arrCopy: Games[] = [...state]
-        arrCopy.push(action.payload)
-        
-        return arrCopy;
-    },
     [setAllGames.toString()]: ( state, action) => {
       const gamesArr: Games[] = [...action.payload]
         gamesArr.sort(function(a,b) {
@@ -38,27 +28,27 @@ const reducer = createReducer(initialState, {
         return state;
     },
     [getUserGames.toString()]: ( state, action ) => {
-        const allGames:Games[] = [...state]
-        let newGamesArray: Games[] = [];
+      const allGames:Games[] = [...state]
+      let newGamesArray: Games[] = [];
 
-        for (const game of allGames) {
-          game.team1.forEach(player => {
-            if(Object.values(player).indexOf(action.payload.username) > -1) {
-              newGamesArray.push(game)
-            }
-          })
-          game.team2.forEach(player => {
-            if(Object.values(player).indexOf(action.payload.username) > -1) {
-              newGamesArray.push(game)
-            }
-          })
-        }    
-        
-        if(action.payload.game != 'all') {
-          newGamesArray = newGamesArray.filter(game => game.game == action.payload.game)
-        }
-        
-        return newGamesArray
+      for (const game of allGames) {
+        game.team1.forEach(player => {
+          if(Object.values(player).indexOf(action.payload.username) > -1) {
+            newGamesArray.push(game)
+          }
+        })
+        game.team2.forEach(player => {
+          if(Object.values(player).indexOf(action.payload.username) > -1) {
+            newGamesArray.push(game)
+          }
+        })
+      }    
+      
+      if(action.payload.game != 'all') {
+        newGamesArray = newGamesArray.filter(game => game.game == action.payload.game)
+      }
+      
+      return newGamesArray
     },
     [getAllGames.toString()]: ( state, action) => {
       const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
@@ -75,9 +65,7 @@ const reducer = createReducer(initialState, {
       let newGamesArray: Games[] = [];
 
       if(action.payload.setting == 'no-win') {
-        allGames = arrCopy.filter(game => game.win == '')
-        console.log(allGames);
-        
+        allGames = arrCopy.filter(game => game.win == '')        
       }
 
       for (const game of allGames) {
@@ -93,7 +81,7 @@ const reducer = createReducer(initialState, {
         })
       } 
       
-      let filteredGames: Games[] = newGamesArray.filter(game => game.game == action.payload.filter)
+      let filteredGames: Games[] = newGamesArray.filter(game => game.game == action.payload.game)
       
       if(action.payload.setting == 'last-ten') {        
         filteredGames = filteredGames.slice(0,10)
@@ -108,10 +96,10 @@ const reducer = createReducer(initialState, {
       
       return filteredGames;
     },
-    [lastTen.toString()]: ( state, action ) => {
+    [filterGames.toString()]: ( state, action ) => {
       let allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
       const arrCopy: Games[] = [...allGames]
-      const newGamesArray: Games[] = [];
+      let newGamesArray: Games[] = [];
 
       if(action.payload.game != 'all') {
         allGames = arrCopy.filter(game => game.game == action.payload.game)        
@@ -128,136 +116,86 @@ const reducer = createReducer(initialState, {
             newGamesArray.push(game)
           }
         })
-      }       
-      newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
-      const slicedArr = newGamesArray.slice(0, 10);
+      }     
+      if(action.payload.setting == 'no-win') {
+        newGamesArray = newGamesArray.filter(game => game.win == '')
+      } else if(action.payload.setting == 'last-ten') {
+        newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
+        newGamesArray = newGamesArray.slice(0, 10);
+      }    
+      return newGamesArray
+    },
+    [filteredGames.toString()]: ( state, action) => {
+      const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
+      const newGamesArray: Games[] = [...allGames];
 
-      return slicedArr
-  },
-  [noWin.toString()]: ( state, action ) => {
-    let allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-    const arrCopy: Games[] = [...allGames]
-    const newGamesArray: Games[] = [];
+      const filteredGames: Games[] = newGamesArray.filter(game => game.game == action.payload)
+      
+      return filteredGames;
+    }, 
+    [sortByDate.toString()]: ( state, action) => {
+      const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
+      let arrCopy: Games[] = [...allGames];
 
-    if(action.payload.game != 'all') {
-      allGames = arrCopy.filter(game => game.game == action.payload.game)        
+      if(action.payload != 'all') {
+        arrCopy = arrCopy.filter(game => game.game == action.payload)
+      }
+      
+      arrCopy.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
+
+      return arrCopy;
+    }, 
+    [sortByDuration.toString()]: ( state, action) => {
+      const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
+      let arrCopy: Games[] = [...allGames];
+
+      if(action.payload != 'all') {
+        arrCopy = arrCopy.filter(game => game.game == action.payload)
+      }
+      
+      arrCopy.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0))
+      
+      
+      return arrCopy;
+    },
+    [sortByTimeUser.toString()]: ( state, action) => {
+      const allGames:Games[] = [...state]  
+      let newGamesArray: Games[] = [];
+
+      for (const game of allGames) {
+        game.team1.forEach(player => {
+          if(Object.values(player).indexOf(action.payload.username) > -1) {
+            newGamesArray.push(game)
+          }
+        })
+        game.team2.forEach(player => {
+          if(Object.values(player).indexOf(action.payload.username) > -1) {
+            newGamesArray.push(game)
+          }
+        })
+      } 
+
+      if(action.payload.game != 'all') {
+        newGamesArray = newGamesArray.filter(game => game.game == action.payload.game)
+      }
+
+      if(action.payload.sortBy == 'date') {
+        newGamesArray = newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
+
+      } else if(action.payload.sortBy == 'duration') {
+        newGamesArray = newGamesArray.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0))
+
+      }
+
+
+      if(action.payload.setting == 'last-ten') {
+        newGamesArray = newGamesArray.slice(0, 10)
+      } else if(action.payload.setting == 'no-win') {
+        newGamesArray = newGamesArray.filter(game => game.win == '')
+      }
+      
+      return newGamesArray;
     }
-
-    for (const game of allGames) {
-      game.team1.forEach(player => {
-        if(Object.values(player).indexOf(action.payload.username) > -1) {
-          newGamesArray.push(game)
-        }
-      })
-      game.team2.forEach(player => {
-        if(Object.values(player).indexOf(action.payload.username) > -1) {
-          newGamesArray.push(game)
-        }
-      })
-    }     
-    
-    const noWinArr = newGamesArray.filter(game => game.win == '')
-    
-    return noWinArr
-},
-[filteredGames.toString()]: ( state, action) => {
-  const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-  const newGamesArray: Games[] = [...allGames];
-
-  const filteredGames: Games[] = newGamesArray.filter(game => game.game == action.payload)
-  
-  return filteredGames;
-}, 
-[sortByDate.toString()]: ( state, action) => {
-  const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-  let arrCopy: Games[] = [...allGames];
-
-  if(action.payload != 'all') {
-    arrCopy = arrCopy.filter(game => game.game == action.payload)
-  }
-  
-  arrCopy.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
-
-  return arrCopy;
-}, 
-[sortByDuration.toString()]: ( state, action) => {
-  const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-  let arrCopy: Games[] = [...allGames];
-
-  if(action.payload != 'all') {
-    arrCopy = arrCopy.filter(game => game.game == action.payload)
-  }
-  
-  arrCopy.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0))
-  
-  
-  return arrCopy;
-},
-[sortByDateUser.toString()]: ( state, action) => {
-  const allGames:Games[] = [...state]  
-  let newGamesArray: Games[] = [];
-
-  for (const game of allGames) {
-    game.team1.forEach(player => {
-      if(Object.values(player).indexOf(action.payload.username) > -1) {
-        newGamesArray.push(game)
-      }
-    })
-    game.team2.forEach(player => {
-      if(Object.values(player).indexOf(action.payload.username) > -1) {
-        newGamesArray.push(game)
-      }
-    })
-  } 
-
-  if(action.payload.game != 'all') {
-    newGamesArray = newGamesArray.filter(game => game.game == action.payload.game)
-  }
-
-  let filteredGames: Games[] = newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
-
-  if(action.payload.setting == 'last-ten') {
-    filteredGames = filteredGames.slice(0, 10)
-  } else if(action.payload.setting == 'no-win') {
-    filteredGames = filteredGames.filter(game => game.win == '')
-  }
-  
-  return filteredGames;
-},
-[sortByDurationUser.toString()]: ( state, action) => {
-  const allGames:Games[] = [...state]  
-  let newGamesArray: Games[] = [];
-  
-  for (const game of allGames) {
-    game.team1.forEach(player => {
-      if(Object.values(player).indexOf(action.payload.username) > -1) {
-        newGamesArray.push(game)
-      }
-    })
-    game.team2.forEach(player => {
-      if(Object.values(player).indexOf(action.payload.username) > -1) {
-        newGamesArray.push(game)
-      }
-    })
-  } 
-
-  
-  if(action.payload.game != 'all') {    
-    newGamesArray = newGamesArray.filter(game => game.game == action.payload.game)
-  }
-  
-  
-  let filteredGames: Games[] = newGamesArray.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0))
-
-  if(action.payload.setting == 'last-ten') {
-    filteredGames = filteredGames.slice(0, 10)
-  } else if(action.payload.setting == 'no-win') {
-    filteredGames = filteredGames.filter(game => game.win == '')
-  }
-  
-  return filteredGames;
-}
-
 });
 
 export { reducer, actions };

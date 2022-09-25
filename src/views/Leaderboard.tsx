@@ -85,10 +85,10 @@ function Leaderboard() {
             <option value="Tower Defence">Tower Defence</option>
         </select>
         <div className='headlines'>
-          <h3 onClick={handleName}>Player <span>&#x25BC;</span></h3>
-          <h3 onClick={handleWin}>Wins <span>&#x25BC;</span></h3>
-          <h3 onClick={handleLoss}>Loss <span>&#x25BC;</span></h3>
-          <h3 onClick={handleWinRate}>Win % <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={handleName}>Player <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={handleWin}>Wins <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={handleLoss}>Loss <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={handleWinRate}>Win % <span>&#x25BC;</span></h3>
         </div>
         <div className='users'>
           {userElement}

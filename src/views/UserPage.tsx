@@ -9,10 +9,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import {actions as gameActions} from '../features/gameReducer';
+import {actions as userActions} from '../features/userReducer';
 
 type MyParams = {
   username: string;
 };
+
+interface FilterProps {
+  username: string;
+  game: string;
+  setting: string;
+  sortBy?: string;
+}
 
 function UserPage() {
     const { username } = useParams<keyof MyParams>() as MyParams;
@@ -53,7 +61,8 @@ function UserPage() {
       
       if (data.success) {
         localStorage.setItem('games', JSON.stringify(data.matches));
-        dispatch(gameActions.setAllGames(data.matches))                
+        dispatch(gameActions.setAllGames(data.matches))   
+        dispatch(userActions.allUsers('all'))             
       }
     }
 
@@ -80,8 +89,8 @@ function UserPage() {
       const { value } = e.target;
       setChosenGame(value)
       
-      const filterSearch: object = {
-        filter : value,
+      const filterSearch: FilterProps = {
+        game : value,
         username : username,
         setting : filterSetting
       }
@@ -93,18 +102,16 @@ function UserPage() {
 
       setFilterSetting(value)
 
-      const searchParams: object = {
+      const searchParams: FilterProps = {
         username : username,
-        game : chosenGame
+        game : chosenGame,
+        setting : value
       }
       if(value == 'all') {        
         dispatch(gameActions.getUserGames(searchParams))
-      } else if(value == 'last-ten') {
-        dispatch(gameActions.lastTen(searchParams))
-        gamesList = gamesList.slice(0, 1)
-      } else if(value == 'no-win') {
-        dispatch(gameActions.noWin(searchParams))
-      }
+      } else {
+        dispatch(gameActions.filterGames(searchParams))
+      } 
     };
 
     const handleLogOut: (e:any) => void = (e) => {
@@ -114,21 +121,23 @@ function UserPage() {
     };
 
     const sortDate: () => void = () => { 
-      const searchObj: object = {
+      const searchObj: FilterProps = {
         username : username,
         game: chosenGame,
-        setting : filterSetting
+        setting : filterSetting,
+        sortBy: 'date'
       }
-      dispatch(gameActions.sortByDateUser(searchObj));
+      dispatch(gameActions.sortByTimeUser(searchObj));
     };
 
     const sortDuration: () => void = () => { 
-      const searchObj: object = {
+      const searchObj: FilterProps = {
         username : username,
         game: chosenGame,
-        setting : filterSetting
+        setting : filterSetting,
+        sortBy: 'duration'
       }
-      dispatch(gameActions.sortByDurationUser(searchObj));
+      dispatch(gameActions.sortByTimeUser(searchObj));
     };
 
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} username={username} /> );
@@ -162,8 +171,8 @@ function UserPage() {
         </div>
         <div className='headlines'>
           <h3>Game</h3>
-          <h3 onClick={sortDuration}>Time <span>&#x25BC;</span></h3>
-          <h3 onClick={sortDate}>Date <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={sortDuration}>Time <span>&#x25BC;</span></h3>
+          <h3 className='sort' onClick={sortDate}>Date <span>&#x25BC;</span></h3>
           <h3>W/L</h3>
           <img src={activeInfo} className='info' onClick={handleInfo} alt="info" />
   
