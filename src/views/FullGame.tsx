@@ -6,9 +6,9 @@ import { Games } from '../models/data'
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {actions as gameActions} from '../features/gameReducer'
+import {actions as gameActions} from '../features/gameReducer';
 
 type MyParams = {
     id: string;
@@ -17,7 +17,7 @@ type MyParams = {
 interface teamArray {
     name: string;
     info: string;
-}
+};
 
 interface UpdatedGame {
     game: string,
@@ -28,21 +28,26 @@ interface UpdatedGame {
     team1 : Array<teamArray>,
     team2 : Array<teamArray>,
     gameId : string
-}
+};
 
 
 export default function FullGame() { 
     const { id } = useParams<keyof MyParams>() as MyParams;
 
     const dispatch = useDispatch();
-    const gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
-    const chosenGame = gamesList.filter(game => game.gameId == id)[0]
+
+    // useMemo(() => {
+    //     dispatch(gameActions.getAllGames())
+    // }, [id])
+
+    const gamesList:Array<Games> = useSelector((state: RootState) => state.games);
+    const chosenGame = gamesList.filter(game => game.gameId == id)[0];
 
     const [newGame, setNewGame] = useState<string>(chosenGame.game);
     const [newDate, setNewDate] = useState<string>(chosenGame.date);
     const [newDuration, setNewDuration] = useState<string>(chosenGame.duration);
-    const [newWinner, setNewWinner] = useState<string>(chosenGame.win || '');
-    const [newLoser, setNewLoser] = useState<string>(chosenGame.lost || '');
+    const [newWinner, setNewWinner] = useState<string>(chosenGame.win);
+    const [newLoser, setNewLoser] = useState<string>(chosenGame.lost);
     const [changeGame, setChangeGame] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -54,104 +59,104 @@ export default function FullGame() {
     const teamOneEl = chosenGame.team1.map((player, index) => <DisplayTeams key={index} player={player} />);
     const teamTwoEl = chosenGame.team2.map((player, index) => <DisplayTeams key={index} player={player} />);
     
-    const teamOneArr: Array<any> = [] 
+    const teamOneArr: Array<any> = [] ;
     for(let i = 0; i < chosenGame.team1.length ; i ++) {
         const playerValue = {
             [`player-${i + 1}`] : Object.values(chosenGame.team1[i])[0],
             [`player-${i + 1}-info`]: Object.values(chosenGame.team1[i])[1]
-        }
+        };
 
         
         teamOneArr.push(playerValue)
-    }
+    };
     for(let j = 0; j < 5 - chosenGame.team1.length; j++) {
         const addedIndex = chosenGame.team1.length + 1
         const playerValue = {
             [`player-${j + addedIndex}`] : '',
             [`player-${j + addedIndex}-info`] : ''
-        }
-        teamOneArr.push(playerValue)
-    }
+        };
+        teamOneArr.push(playerValue);
+    };
 
-    const teamTwoArr: Array<any> = []
+    const teamTwoArr: Array<any> = [];
     for(let i = 0; i < chosenGame.team2.length ; i ++) {
         const playerValue = {
             [`player-${i + 6}`] : Object.values(chosenGame.team2[i])[0],
             [`player-${i + 6}-info`]: Object.values(chosenGame.team2[i])[1]
-        }
+        };
 
         
-        teamTwoArr.push(playerValue)
-    }
+        teamTwoArr.push(playerValue);
+    };
     for(let j = 0; j < 5 - chosenGame.team2.length; j++) {
-        const addedIndex = chosenGame.team2.length + 6
+        const addedIndex = chosenGame.team2.length + 6;
         const playerValue = {
             [`player-${j + addedIndex}`] : '',
             [`player-${j + addedIndex}-info`] : ''
-        }
-        teamTwoArr.push(playerValue)
-    }
+        };
+        teamTwoArr.push(playerValue);
+    };
 
     const handleChange: () => void = () => {
-        setChangeGame(true)
-    }
+        setChangeGame(true);
+    };
 
     const handleCancel: () => void = () => {
-        setChangeGame(false)
-    }
+        setChangeGame(false);
+    };
 
     const handleTeamOne: (e:any, index:number) => void = (e, index) => {
-        const {name, value} = e.target
+        const {name, value} = e.target;
         if(name == 'player') {
-            teamOneArr[index][`player-${index+1}`] = value
+            teamOneArr[index][`player-${index+1}`] = value;
         } else {
-            teamOneArr[index][`player-${index+1}-info`] = value
-        }        
-    }
+            teamOneArr[index][`player-${index+1}-info`] = value;
+        };
+    };
 
     const handleTeamTwo: (e:any, index:number) => void = (e, index) => {
-        const {name, value} = e.target
+        const {name, value} = e.target;
         
         if(name == 'player') {
-            teamTwoArr[index][`player-${index+6}`] = value
+            teamTwoArr[index][`player-${index+6}`] = value;
         } else {
-            teamTwoArr[index][`player-${index+6}-info`] = value
-        }        
-    }
+            teamTwoArr[index][`player-${index+6}-info`] = value;
+        };
+    };
 
     const handleGame: (e:any) => void = (e) => {
-        setNewGame(e.target.value)        
+        setNewGame(e.target.value);  
         
-    }
+    };
     const handleDate: (e:any) => void = (e) => {
-        setNewDate(e.target.value)
-    }
+        setNewDate(e.target.value);
+    };
     const handleDuration: (e:any) => void = (e) => {
-        setNewDuration(e.target.value)
-    }
+        setNewDuration(e.target.value);
+    };
     const handleWinner: (e:any) => void = (e) => {
-        setNewWinner(e.target.value)
-    }
+        setNewWinner(e.target.value);
+    };
     const handleLoser: (e:any) => void = (e) => {
-        setNewLoser(e.target.value)
-    }
+        setNewLoser(e.target.value);
+    };
 
 
     async function updateGame() {
         for(let i = 0; i < teamOneArr.length; i++) {           
             if(teamOneArr[i][`player-${i+1}`] == '') {
-                teamOneArr.splice(i)
-            }
-        }
+                teamOneArr.splice(i);
+            };
+        };
         
         for(let j = 0; j < teamTwoArr.length; j++) {                       
             if(teamTwoArr[j][`player-${j+6}`] == '') {
-                teamTwoArr.splice(j)
-            }
-        }
+                teamTwoArr.splice(j);
+            };
+        };
 
-        setLoading(true)
-          const updatedGame: UpdatedGame = {
+        setLoading(true);
+        const updatedGame: UpdatedGame = {
             game: newGame,
             date: newDate,
             duration : newDuration,
@@ -160,7 +165,7 @@ export default function FullGame() {
             team1 : teamOneArr,
             team2 : teamTwoArr,
             gameId : chosenGame.gameId
-          };
+        };
           
           const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${chosenGame.gameId}`, {
             method: 'POST',
@@ -170,10 +175,9 @@ export default function FullGame() {
           const data = await response.json();
           if (data.success) {
             setChangeGame(false)
-            await getGames(); 
-            
-          }        
-    }
+            await getGames();            
+          };
+    };
 
     async function getGames() {
         const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
@@ -183,8 +187,8 @@ export default function FullGame() {
         
         if (data.success) {
             dispatch(gameActions.setAllGames(data.matches))
-            setLoading(false)
-        }
+            setLoading(false);
+        };
     };
     
     return (         
@@ -192,7 +196,7 @@ export default function FullGame() {
             <Nav />
             {!changeGame ?
             <section className='game-container'>
-                <div className="game-info">
+                <div className="game-headline">
                     <h2>{chosenGame.game}</h2>
                     <img className='change-game' src={change} alt="change" onClick={handleChange}/>
                 </div>

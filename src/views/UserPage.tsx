@@ -24,10 +24,11 @@ interface FilterProps {
 
 function UserPage() {
     const { username } = useParams<keyof MyParams>() as MyParams;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [chosenGame, setChosenGame] = useState<string>('all');
     const [filterSetting, setFilterSetting] = useState<string>('all'); 
     const [userTen, setUserTen] = useState<User>({
@@ -37,28 +38,30 @@ function UserPage() {
       amountOfGames: 0,
       winRate : 0
     }); 
-  
+
+
     useEffect(() => {
       async function loadUserGames() {        
-        await getGames()
+        await getGames();
         
         const accountName = localStorage.getItem('user')
         const accountId = localStorage.getItem('accountKey')
         const userObj: object = {
           username: username,
           game: 'all'
-        }
+        };
         if(accountName && accountId && accountName == username) {
-          setLoggedIn(true)          
-        }
+          setLoggedIn(true);
+        };
         
-        setChosenGame('all')
-        setFilterSetting('all')
-        dispatch(gameActions.getUserGames(userObj))
-      }
+        setChosenGame('all');
+        setFilterSetting('all');
+        dispatch(gameActions.getUserGames(userObj));
+        setLoading(false);
+      };
       
       loadUserGames();
-    }, [username])
+    }, [username]);
 
     async function getGames() {
       const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
@@ -68,20 +71,20 @@ function UserPage() {
       
       if (data.success) {
         localStorage.setItem('games', JSON.stringify(data.matches));
-        dispatch(gameActions.setAllGames(data.matches))   
-        dispatch(userActions.allUsers('all'))             
-      }
-    }
+        dispatch(gameActions.setAllGames(data.matches));
+        dispatch(userActions.allUsers('all'));
+      };
+    };
 
-    const [info, setInfo] = useState<boolean>(false)   
+    const [info, setInfo] = useState<boolean>(false);
 
     const handleInfo: () => void = () => { 
-      setInfo(!info)
-    } 
+      setInfo(!info);
+    };
 
     const activeInfo:any = info ? infoActiveIcon : infoIcon;
     
-    let gamesList:Array<Games> = useSelector((state: RootState) => state.games)   
+    let gamesList:Array<Games> = useSelector((state: RootState) => state.games);
     
     useEffect(() => {
       if(filterSetting == 'last-ten') {
@@ -95,14 +98,14 @@ function UserPage() {
           game.team1.forEach(player => {
             if(Object.values(player).indexOf(username) > -1 && game.win == 'team1') {
               win = win + 1;
-            }
-          })
+            };
+          });
           game.team2.forEach(player => {
               if(Object.values(player).indexOf(username) > -1 && game.win == 'team2') {
                   win = win + 1;
-              }
-            })
-      }   
+              };
+            });
+        };
         const winRate: number = (win / amountOfGames ) * 100;
 
         const userObj: User = {
@@ -111,12 +114,12 @@ function UserPage() {
             lost: amountOfGames - win,
             amountOfGames: amountOfGames,
             winRate : parseInt(winRate.toFixed(1))
-        }
-        setUserTen(userObj)  
+        };
+        setUserTen(userObj);
       }
-    }, [chosenGame, filterSetting])
+    }, [chosenGame, filterSetting]);
 
-    const users:Array<User> = useSelector((state: RootState) => state.users)
+    const users:Array<User> = useSelector((state: RootState) => state.users);
     const chosenUser = users.filter(user => user.name == username)[0];
     
     const handleGame: (e:any) => void = (e) => { 
@@ -140,17 +143,17 @@ function UserPage() {
         username : username,
         game : chosenGame,
         setting : value
-      }
+      };
       if(value == 'all') {        
-        dispatch(gameActions.getUserGames(searchParams))
+        dispatch(gameActions.getUserGames(searchParams));
       } else {
-        dispatch(gameActions.filterGames(searchParams))
-      } 
+        dispatch(gameActions.filterGames(searchParams));
+      };
     };
 
-    const handleLogOut: (e:any) => void = (e) => {
-      localStorage.removeItem('accountKey')
-      localStorage.removeItem('user')
+    const handleLogOut: () => void = () => {
+      localStorage.removeItem('accountKey');
+      localStorage.removeItem('user');
       navigate('/');
     };
 
@@ -170,7 +173,7 @@ function UserPage() {
         game: chosenGame,
         setting : filterSetting,
         sortBy: 'duration'
-      }
+      };
       dispatch(gameActions.sortByTimeUser(searchObj));
     };
 
@@ -179,7 +182,10 @@ function UserPage() {
     return (
       <div className="userpage">
         <Nav />
-        
+        {loading ? 
+          <div className='loading'></div>
+          : ''
+        }
         <div className="header">
           <h2>{username}'s profile</h2>
           {loggedIn ? <p onClick={handleLogOut}>Log Out</p> : ''}

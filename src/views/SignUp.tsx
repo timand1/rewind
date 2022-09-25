@@ -10,12 +10,12 @@ function SignUp() {
     const [loginPassword, setLoginPassword] = useState<string>('');
 
     const handleUsername: (e:any) => void = (e) => { 
-      setLoginUsername(e.target.value)
-    }
+      setLoginUsername(e.target.value);
+    };
     
     const handlePassword: (e:any) => void = (e) => { 
-      setLoginPassword(e.target.value)
-    } 
+      setLoginPassword(e.target.value);
+    };
 
     async function signUp() {      
       if(loginUsername.length > 2 && loginPassword.length > 2) {
@@ -35,9 +35,9 @@ function SignUp() {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.accountId);
           navigate(`/user/${loginUsername}`);
-        }
-      }
-    }
+        };
+      };
+    };
 
     return (
       <div className="landingpage">
@@ -56,4 +56,4 @@ function SignUp() {
     )
   }
   
-export default SignUp
+export default SignUp;

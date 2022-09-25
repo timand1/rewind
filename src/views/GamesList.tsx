@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
-import {actions as gameActions} from '../features/gameReducer'
+import {actions as gameActions} from '../features/gameReducer';
 
 type MyParams = {
   username: string;
@@ -16,29 +16,30 @@ type MyParams = {
 
 function GamesList() {
     const { username } = useParams<keyof MyParams>() as MyParams;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const [gameFilter, setGameFilter] = useState<string>('all')
+    const [gameFilter, setGameFilter] = useState<string>('all');
     const [info, setInfo] = useState<boolean>(false);   
 
     const handleInfo: () => void = () => { 
-      setInfo(!info)
-    } 
+      setInfo(!info);
+    } ;
 
     useEffect(() => {
-      dispatch(gameActions.getAllGames())
-    }, [])
+      dispatch(gameActions.getAllGames());
+    }, []);
+
     const activeInfo:any = info ? infoActiveIcon : infoIcon;
 
     const gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
 
     const handleGame: (e:any) => void = (e) => { 
-      setGameFilter(e.target.value)
+      setGameFilter(e.target.value);
       if(e.target.value == 'all') {
         dispatch(gameActions.getAllGames());
       } else {
         dispatch(gameActions.filteredGames(e.target.value));
-      }
+      };
     };
 
     const sortDate: () => void = () => { 

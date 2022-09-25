@@ -15,12 +15,22 @@
         @include variables.flexContainer();
         gap: 2em;
 
+        .game-headline {
+            @include variables.flexContainer(row);
+            justify-content: space-between;
+        }
+
         .game-info {
             @include variables.flexContainer(row);
             justify-content: space-between;
+            padding: 0 1em;
             div {
                 @include variables.flexContainer(column);
                 gap: 0.4em;
+
+                select, input {
+                    min-width: 35vw;
+                }
             }
             .change-game {
                 cursor: pointer;
@@ -66,7 +76,13 @@
             .game-info {
                 div {
                     flex-direction: row;
-                    gap: 2em;
+                    gap: 1em;
+                    p {
+                        min-width: clamp(2vw, 5em, 10vw)
+                    }
+                    input, select {
+                        min-width: clamp(7vw, 13em, 20vw)
+                    }
                 }
             }
             .team-list {

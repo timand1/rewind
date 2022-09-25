@@ -8,7 +8,7 @@ import {actions as gameActions} from '../features/gameReducer';
 function AddGame() {
     const dispatch = useDispatch();
 
-    const [showTeamTwo, setShowTeamTwo] = useState<boolean>(false)
+    const [showTeamTwo, setShowTeamTwo] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     const [teamOne, setTeamOne] = useState<Array<object>>([]);
@@ -34,13 +34,13 @@ function AddGame() {
             date: date,
             duration: duration,
             gameId: (Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000)).toString()
-        }
+        };
 
-        addGame(newGame)
-    }
+        addGame(newGame);
+    };
 
     async function addGame(newGame : object) {        
-        setLoading(true)
+        setLoading(true);
         const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
         method: 'POST',
         body: JSON.stringify(newGame),
@@ -48,10 +48,10 @@ function AddGame() {
         });
         const data = await response.json();
         if (data.success) {
-            await getGames()
-            setAddedGame(true)
-        }
-    }
+            await getGames();
+            setAddedGame(true);
+        };
+    };
 
     async function getGames() {
         const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
@@ -61,52 +61,52 @@ function AddGame() {
         
         if (data.success) {
           dispatch(gameActions.setAllGames(data.matches))
-          setLoading(false)
-        }
-      }
+          setLoading(false);
+        };
+      };
     
     const handleGame: (e:any) => void = (e) => {
         setGame(e.target.value);
-    }
+    };
 
     const handleTeamOne: (player:object, index: number) => void = (player, index) => {      
         const teamOneCopy = [...teamOne];
-        teamOneCopy[index] = player
+        teamOneCopy[index] = player;
 
-        setTeamOne(teamOneCopy)
-    }
+        setTeamOne(teamOneCopy);
+    };
 
     const handleTeamTwo: (player:object, index: number) => void = (player, index) => {    
         const teamTwoCopy = [...teamTwo];
-        teamTwoCopy[index] = player
+        teamTwoCopy[index] = player;
 
-        setTeamTwo(teamTwoCopy)
-    }
+        setTeamTwo(teamTwoCopy);
+    };
 
     const handleResult: (e:any) => void = (e) => {
         if(e.target.value === 'win') {
-            setWinner(e.target.name)
+            setWinner(e.target.name);
         } else {
-            setLoser(e.target.name)
-        }
-    }
+            setLoser(e.target.name);
+        };
+    };
 
     const handleDate: (e:any) => void = (e) => {
         setDate(e.target.value);
-    }
+    };
 
     const handleDuration: (e:any) => void = (e) => {
         setDuration(e.target.value);
-    }
+    };
 
     const handleShowTeams: (e:any) => void = (e) => {
-        setShowTeamTwo(!showTeamTwo)
-    }
+        setShowTeamTwo(!showTeamTwo);
+    };
 
     const handleAdded: (e:any) => void = (e) => {
-        setAddedGame(false)
-        setShowTeamTwo(false)
-    }
+        setAddedGame(false);
+        setShowTeamTwo(false);
+    };
 
     return (
       <div className="add-game">

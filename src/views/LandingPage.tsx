@@ -3,8 +3,8 @@ import logo from '../assets/logo.svg';
 import {  useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {actions as gameActions} from '../features/gameReducer'
-import {actions as userActions} from '../features/userReducer'
+import {actions as gameActions} from '../features/gameReducer';
+import {actions as userActions} from '../features/userReducer';
 
 
 function LandingPage() {
@@ -13,46 +13,46 @@ function LandingPage() {
 
     useEffect(() => {
       async function handleLoggedIn() {
-        const username = localStorage.getItem('user')
-        const accountId = localStorage.getItem('accountKey')
+        const username = localStorage.getItem('user');
+        const accountId = localStorage.getItem('accountKey');
         if(username && accountId) {
-            await getGames()
-            navigate(`/user/${username}`)
-        }
-      }
+            await getGames();
+            navigate(`/user/${username}`);
+        };
+      };
 
-      handleLoggedIn()
-  }, [])
+      handleLoggedIn();
+  }, []);
 
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleUsername: (e:any) => void = (e) => { 
-      setLoginUsername(e.target.value)
-    }
+      setLoginUsername(e.target.value);
+    };
     
     const handlePassword: (e:any) => void = (e) => { 
-      setLoginPassword(e.target.value)
+      setLoginPassword(e.target.value);
 
       if(e.key == 'Enter') {
-        login()
-      }
-    } 
+        login();
+      };
+    };
 
     const handleSignUp: () => void = () => { 
-        navigate('/signup');
-    } 
+      navigate('/signup');
+    };
 
     async function handleNoLogin() {
-      setLoading(true)
-      await getGames()
-      dispatch(userActions.allUsers('all'))
+      setLoading(true);
+      await getGames();
+      dispatch(userActions.allUsers('all'));
       navigate('/leaderboard');
     }
 
     async function login() {
-      setLoading(true)
+      setLoading(true);
       if(loginUsername.length > 2 && loginPassword.length > 2) {
         const account: object = {
           username: loginUsername,
@@ -70,9 +70,9 @@ function LandingPage() {
           localStorage.setItem('accountKey', data.key.accountId);
           await getGames(); 
           navigate(`/user/${loginUsername}`);
-        }
-      }
-    }
+        };
+      };
+    };
 
     async function getGames() {
       const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
@@ -82,10 +82,10 @@ function LandingPage() {
       
       if (data.success) {
         localStorage.setItem('games', JSON.stringify(data.matches));
-        dispatch(gameActions.setAllGames(data.matches))
-        setLoading(false)
-      }
-    }
+        dispatch(gameActions.setAllGames(data.matches));
+        setLoading(false);
+      };
+    };
 
     return (
       <div className="landingpage">
