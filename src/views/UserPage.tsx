@@ -30,7 +30,13 @@ function UserPage() {
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
     const [chosenGame, setChosenGame] = useState<string>('all');
     const [filterSetting, setFilterSetting] = useState<string>('all'); 
-    const [userTen, setUserTen] = useState<User>(); 
+    const [userTen, setUserTen] = useState<User>({
+      name: username,
+      win: 0,
+      lost: 0,
+      amountOfGames: 0,
+      winRate : 0
+    }); 
   
     useEffect(() => {
       async function loadUserGames() {        
@@ -80,7 +86,7 @@ function UserPage() {
     useEffect(() => {
       if(filterSetting == 'last-ten') {
         let arrCopy:Array<Games> = [...gamesList];
-                
+
         let win: number = 0;
         // Incase a player does not have 10 games with a certain game.
         const amountOfGames: number = arrCopy.length;
@@ -183,10 +189,11 @@ function UserPage() {
           {chosenUser ? 
           <p>{chosenUser.amountOfGames} games - {chosenUser.win} wins - {chosenUser.winRate}% winrate</p>
           : ''}
-          {filterSetting == 'last-ten' ? 
-            <p>Last 10 : {userTen?.win} wins - {userTen?.lost} lost - {userTen?.winRate}% winrate</p>
-            : '' 
-          }
+          {userTen.amountOfGames > 0 && filterSetting == 'last-ten' ? 
+              <p>Last {userTen?.amountOfGames} : {userTen?.win} wins - {userTen?.lost} lost - {userTen?.winRate}% winrate</p>
+              : '' 
+            } 
+
         </div>
         <div className='game-options'>
           <select value={chosenGame} name="game-type" id="game-type" onChange={(e) => handleGame(e)} >
