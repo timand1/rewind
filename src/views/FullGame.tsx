@@ -161,7 +161,6 @@ export default function FullGame() {
             team2 : teamTwoArr,
             gameId : chosenGame.gameId
           };
-          console.log(updatedGame);
           
           const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${chosenGame.gameId}`, {
             method: 'POST',

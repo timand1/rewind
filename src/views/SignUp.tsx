@@ -31,7 +31,6 @@ function SignUp() {
           headers: { 'Content-Type': 'application/json' }
         });
         const data = await response.json();
-        console.log(data);
         if (data.success) {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.accountId);

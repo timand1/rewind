@@ -83,12 +83,14 @@ const reducer = createReducer(initialState, {
       
       let filteredGames: Games[] = newGamesArray.filter(game => game.game == action.payload.game)
       
-      if(action.payload.setting == 'last-ten') {        
+      if(action.payload.setting == 'last-ten') {    
+        filteredGames.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))    
         filteredGames = filteredGames.slice(0,10)
       }
 
-      if(action.payload.filter == 'all') { 
+      if(action.payload.game == 'all') {         
         if(action.payload.setting == 'last-ten') {
+          newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0))
           newGamesArray = newGamesArray.slice(0,10)
         }       
         return newGamesArray

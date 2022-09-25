@@ -28,9 +28,10 @@ function UserPage() {
     const navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
-    const [chosenGame, setChosenGame] = useState<string>('all')
-    const [filterSetting, setFilterSetting] = useState<string>('all')    
-
+    const [chosenGame, setChosenGame] = useState<string>('all');
+    const [filterSetting, setFilterSetting] = useState<string>('all'); 
+    const [userTen, setUserTen] = useState<User>(); 
+  
     useEffect(() => {
       async function loadUserGames() {        
         await getGames()
@@ -51,7 +52,7 @@ function UserPage() {
       }
       
       loadUserGames();
-    }, [])
+    }, [username])
 
     async function getGames() {
       const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
@@ -74,33 +75,60 @@ function UserPage() {
 
     const activeInfo:any = info ? infoActiveIcon : infoIcon;
     
-    let gamesList:Array<Games> = useSelector((state: RootState) => state.games)      
+    let gamesList:Array<Games> = useSelector((state: RootState) => state.games)   
+    
+    useEffect(() => {
+      if(filterSetting == 'last-ten') {
+        let arrCopy:Array<Games> = [...gamesList];
+                
+        let win: number = 0;
+        // Incase a player does not have 10 games with a certain game.
+        const amountOfGames: number = arrCopy.length;
+        
+        for (const game of arrCopy) {
+          game.team1.forEach(player => {
+            if(Object.values(player).indexOf(username) > -1 && game.win == 'team1') {
+              win = win + 1;
+            }
+          })
+          game.team2.forEach(player => {
+              if(Object.values(player).indexOf(username) > -1 && game.win == 'team2') {
+                  win = win + 1;
+              }
+            })
+      }   
+        const winRate: number = (win / amountOfGames ) * 100;
+
+        const userObj: User = {
+            name: username,
+            win: win,
+            lost: amountOfGames - win,
+            amountOfGames: amountOfGames,
+            winRate : parseInt(winRate.toFixed(1))
+        }
+        setUserTen(userObj)  
+      }
+    }, [chosenGame, filterSetting])
 
     const users:Array<User> = useSelector((state: RootState) => state.users)
     const chosenUser = users.filter(user => user.name == username)[0];
     
-    let winPercentage : string = '';
-    if(chosenUser) {
-
-       winPercentage = ((chosenUser.win / (chosenUser.amountOfGames)) * 100).toFixed(1);    
-    }
-
     const handleGame: (e:any) => void = (e) => { 
       const { value } = e.target;
-      setChosenGame(value)
+      setChosenGame(value);
       
       const filterSearch: FilterProps = {
         game : value,
         username : username,
         setting : filterSetting
-      }
-      dispatch(gameActions.filterUserGames(filterSearch))
+      };
+      dispatch(gameActions.filterUserGames(filterSearch));
     } 
 
     const handleGameSetting: (e:any) => void = (e) => {
       const { value } = e.target;
 
-      setFilterSetting(value)
+      setFilterSetting(value);
 
       const searchParams: FilterProps = {
         username : username,
@@ -153,17 +181,21 @@ function UserPage() {
         <div className='stats'>
           <p>Stats -</p>
           {chosenUser ? 
-          <p>{chosenUser.amountOfGames} games - {chosenUser.win} wins - {winPercentage}% winrate</p>
+          <p>{chosenUser.amountOfGames} games - {chosenUser.win} wins - {chosenUser.winRate}% winrate</p>
           : ''}
+          {filterSetting == 'last-ten' ? 
+            <p>Last 10 : {userTen?.win} wins - {userTen?.lost} lost - {userTen?.winRate}% winrate</p>
+            : '' 
+          }
         </div>
         <div className='game-options'>
-          <select defaultValue={filterSetting} name="game-type" id="game-type" onChange={(e) => handleGame(e)} >
+          <select value={chosenGame} name="game-type" id="game-type" onChange={(e) => handleGame(e)} >
             <option value="all">All games</option>
             <option value="Dota 2">Dota 2</option>
             <option value="World of Warcraft">World of Warcraft</option>
             <option value="Tower Defence">Tower Defence</option>
           </select>
-          <select defaultValue={filterSetting} name="games" id="games" onChange={(e) => handleGameSetting(e)}>
+          <select value={filterSetting} name="games" id="games" onChange={(e) => handleGameSetting(e)}>
             <option value="all">All matches</option>
             <option value="last-ten">Last 10 games</option>
             <option value="no-win">Games without a winner</option>
