@@ -5,8 +5,8 @@ import DisplayTeams from '../components/DisplayTeams'
 import { Games } from '../models/data'
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { useParams } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {actions as gameActions} from '../features/gameReducer';
 
@@ -14,20 +14,20 @@ type MyParams = {
     id: string;
   };
 
-interface teamArray {
+interface TeamArray {
     name: string;
     info: string;
 };
 
 interface UpdatedGame {
-    game: string,
-    date: string,
-    duration : string,
-    win : string,
-    lost : string,
-    team1 : Array<teamArray>,
-    team2 : Array<teamArray>,
-    gameId : string
+    game: string;
+    date: string;
+    duration : string;
+    win : string;
+    lost : string;
+    team1 : TeamArray[];
+    team2 : TeamArray[];
+    gameId : string;
 };
 
 
@@ -35,67 +35,74 @@ export default function FullGame() {
     const { id } = useParams<keyof MyParams>() as MyParams;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    useEffect(() => {        
+        dispatch(gameActions.getAllGames());
+        if(!chosenGame) {
+            navigate('/');
+        }
+    }, []);
 
-    // useMemo(() => {
-    //     dispatch(gameActions.getAllGames())
-    // }, [id])
-
-    const gamesList:Array<Games> = useSelector((state: RootState) => state.games);
+    const gamesList:Games[] = useSelector((state: RootState) => state.games);
     const chosenGame = gamesList.filter(game => game.gameId == id)[0];
-
-    const [newGame, setNewGame] = useState<string>(chosenGame.game);
-    const [newDate, setNewDate] = useState<string>(chosenGame.date);
-    const [newDuration, setNewDuration] = useState<string>(chosenGame.duration);
-    const [newWinner, setNewWinner] = useState<string>(chosenGame.win);
-    const [newLoser, setNewLoser] = useState<string>(chosenGame.lost);
+    
+    const [newGame, setNewGame] = useState<string>('');
+    const [newDate, setNewDate] = useState<string>('');
+    const [newDuration, setNewDuration] = useState<string>('');
+    const [newWinner, setNewWinner] = useState<string>('');
+    const [newLoser, setNewLoser] = useState<string>('');
     const [changeGame, setChangeGame] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-
-    const slicedDate = chosenGame.date.slice(2);
-    const slicedDuration = chosenGame.duration.slice(1)
     
-
-    const checkTeamTwo = chosenGame.team2.length > 0 ? true : false;
-    const teamOneEl = chosenGame.team1.map((player, index) => <DisplayTeams key={index} player={player} />);
-    const teamTwoEl = chosenGame.team2.map((player, index) => <DisplayTeams key={index} player={player} />);
-    
-    const teamOneArr: Array<any> = [] ;
-    for(let i = 0; i < chosenGame.team1.length ; i ++) {
-        const playerValue = {
-            [`player-${i + 1}`] : Object.values(chosenGame.team1[i])[0],
-            [`player-${i + 1}-info`]: Object.values(chosenGame.team1[i])[1]
-        };
-
-        
-        teamOneArr.push(playerValue)
-    };
-    for(let j = 0; j < 5 - chosenGame.team1.length; j++) {
-        const addedIndex = chosenGame.team1.length + 1
-        const playerValue = {
-            [`player-${j + addedIndex}`] : '',
-            [`player-${j + addedIndex}-info`] : ''
-        };
-        teamOneArr.push(playerValue);
-    };
-
+    let teamOneEl: any;
+    let teamTwoEl: any;
+    let checkTeamTwo: boolean = false;
+    const teamOneArr: Array<any> = [];
     const teamTwoArr: Array<any> = [];
-    for(let i = 0; i < chosenGame.team2.length ; i ++) {
-        const playerValue = {
-            [`player-${i + 6}`] : Object.values(chosenGame.team2[i])[0],
-            [`player-${i + 6}-info`]: Object.values(chosenGame.team2[i])[1]
-        };
 
-        
-        teamTwoArr.push(playerValue);
-    };
-    for(let j = 0; j < 5 - chosenGame.team2.length; j++) {
-        const addedIndex = chosenGame.team2.length + 6;
-        const playerValue = {
-            [`player-${j + addedIndex}`] : '',
-            [`player-${j + addedIndex}-info`] : ''
+    if(chosenGame) {
+        checkTeamTwo = chosenGame.team2.length > 0 ? true : false;
+        teamOneEl = chosenGame.team1.map((player, index) => <DisplayTeams key={index} player={player} />);
+        teamTwoEl = chosenGame.team2.map((player, index) => <DisplayTeams key={index} player={player} />);
+
+
+        for(let i = 0; i < chosenGame.team1.length ; i ++) {
+            const playerValue = {
+                [`player-${i + 1}`] : Object.values(chosenGame.team1[i])[0],
+                [`player-${i + 1}-info`]: Object.values(chosenGame.team1[i])[1]
+            };
+    
+            
+            teamOneArr.push(playerValue)
         };
-        teamTwoArr.push(playerValue);
-    };
+        for(let j = 0; j < 5 - chosenGame.team1.length; j++) {
+            const addedIndex = chosenGame.team1.length + 1
+            const playerValue = {
+                [`player-${j + addedIndex}`] : '',
+                [`player-${j + addedIndex}-info`] : ''
+            };
+            teamOneArr.push(playerValue);
+        };
+    
+        for(let i = 0; i < chosenGame.team2.length ; i ++) {
+            const playerValue = {
+                [`player-${i + 6}`] : Object.values(chosenGame.team2[i])[0],
+                [`player-${i + 6}-info`]: Object.values(chosenGame.team2[i])[1]
+            };
+    
+            
+            teamTwoArr.push(playerValue);
+        };
+        for(let j = 0; j < 5 - chosenGame.team2.length; j++) {
+            const addedIndex = chosenGame.team2.length + 6;
+            const playerValue = {
+                [`player-${j + addedIndex}`] : '',
+                [`player-${j + addedIndex}-info`] : ''
+            };
+            teamTwoArr.push(playerValue);
+        };
+    }
+    
 
     const handleChange: () => void = () => {
         setChangeGame(true);
@@ -197,16 +204,16 @@ export default function FullGame() {
             {!changeGame ?
             <section className='game-container'>
                 <div className="game-headline">
-                    <h2>{chosenGame.game}</h2>
+                    <h2>{chosenGame?.game}</h2>
                     <img className='change-game' src={change} alt="change" onClick={handleChange}/>
                 </div>
                 <div className="game-info">
-                    <p>Duration : {slicedDuration}</p>
-                    <p>Date : {slicedDate}</p>
+                    <p>Duration : {chosenGame?.duration}</p>
+                    <p>Date : {chosenGame?.date}</p>
                 </div>
                 <div className="game-info">
-                    {chosenGame.win ? <p>Winner : {chosenGame.win}</p> : ''}
-                    {chosenGame.lost ? <p>Loser : {chosenGame.lost}</p> : ''}
+                    {chosenGame?.win ? <p>Winner : {chosenGame?.win}</p> : ''}
+                    {chosenGame?.lost ? <p>Loser : {chosenGame?.lost}</p> : ''}
                 </div>
                 <div className='team-list'>
                     <h3>Team 1</h3>
@@ -225,7 +232,7 @@ export default function FullGame() {
                         <div className='loading'></div>
                         : ''
                     }
-                <h2>Update game {chosenGame.gameId}</h2>
+                <h2>Update game {chosenGame?.gameId}</h2>
                 <div className="game-info">
                     <div>
                         <p>Game</p>
@@ -239,17 +246,17 @@ export default function FullGame() {
                 <div className="game-info">
                     <div>
                         <p>Duration</p>
-                        <input type="time" step={2} name="duration" id="duration" defaultValue={chosenGame.duration} onChange={(e) => {handleDuration(e)}} required/>
+                        <input type="time" step={2} name="duration" id="duration" defaultValue={chosenGame?.duration} onChange={(e) => {handleDuration(e)}} required/>
                     </div>
                     <div>
                         <p>Date</p>
-                        <input type="date" name="date" id="date" defaultValue={chosenGame.date} onChange={(e) => {handleDate(e)}} required/>
+                        <input type="date" name="date" id="date" defaultValue={chosenGame?.date} onChange={(e) => {handleDate(e)}} required/>
                     </div>
                 </div>
                 <div className="game-info">
                     <div>
                         <p>Winner</p>
-                        <select name="team1" id="result" defaultValue={chosenGame.win} onChange={(e) => {handleWinner(e)}}>
+                        <select name="team1" id="result" defaultValue={chosenGame?.win} onChange={(e) => {handleWinner(e)}}>
                             <option value="">None</option>
                             <option value="team1">Team 1</option>
                             <option value="team2">Team 2</option>
@@ -257,7 +264,7 @@ export default function FullGame() {
                     </div>
                     <div>
                         <p>Loser</p>
-                        <select name="team1" id="result" defaultValue={chosenGame.lost} onChange={(e) => {handleLoser(e)}}>
+                        <select name="team1" id="result" defaultValue={chosenGame?.lost} onChange={(e) => {handleLoser(e)}}>
                             <option value="">None</option>
                             <option value="team1">Team 1</option>
                             <option value="team2">Team 2</option>

@@ -1,0 +1,14 @@
+@use 'variables';
+@use 'buttons';
+
+.error-page {
+    margin: 0 auto;
+    margin-top: 8em;
+    @include variables.flexContainer();
+    gap: 2em;
+
+    button {
+        @include buttons.button();
+        align-self: center;
+    }
+}

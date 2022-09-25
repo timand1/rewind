@@ -7,12 +7,12 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 interface GameProps {
     game: Games,
-    username: string
+    username?: string
 }
 
 export default function DisplayGame(props: GameProps) { 
     const { game, date, duration, win } = props.game;
-
+    
     const navigate = useNavigate();
     const location = useLocation();
 

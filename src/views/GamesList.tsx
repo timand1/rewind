@@ -5,17 +5,11 @@ import DisplayGame from '../components/DisplayGame';
 import infoIcon from '../assets/info.svg';
 import infoActiveIcon from '../assets/infoActive.svg';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import {actions as gameActions} from '../features/gameReducer';
 
-type MyParams = {
-  username: string;
-};
-
 function GamesList() {
-    const { username } = useParams<keyof MyParams>() as MyParams;
     const dispatch = useDispatch();
 
     const [gameFilter, setGameFilter] = useState<string>('all');
@@ -50,7 +44,7 @@ function GamesList() {
       dispatch(gameActions.sortByDuration(gameFilter));
     };
     
-    const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} username={username} /> );
+    const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} /> );
 
     return (
       <div className="userpage">
