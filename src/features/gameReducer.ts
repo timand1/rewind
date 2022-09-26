@@ -23,7 +23,7 @@ const reducer = createReducer(initialState, {
         });
 
         localStorage.setItem('games', JSON.stringify(action.payload));
-        state = [...action.payload];
+        state = [...gamesArr];
         
         return state;
     },

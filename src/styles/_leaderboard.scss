@@ -5,6 +5,9 @@
     gap: 2em;
     margin: 0 auto;    
     margin-top: 8em;
+    .loading {
+        @include variables.loader();
+    }
     h2 {
         font-size: 2em;
     }

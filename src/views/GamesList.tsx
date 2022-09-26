@@ -14,13 +14,28 @@ function GamesList() {
 
     const [gameFilter, setGameFilter] = useState<string>('all');
     const [info, setInfo] = useState<boolean>(false);   
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleInfo: () => void = () => { 
       setInfo(!info);
     } ;
 
     useEffect(() => {
-      dispatch(gameActions.getAllGames());
+      getGames();
+
+      async function getGames() {
+        setLoading(true);
+        const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+        headers: {'Content-Type': 'application/json'}
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          localStorage.setItem('games', JSON.stringify(data.matches));
+          dispatch(gameActions.setAllGames(data.matches));
+          setLoading(false);
+        };
+      };
     }, []);
 
     const activeInfo:any = info ? infoActiveIcon : infoIcon;
@@ -49,6 +64,10 @@ function GamesList() {
     return (
       <div className="userpage">
         <Nav />
+        {loading ? 
+          <div className='loading'></div>
+          : ''
+        }
         <h2>Games</h2>
         <div className='game-options'>
           <select defaultValue={'all'} name="game-type" id="game-type" onChange={(e) => handleGame(e)} >

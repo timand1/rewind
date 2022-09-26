@@ -6,6 +6,7 @@ import { RootState } from '../store';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {actions as userActions} from '../features/userReducer';
+import {actions as gameActions} from '../features/gameReducer';
 
 
 function Leaderboard() {
@@ -14,9 +15,25 @@ function Leaderboard() {
     const [searchInput, setSearchInput] = useState<string>('');
     const [searched, setSearched] = useState<boolean>(false);
     const [filterParams, setFilterParams] = useState<string>('all');
-
+    const [loading, setLoading] = useState<boolean>(false);
+    
     useEffect(() => {
-      dispatch(userActions.allUsers(filterParams));
+      getGames();
+      async function getGames() {
+        setLoading(true);
+
+        const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+        headers: {'Content-Type': 'application/json'}
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          localStorage.setItem('games', JSON.stringify(data.matches));
+          dispatch(gameActions.setAllGames(data.matches));
+          dispatch(userActions.allUsers(filterParams));
+          setLoading(false);
+        };
+      };
     }, []);
     
     const users:Array<any> = useSelector((state: RootState) => state.users);   
@@ -72,6 +89,10 @@ function Leaderboard() {
     return (
       <div className="leaderboard">
         <Nav />
+        {loading ? 
+          <div className='loading'></div>
+          : ''
+        }
         <h2>Leaderboard</h2>
         <div className='search-bar'>
             <input type="text" name="search" id="search" value={searchInput} placeholder='Search players...'  onKeyUp={(e) => {handleEnter(e)}} onChange={(e) => { handleInput(e) }}/>

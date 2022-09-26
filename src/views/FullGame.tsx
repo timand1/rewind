@@ -27,7 +27,7 @@ interface UpdatedGame {
     lost : string;
     team1 : TeamArray[];
     team2 : TeamArray[];
-    gameId : string;
+    gameId? : string;
 };
 
 
@@ -35,17 +35,35 @@ export default function FullGame() {
     const { id } = useParams<keyof MyParams>() as MyParams;
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    useEffect(() => {        
-        dispatch(gameActions.getAllGames());
-        if(!chosenGame) {
-            navigate('/');
-        }
-    }, []);
+    const navigate = useNavigate()
 
-    const gamesList:Games[] = useSelector((state: RootState) => state.games);
-    const chosenGame = gamesList.filter(game => game.gameId == id)[0];
+    useEffect(() => {
+        getGame();
+        async function getGame() {
+            setLoading(true);
+  
+            const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
+                headers: {'Content-Type': 'application/json'}
+            });
+            const data = await response.json();
+            
+            if (data.success) {
+                setChosenGame(data.game[0]);
+                setNewGame(data.game[0].game);
+                setNewDate(data.game[0].date);
+                setNewDuration(data.game[0].duration);
+                setNewWinner(data.game[0].win);
+                setNewLoser(data.game[0].loser);
+                setLoading(false);
+                
+                if(data.game.length == 0) {
+                    navigate('/')
+                }
+            };
+        };
+    }, []);    
     
+    const [chosenGame, setChosenGame] = useState<Games>();
     const [newGame, setNewGame] = useState<string>('');
     const [newDate, setNewDate] = useState<string>('');
     const [newDuration, setNewDuration] = useState<string>('');
@@ -59,7 +77,7 @@ export default function FullGame() {
     let checkTeamTwo: boolean = false;
     const teamOneArr: Array<any> = [];
     const teamTwoArr: Array<any> = [];
-
+    
     if(chosenGame) {
         checkTeamTwo = chosenGame.team2.length > 0 ? true : false;
         teamOneEl = chosenGame.team1.map((player, index) => <DisplayTeams key={index} player={player} />);
@@ -171,10 +189,10 @@ export default function FullGame() {
             lost : newLoser,
             team1 : teamOneArr,
             team2 : teamTwoArr,
-            gameId : chosenGame.gameId
+            gameId : id
         };
-          
-          const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${chosenGame.gameId}`, {
+        
+          const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
             method: 'POST',
             body: JSON.stringify(updatedGame),
             headers: { 'Content-Type': 'application/json' }
@@ -182,22 +200,22 @@ export default function FullGame() {
           const data = await response.json();
           if (data.success) {
             setChangeGame(false)
-            await getGames();            
+            await getGame();            
           };
     };
 
-    async function getGames() {
-        const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
-        headers: {'Content-Type': 'application/json'}
+    async function getGame() {
+        const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
+            headers: {'Content-Type': 'application/json'}
         });
         const data = await response.json();
         
         if (data.success) {
-            dispatch(gameActions.setAllGames(data.matches))
+            setChosenGame(data.game[0])             
             setLoading(false);
         };
     };
-    
+
     return (         
         <section className='full-game'>
             <Nav />
@@ -232,11 +250,11 @@ export default function FullGame() {
                         <div className='loading'></div>
                         : ''
                     }
-                <h2>Update game {chosenGame?.gameId}</h2>
+                <h2>Update game {id}</h2>
                 <div className="game-info">
                     <div>
                         <p>Game</p>
-                        <select name="game" id="game" defaultValue={newGame} onChange={(e) => {handleGame(e)}}>
+                        <select name="game" id="game" defaultValue={chosenGame?.game} onChange={(e) => {handleGame(e)}}>
                             <option value="Dota 2">Dota 2</option>
                             <option value="World of Warcraft">World of Warcraft</option>
                             <option value="Tower Defence">Tower Defence</option>
