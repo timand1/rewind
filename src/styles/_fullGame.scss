@@ -38,16 +38,22 @@
         }
 
         .team-list {
+            @include variables.flexContainer();
+            gap: 1em;
             h3 {
                 border-bottom: 1px solid variables.$font-color;
                 padding-bottom: 1em;
             }
             .teams {
+                @include variables.flexContainer();
+                gap: 0.6em;
                 div {
-                    @include variables.flexContainer(column);
+                    padding: 0 1em;
+                    @include variables.flexContainer(row);
+                    justify-content: space-between;
                     gap: 0.4em;
-                    input {
-                        max-width: 30vw;
+                    input, textarea {
+                        max-width: 35vw;
                     }
                 }
             }
@@ -57,7 +63,7 @@
             justify-content: space-around;
             gap: 2em;
             button {
-                margin-bottom: 4em;
+                margin-top: 2em;
                 max-width: 40vw;
                 @include buttons.button();
                 &:first-child {
@@ -91,6 +97,9 @@
                     div {
                         flex-direction: row;
                         gap: 2em;
+                        input, textarea {
+                            min-width: clamp(7vw, 13em, 20vw)
+                        }
                     }
                 }
             }

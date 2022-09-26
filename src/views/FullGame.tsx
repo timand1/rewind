@@ -296,7 +296,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 1 info</p>
-                            <input type="text" name="player-info" id="player-1-info" defaultValue={teamOneArr[0]['player-1-info']} onKeyUp={(e) => {handleTeamOne(e, 0)}}/>
+                            <textarea rows={2} name="player-info" id="player-1-info" defaultValue={teamOneArr[0]['player-1-info']} onKeyUp={(e) => {handleTeamOne(e, 0)}}/>
                         </div>
                     </div>
                     <div className="teams">
@@ -306,7 +306,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 2 info</p>
-                            <input type="text" name="player-info" id="player-2-info" defaultValue={teamOneArr[1]['player-2-info']} onKeyUp={(e) => {handleTeamOne(e, 1)}}/>
+                            <textarea rows={2} name="player-info" id="player-2-info" defaultValue={teamOneArr[1]['player-2-info']} onKeyUp={(e) => {handleTeamOne(e, 1)}}/>
                         </div>
                     </div>
                     <div className="teams">
@@ -316,7 +316,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 3 info</p>
-                            <input type="text" name="player-info" id="player-3-info" defaultValue={teamOneArr[2]['player-3-info']} onKeyUp={(e) => {handleTeamOne(e, 2)}}/>
+                            <textarea rows={2} name="player-info" id="player-3-info" defaultValue={teamOneArr[2]['player-3-info']} onKeyUp={(e) => {handleTeamOne(e, 2)}}/>
                         </div>
                     </div>
                     <div className="teams">
@@ -326,7 +326,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 4 info</p>
-                            <input type="text" name="player-info" id="player-4-info" defaultValue={teamOneArr[3]['player-4-info']} onKeyUp={(e) => {handleTeamOne(e, 3)}}/>
+                            <textarea rows={2} name="player-info" id="player-4-info" defaultValue={teamOneArr[3]['player-4-info']} onKeyUp={(e) => {handleTeamOne(e, 3)}}/>
                         </div>
                     </div>
                     <div className="teams">
@@ -336,7 +336,7 @@ export default function FullGame() {
                         </div>
                         <div>
                             <p>Player 5 info</p>
-                            <input type="text" name="player-info" id="player-5-info" defaultValue={teamOneArr[4]['player-5-info']} onKeyUp={(e) => {handleTeamOne(e, 4)}}/>
+                            <textarea rows={2} name="player-info" id="player-5-info" defaultValue={teamOneArr[4]['player-5-info']} onKeyUp={(e) => {handleTeamOne(e, 4)}}/>
                         </div>
                     </div>
                 </div>
@@ -349,7 +349,7 @@ export default function FullGame() {
                             </div>
                             <div>
                                 <p>Player 1 info</p>
-                                <input type="text" name="player-info" id="player-6-info" defaultValue={teamTwoArr[0]['player-6-info']} onKeyUp={(e) => {handleTeamTwo(e, 0)}} />
+                                <textarea rows={2} name="player-info" id="player-6-info" defaultValue={teamTwoArr[0]['player-6-info']} onKeyUp={(e) => {handleTeamTwo(e, 0)}} />
                             </div>
                         </div>
                         <div className="teams">
@@ -359,7 +359,7 @@ export default function FullGame() {
                             </div>
                             <div>
                                 <p>Player 2 info</p>
-                                <input type="text" name="player-info" id="player-7-info" defaultValue={teamTwoArr[1]['player-7-info']} onKeyUp={(e) => {handleTeamTwo(e, 1)}} />
+                                <textarea rows={2} name="player-info" id="player-7-info" defaultValue={teamTwoArr[1]['player-7-info']} onKeyUp={(e) => {handleTeamTwo(e, 1)}} />
                             </div>
                         </div>
                         <div className="teams">
@@ -369,7 +369,7 @@ export default function FullGame() {
                             </div>
                             <div>
                                 <p>Player 3 info</p>
-                                <input type="text" name="player-info" id="player-8-info" defaultValue={teamTwoArr[2]['player-8-info']} onKeyUp={(e) => {handleTeamTwo(e, 2)}} />
+                                <textarea rows={2} name="player-info" id="player-8-info" defaultValue={teamTwoArr[2]['player-8-info']} onKeyUp={(e) => {handleTeamTwo(e, 2)}} />
                             </div>
                         </div>
                         <div className="teams">
@@ -379,7 +379,7 @@ export default function FullGame() {
                             </div>
                             <div>
                                 <p>Player 4 info</p>
-                                <input type="text" name="player-info" id="player-9-info" defaultValue={teamTwoArr[3]['player-9-info']} onKeyUp={(e) => {handleTeamTwo(e, 3)}} />
+                                <textarea rows={2} name="player-info" id="player-9-info" defaultValue={teamTwoArr[3]['player-9-info']} onKeyUp={(e) => {handleTeamTwo(e, 3)}} />
                             </div>
                         </div>
                         <div className="teams">
@@ -389,7 +389,7 @@ export default function FullGame() {
                             </div>
                             <div>
                                 <p>Player 5 info</p>
-                                <input type="text" name="player-info" id="player-10-info" defaultValue={teamTwoArr[4]['player-10-info']} onKeyUp={(e) => {handleTeamTwo(e, 4)}} />
+                                <textarea rows={2} name="player-info" id="player-10-info" defaultValue={teamTwoArr[4]['player-10-info']} onKeyUp={(e) => {handleTeamTwo(e, 4)}} />
                             </div>
                         </div>
 

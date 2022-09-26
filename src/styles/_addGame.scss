@@ -40,7 +40,7 @@
         gap: 2em;
         .teams {
             @include variables.oddListColor();
-            @include variables.flexContainer(row);
+            @include variables.flexContainer();
             justify-content: space-between;
             padding: 1em;
             gap: 3em;
