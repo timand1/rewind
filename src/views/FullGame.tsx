@@ -60,11 +60,11 @@ export default function FullGame() {
     }, []);    
     
     const [chosenGame, setChosenGame] = useState<Games>();
-    const [newGame, setNewGame] = useState<string>('');
-    const [newDate, setNewDate] = useState<string>('');
-    const [newDuration, setNewDuration] = useState<string>('');
-    const [newWinner, setNewWinner] = useState<string>('');
-    const [newLoser, setNewLoser] = useState<string>('');
+    const [newGame, setNewGame] = useState<string>(chosenGame?.game || '');
+    const [newDate, setNewDate] = useState<string>(chosenGame?.date || '');
+    const [newDuration, setNewDuration] = useState<string>(chosenGame?.duration || '');
+    const [newWinner, setNewWinner] = useState<string>(chosenGame?.win || '');
+    const [newLoser, setNewLoser] = useState<string>(chosenGame?.lost || '');
     const [changeGame, setChangeGame] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     
@@ -287,7 +287,7 @@ export default function FullGame() {
                 </div>
                 <div className='team-list'>
                     <h3>Team 1</h3>
-                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={1} />
+                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={1} required={true} />
                     <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={2} />
                     <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={3} />
                     <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={4} />
