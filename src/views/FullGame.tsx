@@ -192,7 +192,7 @@ export default function FullGame() {
             team2 : teamTwoArr,
             gameId : id
         };
-        
+
           const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
             method: 'POST',
             body: JSON.stringify(updatedGame),
@@ -231,7 +231,7 @@ export default function FullGame() {
                     <p>Date : {chosenGame?.date.slice(2)}</p>
                 </div>
                 <div className="game-info">
-                    {chosenGame?.win ? <p>Winner : {chosenGame?.win}</p> : ''}
+                    {chosenGame?.win ? <p>Winner : {chosenGame?.win}</p> : <p>Winner : -</p>}
                     {chosenGame?.lost ? <p>Loser : {chosenGame?.lost}</p> : ''}
                 </div>
                 <div className='team-list'>

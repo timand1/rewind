@@ -51,8 +51,9 @@ $mobile-card-width: 90vw;
     font-size: 1.2em;
 
     option {
-        color: black;
+        color: $font-color;
         font-size: 0.8em;
+        background-color: $secondary-bg;
     }
 }
 

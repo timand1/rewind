@@ -1,4 +1,5 @@
 @use './styles/variables';
+@use 'sass:color';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sulphur+Point:wght@300;400;700&display=swap');
 html,
 #root {
@@ -31,6 +32,24 @@ html,
 }
 
 @media screen and (min-width: 786px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {    
+    background: color.scale(variables.$primary-bg, $lightness: 10%); 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: color.scale(variables.$primary-bg, $lightness: 60%);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: color.scale(variables.$secondary-bg, $lightness: 80%);
+  }
   .App {
     max-width: 1000px;
     margin: 0 auto;

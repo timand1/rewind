@@ -50,8 +50,13 @@ export default function DisplayGame(props: GameProps) {
             gameResult = true;
         } 
     })
-    
-    const showWinner = win ? win : '-';
+    let winner = '-';
+    if(win == 'team1') {
+        winner = 'Team 1';
+    } else if(win == 'team2') {
+        winner = 'Team 2';
+    };
+
     const showWinLoss  = gameResult ? 'W' : 'L';
 
     return (         
@@ -60,7 +65,7 @@ export default function DisplayGame(props: GameProps) {
                 <p onClick={handleGame}>{game}</p>
                 <p onClick={handleGame}>{slicedDuration}</p>
                 <p onClick={handleGame}>{slicedDate}</p>
-                <p className='result' onClick={handleGame} >{location.pathname == '/games' ? showWinner : showWinLoss}</p>
+                <p className='result' onClick={handleGame} >{location.pathname == '/games' ? winner : showWinLoss}</p>
                 <img src={cross} alt="" className={activeInfoCss} onClick={handleInfo}/>
             </div>
             {showInfo ?
