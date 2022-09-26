@@ -39,7 +39,10 @@
         @include variables.flexContainer();
         gap: 2em;
         .teams {
-            @include variables.flexContainer();
+            @include variables.oddListColor();
+            @include variables.flexContainer(row);
+            justify-content: space-between;
+            padding: 1em;
             gap: 3em;
             
             .team-container {
@@ -49,7 +52,6 @@
             }
             .team-divider {
                 height: 0.2em;
-                width: 100%;
                 background-color: variables.$font-color;
             }
         }

@@ -26,7 +26,7 @@ $mobile-card-width: 90vw;
     @include flexContainer(row); 
     justify-content: space-between;
     background-color: #000;
-    padding: 0.4em;
+    padding: 0.6em;
     
     h3 {
         font-size: 1.2em;
@@ -57,9 +57,9 @@ $mobile-card-width: 90vw;
     }
 }
 
-@mixin oddListColor() {
+@mixin oddListColor($bg: $secondary-bg) {
     &:nth-child(odd) {
-        background-color: $secondary-bg;
+        background-color: $bg;
     }
     p {
         flex: 1;

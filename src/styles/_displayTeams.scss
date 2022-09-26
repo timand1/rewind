@@ -1,8 +1,14 @@
 @use 'variables';
 
-.teams {
+.player-info {
     @include variables.oddListColor();
     @include variables.flexContainer(row);
     justify-content: space-between;
     padding: 1em;
+}
+
+@media screen and (min-width: 786px) {
+    .player-info {
+        @include variables.oddListColor(variables.$primary-bg);
+    }
 }

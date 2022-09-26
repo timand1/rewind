@@ -71,7 +71,8 @@
 @media screen and (min-width: 786px) {
     .full-game {
         max-width: 1000px;
-
+        background-color: variables.$secondary-bg;
+        
         .game-container {
             .game-info {
                 div {

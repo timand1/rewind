@@ -3,12 +3,9 @@ import change from '../assets/change.svg';
 import Nav from '../components/Nav';
 import DisplayTeams from '../components/DisplayTeams'
 import { Games } from '../models/data'
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {actions as gameActions} from '../features/gameReducer';
 
 type MyParams = {
     id: string;

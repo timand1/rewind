@@ -10,7 +10,7 @@ export default function DisplayTeams(props: DisplayTeamProps) {
     const playerInfo = Object.values(props.player)[1]
     
     return (         
-        <section className='teams'>             
+        <section className='player-info'>             
             <p>{player}</p>
             <p>{playerInfo}</p>
         </section>
