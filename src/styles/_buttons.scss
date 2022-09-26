@@ -14,7 +14,6 @@
     text-align: center;
     box-shadow: 4px 8px 6px variables.$shadow-color;
     cursor: pointer;
-    // font family
     &:hover {
         background: color.scale($bg, $lightness: 30%);
     }

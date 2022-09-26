@@ -69,11 +69,9 @@
             }
         }
         .toggle-team {
+            @include buttons.button();
             background-color: variables.$secondary-bg;
-            padding: 1em 2em;
-            border-radius: 0.5em;
             align-self: center;
-            box-shadow: 4px 8px 6px variables.$shadow-color;
         }
         .divider {
             height: 0.2em;

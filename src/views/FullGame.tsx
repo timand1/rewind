@@ -227,8 +227,8 @@ export default function FullGame() {
                     <img className='change-game' src={change} alt="change" onClick={handleChange}/>
                 </div>
                 <div className="game-info">
-                    <p>Duration : {chosenGame?.duration}</p>
-                    <p>Date : {chosenGame?.date}</p>
+                    <p>Duration : {chosenGame?.duration.slice(1)}</p>
+                    <p>Date : {chosenGame?.date.slice(2)}</p>
                 </div>
                 <div className="game-info">
                     {chosenGame?.win ? <p>Winner : {chosenGame?.win}</p> : ''}

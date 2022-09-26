@@ -18,6 +18,9 @@
         .game-headline {
             @include variables.flexContainer(row);
             justify-content: space-between;
+            .change-game {
+                cursor: pointer;
+            }
         }
 
         .game-info {
@@ -31,9 +34,6 @@
                 select, input {
                     min-width: 35vw;
                 }
-            }
-            .change-game {
-                cursor: pointer;
             }
         }
 

@@ -1,6 +1,6 @@
-import '../styles/_userPage.scss';
+import '../styles/_gameList.scss';
 import Nav from '../components/Nav';
-import { Games, User } from '../models/data';
+import { Games } from '../models/data';
 import DisplayGame from '../components/DisplayGame';
 import infoIcon from '../assets/info.svg';
 import infoActiveIcon from '../assets/infoActive.svg';
@@ -62,7 +62,7 @@ function GamesList() {
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} /> );
 
     return (
-      <div className="userpage">
+      <div className="gamelist">
         <Nav />
         {loading ? 
           <div className='loading'></div>

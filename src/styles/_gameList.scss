@@ -1,6 +1,6 @@
 @use 'variables';
 
-.userpage {
+.gamelist {
     @include variables.flexContainer();
     gap: 1em;
     margin: 0 1em;
@@ -8,16 +8,8 @@
     .loading {
         @include variables.loader()
     }
-    .header {
-        @include variables.flexContainer(row);
-        justify-content: space-between;
-        h2 {
-            font-size: 2em;
-        }
-        p {
-            font-size: 0.8em;
-            cursor: pointer;
-        }
+    h2 {
+        font-size: 2em;
     }
     .stats {
         margin-top: auto;
@@ -29,7 +21,7 @@
         select {
             @include variables.selectContainer();
             width: 40vw;
-            font-size: 1em;
+            font-size: 1.2em;
         }
     }
 
@@ -58,8 +50,7 @@
 }
 
 @media screen and (min-width: 786px) {
-
-    .userpage {
+    .gamelist {
         .game-options {
            select {
                 width: 20vw;
@@ -69,7 +60,7 @@
 }
 
 @media screen and (max-width: 360px) {
-    .userpage {
+    .gamelist {
         .game-options {
            select {
             font-size: 0.8em;
