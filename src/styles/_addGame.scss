@@ -39,19 +39,17 @@
         @include variables.flexContainer();
         gap: 2em;
         .teams {
-            @include variables.oddListColor();
             @include variables.flexContainer();
-            justify-content: space-between;
-            padding: 1em;
             gap: 3em;
             
             .team-container {
                 flex: 1;
                 @include variables.flexContainer();
-                gap: 1em;
+                gap: 2em;
             }
             .team-divider {
                 height: 0.2em;
+                width: 100%;
                 background-color: variables.$font-color;
             }
         }
@@ -63,17 +61,16 @@
         .form-container {
             @include variables.flexContainer(row);
             justify-content: space-between;
-            textarea, input {
-                width: 40vw;
-                -webkit-box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                box-sizing: border-box;
+            textarea, input, select {
+                max-width: 35vw;
             }
         }
         .toggle-team {
-            @include buttons.button();
             background-color: variables.$secondary-bg;
+            padding: 1em 2em;
+            border-radius: 0.5em;
             align-self: center;
+            box-shadow: 4px 8px 6px variables.$shadow-color;
         }
         .divider {
             height: 0.2em;
@@ -97,6 +94,8 @@
                 gap: 1em;
                 position: relative;
                 height: 100%;
+                background-color: variables.$secondary-bg;
+                padding: 1em;
                 .team-container {
                     flex: 1;
                 }
@@ -106,8 +105,9 @@
                 }
             }
             .form-container {
-                textarea, input {
-                    max-width: 200px;
+                textarea, input, select {
+                    min-width: clamp(7vw, 13em, 20vw);
+                    font-size: 1em;
                 }
             }
         }

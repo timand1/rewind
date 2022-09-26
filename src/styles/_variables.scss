@@ -66,6 +66,15 @@ $mobile-card-width: 90vw;
     }
 }
 
+@mixin evenListColor($bg: $secondary-bg) {
+    &:nth-child(even) {
+        background-color: $bg;
+    }
+    p {
+        flex: 1;
+    }
+}
+
 @mixin hoverLink() {
     &:hover {
         background-color: color.scale($primary-bg, $lightness: 30%);

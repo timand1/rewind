@@ -123,57 +123,58 @@ function AddGame() {
             : ''
         }
         <form onSubmit={handleSubmit}>
-        <div className='form-container'>
-        <label htmlFor="game">Game</label>
-            <select onChange={(e) => {handleGame(e)}} name="game" id="game" defaultValue='DEFAULT'>
-                <option value="DEFAULT">-- Choose a game --</option>
-                <option value="Dota 2">Dota 2</option>
-                <option value="World of Warcraft">World of Warcraft</option>
-                <option value="Tower Defence">Tower Defence</option>
-            </select>
-        </div>
-        <div className='form-container'>
-            <label htmlFor="player">Date</label>
-            <input type="date" name="date" id="date" onChange={(e) => {handleDate(e)}} required/>
-        </div>
-        <div className='form-container'>
-            <label htmlFor="player">Duration (hh/mm/ss)</label>
-            <input type="time" step={2} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
-        </div>
-        <div className='divider'></div>
-        <div className="teams">
-            <div className='team-container'>
-                <div className='form-container'>
-                <h2>Team 1</h2>
-                    <select onChange={(e) => {handleResult(e)}} name="team1" id="result" defaultValue='DEFAULT'>
-                        <option value="DEFAULT">-- Result --</option>
-                        <option value="win">Winner</option>
-                        <option value="loss">Loser</option>
-                    </select>
-                </div>
-                <PlayerInput handleTeam={handleTeamOne} required={true} playerNum={'1'} />
-                <PlayerInput handleTeam={handleTeamOne} playerNum={'2'} />
-                <PlayerInput handleTeam={handleTeamOne} playerNum={'3'} />
-                <PlayerInput handleTeam={handleTeamOne} playerNum={'4'} />
-                <PlayerInput handleTeam={handleTeamOne} playerNum={'5'} />
+            <h1>Add game</h1>
+            <div className='form-container'>
+                <label htmlFor="game">Game</label>
+                <select onChange={(e) => {handleGame(e)}} name="game" id="game" defaultValue='DEFAULT'>
+                    <option value="DEFAULT">-- Choose a game --</option>
+                    <option value="Dota 2">Dota 2</option>
+                    <option value="World of Warcraft">World of Warcraft</option>
+                    <option value="Tower Defence">Tower Defence</option>
+                </select>
             </div>
-            {showTeamTwo ? <div className='team-divider'></div> : ''}
-            {showTeamTwo ? 
-            <div className='team-container'>
-                <div className='form-container'>
-                    <h2>Team 2</h2>
-                    <select onChange={(e) => {handleResult(e)}} name="team2" id="result" defaultValue='DEFAULT'>
-                        <option value="DEFAULT">-- Result --</option>
-                        <option value="win">Winner</option>
-                        <option value="loss">Loser</option>
-                    </select>
+            <div className='form-container'>
+                <label htmlFor="player">Date</label>
+                <input type="date" name="date" id="date" onChange={(e) => {handleDate(e)}} required/>
+            </div>
+            <div className='form-container'>
+                <label htmlFor="player">Duration</label>
+                <input type="time" step={2} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
+            </div>
+            <div className='divider'></div>
+            <div className="teams">
+                <div className='team-container'>
+                    <div className='form-container'>
+                    <h2>Team 1</h2>
+                        <select onChange={(e) => {handleResult(e)}} name="team1" id="result" defaultValue='DEFAULT'>
+                            <option value="DEFAULT">-- Result --</option>
+                            <option value="win">Winner</option>
+                            <option value="loss">Loser</option>
+                        </select>
+                    </div>
+                    <PlayerInput handleTeam={handleTeamOne} required={true} playerNum={'1'} />
+                    <PlayerInput handleTeam={handleTeamOne} playerNum={'2'} />
+                    <PlayerInput handleTeam={handleTeamOne} playerNum={'3'} />
+                    <PlayerInput handleTeam={handleTeamOne} playerNum={'4'} />
+                    <PlayerInput handleTeam={handleTeamOne} playerNum={'5'} />
                 </div>
-                <PlayerInput handleTeam={handleTeamTwo} playerNum={'6'} />
-                <PlayerInput handleTeam={handleTeamTwo} playerNum={'7'} />
-                <PlayerInput handleTeam={handleTeamTwo} playerNum={'8'} />
-                <PlayerInput handleTeam={handleTeamTwo} playerNum={'9'} />
-                <PlayerInput handleTeam={handleTeamTwo} playerNum={'10'} />
-            </div> : '' }
+                {showTeamTwo ? <div className='team-divider'></div> : ''}
+                {showTeamTwo ? 
+                <div className='team-container'>
+                    <div className='form-container'>
+                        <h2>Team 2</h2>
+                        <select onChange={(e) => {handleResult(e)}} name="team2" id="result" defaultValue='DEFAULT'>
+                            <option value="DEFAULT">-- Result --</option>
+                            <option value="win">Winner</option>
+                            <option value="loss">Loser</option>
+                        </select>
+                    </div>
+                    <PlayerInput handleTeam={handleTeamTwo} playerNum={'6'} />
+                    <PlayerInput handleTeam={handleTeamTwo} playerNum={'7'} />
+                    <PlayerInput handleTeam={handleTeamTwo} playerNum={'8'} />
+                    <PlayerInput handleTeam={handleTeamTwo} playerNum={'9'} />
+                    <PlayerInput handleTeam={handleTeamTwo} playerNum={'10'} />
+                </div> : '' }
             </div>
             <p className='toggle-team' onClick={handleShowTeams}>{showTeamTwo ? 'Remove' : 'Add'} Team Two</p>
             <div className='divider'></div>    

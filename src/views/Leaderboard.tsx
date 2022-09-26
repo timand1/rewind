@@ -1,4 +1,5 @@
 import '../styles/_leaderboard.scss';
+import searchIcon from '../assets/search-icon.svg';
 import Nav from '../components/Nav';
 import DisplayUser from '../components/DisplayUser';
 import { useEffect, useState } from 'react';
@@ -93,11 +94,11 @@ function Leaderboard() {
           <div className='loading'></div>
           : ''
         }
-        <h2>Leaderboard</h2>
+        <h1>Leaderboard</h1>
         <div className='search-bar'>
             <input type="text" name="search" id="search" value={searchInput} placeholder='Search players...'  onKeyUp={(e) => {handleEnter(e)}} onChange={(e) => { handleInput(e) }}/>
             {searched ? <p className='clear-search' onClick={resetSearch}>X</p> : ''}
-            <label htmlFor="search" onClick={handleSearch} >&#x1F50D;</label>
+            <img className='search-icon' src={searchIcon} alt="search icon" />
         </div>
         <select value={filterParams} name="games" id="games" onChange={(e) => {handleGame(e)}} >
         <option value="all">All games</option> 

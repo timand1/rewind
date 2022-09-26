@@ -27,12 +27,12 @@ export default function PlayerInput(props: PlayerInputProps) {
     return (         
         <section className="player-container">
             <div className='form-container'>
-                <label htmlFor={`player-${props.playerNum}`}>Player {props.playerNum} {props.required ? '*' : ''}</label>
-                <input type="text" name={`player-${props.playerNum}`} id="player" onKeyUp={(e) => {handlePlayer(e)}} required={props.required} />
+                <label htmlFor={`player-${props.playerNum}`} >Player {props.playerNum} {props.required ? '*' : ''}</label>
+                <input type="text" name={`player-${props.playerNum}`} placeholder={`Player ${props.playerNum} name`} id="player" onKeyUp={(e) => {handlePlayer(e)}} required={props.required} />
             </div>
             <div className='form-container'>
                 <label htmlFor={`player-${props.playerNum}`}>Player Info</label>
-                <textarea name={`player-${props.playerNum}-info`} id="" onKeyUp={(e) => {handlePlayer(e)}}></textarea>
+                <textarea name={`player-${props.playerNum}-info`} placeholder={`Player ${props.playerNum} info`} id="" onKeyUp={(e) => {handlePlayer(e)}}></textarea>
             </div>
         </section>
     )

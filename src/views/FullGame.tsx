@@ -1,11 +1,11 @@
 import '../styles/_fullGame.scss';
 import change from '../assets/change.svg';
 import Nav from '../components/Nav';
-import DisplayTeams from '../components/DisplayTeams'
-import { Games } from '../models/data'
+import DisplayTeams from '../components/DisplayTeams';
+import AddPlayer from '../components/AddPlayer';
+import { Games } from '../models/data';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 type MyParams = {
     id: string;
@@ -31,7 +31,6 @@ interface UpdatedGame {
 export default function FullGame() { 
     const { id } = useParams<keyof MyParams>() as MyParams;
 
-    const dispatch = useDispatch();
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -55,8 +54,7 @@ export default function FullGame() {
                     setNewDuration(data.game[0].duration);
                     setNewWinner(data.game[0].win);
                     setNewLoser(data.game[0].lost);
-                }
-                
+                }                
             };
         };
     }, []);    
@@ -289,111 +287,20 @@ export default function FullGame() {
                 </div>
                 <div className='team-list'>
                     <h3>Team 1</h3>
-                    <div className="teams">
-                        <div>
-                            <p>Player 1</p>
-                            <input type="text" name="player" id="player-1" defaultValue={teamOneArr[0]['player-1']} required onKeyUp={(e) => {handleTeamOne(e, 0)}}/>
-                        </div>
-                        <div>
-                            <p>Player 1 info</p>
-                            <textarea rows={2} name="player-info" id="player-1-info" defaultValue={teamOneArr[0]['player-1-info']} onKeyUp={(e) => {handleTeamOne(e, 0)}}/>
-                        </div>
-                    </div>
-                    <div className="teams">
-                        <div>
-                            <p>Player 2</p>
-                            <input type="text" name="player" id="player-2" defaultValue={teamOneArr[1]['player-2']} onKeyUp={(e) => {handleTeamOne(e, 1)}}/>
-                        </div>
-                        <div>
-                            <p>Player 2 info</p>
-                            <textarea rows={2} name="player-info" id="player-2-info" defaultValue={teamOneArr[1]['player-2-info']} onKeyUp={(e) => {handleTeamOne(e, 1)}}/>
-                        </div>
-                    </div>
-                    <div className="teams">
-                        <div>
-                            <p>Player 3</p>
-                            <input type="text" name="player" id="player-3" defaultValue={teamOneArr[2]['player-3']} onKeyUp={(e) => {handleTeamOne(e, 2)}}/>
-                        </div>
-                        <div>
-                            <p>Player 3 info</p>
-                            <textarea rows={2} name="player-info" id="player-3-info" defaultValue={teamOneArr[2]['player-3-info']} onKeyUp={(e) => {handleTeamOne(e, 2)}}/>
-                        </div>
-                    </div>
-                    <div className="teams">
-                        <div>
-                            <p>Player 4</p>
-                            <input type="text" name="player" id="player-4" defaultValue={teamOneArr[3]['player-4']} onKeyUp={(e) => {handleTeamOne(e, 3)}}/>
-                        </div>
-                        <div>
-                            <p>Player 4 info</p>
-                            <textarea rows={2} name="player-info" id="player-4-info" defaultValue={teamOneArr[3]['player-4-info']} onKeyUp={(e) => {handleTeamOne(e, 3)}}/>
-                        </div>
-                    </div>
-                    <div className="teams">
-                        <div>
-                            <p>Player 5</p>
-                            <input type="text" name="player" id="player-5" defaultValue={teamOneArr[4]['player-5']} onKeyUp={(e) => {handleTeamOne(e, 4)}}/>
-                        </div>
-                        <div>
-                            <p>Player 5 info</p>
-                            <textarea rows={2} name="player-info" id="player-5-info" defaultValue={teamOneArr[4]['player-5-info']} onKeyUp={(e) => {handleTeamOne(e, 4)}}/>
-                        </div>
-                    </div>
+                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={1} />
+                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={2} />
+                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={3} />
+                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={4} />
+                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={5} />
                 </div>
-                    <div className='team-list'>
-                        <h3>Team 2</h3>
-                        <div className="teams">
-                            <div>
-                                <p>Player 1</p>
-                                <input type="text" name="player" id="player-6" defaultValue={teamTwoArr[0]['player-6']} onKeyUp={(e) => {handleTeamTwo(e, 0)}}/>
-                            </div>
-                            <div>
-                                <p>Player 1 info</p>
-                                <textarea rows={2} name="player-info" id="player-6-info" defaultValue={teamTwoArr[0]['player-6-info']} onKeyUp={(e) => {handleTeamTwo(e, 0)}} />
-                            </div>
-                        </div>
-                        <div className="teams">
-                            <div>
-                                <p>Player 2</p>
-                                <input type="text" name="player" id="player-7" defaultValue={teamTwoArr[1]['player-7']} onKeyUp={(e) => {handleTeamTwo(e, 1)}} />
-                            </div>
-                            <div>
-                                <p>Player 2 info</p>
-                                <textarea rows={2} name="player-info" id="player-7-info" defaultValue={teamTwoArr[1]['player-7-info']} onKeyUp={(e) => {handleTeamTwo(e, 1)}} />
-                            </div>
-                        </div>
-                        <div className="teams">
-                            <div>
-                                <p>Player 3</p>
-                                <input type="text" name="player" id="player-8" defaultValue={teamTwoArr[2]['player-8']} onKeyUp={(e) => {handleTeamTwo(e, 2)}} />
-                            </div>
-                            <div>
-                                <p>Player 3 info</p>
-                                <textarea rows={2} name="player-info" id="player-8-info" defaultValue={teamTwoArr[2]['player-8-info']} onKeyUp={(e) => {handleTeamTwo(e, 2)}} />
-                            </div>
-                        </div>
-                        <div className="teams">
-                            <div>
-                                <p>Player 4</p>
-                                <input type="text" name="player" id="player-9" defaultValue={teamTwoArr[3]['player-9']} onKeyUp={(e) => {handleTeamTwo(e, 3)}} />
-                            </div>
-                            <div>
-                                <p>Player 4 info</p>
-                                <textarea rows={2} name="player-info" id="player-9-info" defaultValue={teamTwoArr[3]['player-9-info']} onKeyUp={(e) => {handleTeamTwo(e, 3)}} />
-                            </div>
-                        </div>
-                        <div className="teams">
-                            <div>
-                                <p>Player 5</p>
-                                <input type="text" name="player" id="player-10" defaultValue={teamTwoArr[4]['player-10']} onKeyUp={(e) => {handleTeamTwo(e, 4)}} />
-                            </div>
-                            <div>
-                                <p>Player 5 info</p>
-                                <textarea rows={2} name="player-info" id="player-10-info" defaultValue={teamTwoArr[4]['player-10-info']} onKeyUp={(e) => {handleTeamTwo(e, 4)}} />
-                            </div>
-                        </div>
-
-                    </div>
+                <div className='team-list'>
+                    <h3>Team 2</h3>
+                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={6} />
+                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={7} />
+                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={8} />
+                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={9} />
+                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={10} />
+                </div>
                 <div className="button-container">
                     <button onClick={handleCancel}>Cancel</button>
                     <button onClick={updateGame}>Update</button>
