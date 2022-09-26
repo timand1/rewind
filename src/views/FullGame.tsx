@@ -48,17 +48,18 @@ export default function FullGame() {
             const data = await response.json();
             
             if (data.success) {
-                setChosenGame(data.game[0]);
-                setNewGame(data.game[0].game);
-                setNewDate(data.game[0].date);
-                setNewDuration(data.game[0].duration);
-                setNewWinner(data.game[0].win);
-                setNewLoser(data.game[0].loser);
                 setLoading(false);
-                
                 if(data.game.length == 0) {
                     navigate('/')
+                } else {
+                    setChosenGame(data.game[0]);
+                    setNewGame(data.game[0].game);
+                    setNewDate(data.game[0].date);
+                    setNewDuration(data.game[0].duration);
+                    setNewWinner(data.game[0].win);
+                    setNewLoser(data.game[0].loser);
                 }
+                
             };
         };
     }, []);    
