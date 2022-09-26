@@ -57,7 +57,7 @@ export default function FullGame() {
                     setNewDate(data.game[0].date);
                     setNewDuration(data.game[0].duration);
                     setNewWinner(data.game[0].win);
-                    setNewLoser(data.game[0].loser);
+                    setNewLoser(data.game[0].lost);
                 }
                 
             };
@@ -134,9 +134,9 @@ export default function FullGame() {
     const handleTeamOne: (e:any, index:number) => void = (e, index) => {
         const {name, value} = e.target;
         if(name == 'player') {
-            teamOneArr[index][`player-${index+1}`] = value;
+            teamOneArr[index][`player-${index+1}`] = value.toLowerCase();
         } else {
-            teamOneArr[index][`player-${index+1}-info`] = value;
+            teamOneArr[index][`player-${index+1}-info`] = value.toLowerCase();
         };
     };
 
@@ -144,9 +144,9 @@ export default function FullGame() {
         const {name, value} = e.target;
         
         if(name == 'player') {
-            teamTwoArr[index][`player-${index+6}`] = value;
+            teamTwoArr[index][`player-${index+6}`] = value.toLowerCase();
         } else {
-            teamTwoArr[index][`player-${index+6}-info`] = value;
+            teamTwoArr[index][`player-${index+6}-info`] = value.toLowerCase();
         };
     };
 
