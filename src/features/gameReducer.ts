@@ -28,8 +28,12 @@ const reducer = createReducer(initialState, {
         return state;
     },
     [getUserGames.toString()]: ( state, action ) => {
-      const allGames:Games[] = [...state];
+      const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
       let newGamesArray: Games[] = [];
+
+      allGames.sort(function(a,b) {
+        return b.date.localeCompare(a.date);
+      });
 
       for (const game of allGames) {
         game.team1.forEach(player => {
@@ -61,9 +65,13 @@ const reducer = createReducer(initialState, {
     },
     [filterUserGames.toString()]: ( state, action) => {
       let allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-      const arrCopy: Games[] = [...allGames];
       let newGamesArray: Games[] = [];
-
+      
+      allGames.sort(function(a,b) {
+        return b.date.localeCompare(a.date);
+      });
+      
+      const arrCopy: Games[] = [...allGames];
       if(action.payload.setting == 'no-win') {
         allGames = arrCopy.filter(game => game.win == '');        
       };
@@ -100,8 +108,12 @@ const reducer = createReducer(initialState, {
     },
     [filterGames.toString()]: ( state, action ) => {
       let allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
-      const arrCopy: Games[] = [...allGames];
       let newGamesArray: Games[] = [];
+
+      allGames.sort(function(a,b) {
+        return b.date.localeCompare(a.date);
+      });
+      const arrCopy: Games[] = [...allGames];
 
       if(action.payload.game != 'all') {
         allGames = arrCopy.filter(game => game.game == action.payload.game);
@@ -131,6 +143,10 @@ const reducer = createReducer(initialState, {
       const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
       const newGamesArray: Games[] = [...allGames];
 
+      newGamesArray.sort(function(a,b) {
+        return b.date.localeCompare(a.date);
+      });
+      
       const filteredGames: Games[] = newGamesArray.filter(game => game.game == action.payload);
       
       return filteredGames;
