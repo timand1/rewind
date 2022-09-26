@@ -215,6 +215,10 @@ export default function FullGame() {
     return (         
         <section className='full-game'>
             <Nav />
+                {loading ? 
+                    <div className='loading'></div>
+                    : ''
+                }
             {!changeGame ?
             <section className='game-container'>
                 <div className="game-headline">
