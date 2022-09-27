@@ -307,19 +307,19 @@ export default function FullGame() {
                 </div>
                 <div className='team-list'>
                     <h3>Team 1</h3>
-                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={1} required={true} />
-                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={2} />
-                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={3} />
-                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={4} />
-                    <AddPlayer handleTeam={handleTeamOne} teamArr={teamOneArr} playerNum={5} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[0]} playerNum={1} required={true} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[1]} playerNum={2} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[2]} playerNum={3} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[3]} playerNum={4} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[4]} playerNum={5} />
                 </div>
                 <div className='team-list'>
                     <h3>Team 2</h3>
-                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={6} />
-                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={7} />
-                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={8} />
-                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={9} />
-                    <AddPlayer handleTeam={handleTeamTwo} teamArr={teamTwoArr} playerNum={10} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[0]} playerNum={6} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[1]} playerNum={7} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[2]} playerNum={8} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[3]} playerNum={9} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[4]} playerNum={10} />
                 </div>
                 <div className="button-container">
                     <button onClick={handleCancel}>Cancel</button>
