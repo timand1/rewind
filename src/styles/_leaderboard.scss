@@ -40,7 +40,8 @@
     }
     
     select {
-        @include variables.selectContainer()
+        @include variables.selectContainer();
+        @include variables.selectDesign();
     }
     
     .headlines {

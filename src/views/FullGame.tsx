@@ -22,8 +22,8 @@ interface UpdatedGame {
     duration : string;
     win : string;
     lost : string;
-    team1 : TeamArray[];
-    team2 : TeamArray[];
+    team1 : object[];
+    team2 : object[];
     gameId? : string;
 };
 
@@ -65,6 +65,8 @@ export default function FullGame() {
     const [newDuration, setNewDuration] = useState<string>(chosenGame?.duration || '');
     const [newWinner, setNewWinner] = useState<string>(chosenGame?.win || '');
     const [newLoser, setNewLoser] = useState<string>(chosenGame?.lost || '');
+    const [newTeamOne, setNewTeamOne] = useState<Array<object>>(chosenGame?.team1 || []);
+    const [newTeamTwo, setNewTeamTwo] = useState<Array<object>>(chosenGame?.team2 || []);
     const [changeGame, setChangeGame] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     
@@ -126,23 +128,16 @@ export default function FullGame() {
         setChangeGame(false);
     };
 
-    const handleTeamOne: (e:any, index:number) => void = (e, index) => {
-        const {name, value} = e.target;
-        if(name == 'player') {
-            teamOneArr[index][`player-${index+1}`] = value.toLowerCase();
-        } else {
-            teamOneArr[index][`player-${index+1}-info`] = value.toLowerCase();
-        };
+    const handleTeamOne: (updatedPlayer:object, index:number) => void = (updatedPlayer, index) => {
+        const teamCopy = [...newTeamOne];        
+        teamCopy[index] = updatedPlayer;
+        setNewTeamOne([...teamCopy]);
     };
-
-    const handleTeamTwo: (e:any, index:number) => void = (e, index) => {
-        const {name, value} = e.target;
-        
-        if(name == 'player') {
-            teamTwoArr[index][`player-${index+6}`] = value.toLowerCase();
-        } else {
-            teamTwoArr[index][`player-${index+6}-info`] = value.toLowerCase();
-        };
+    
+    const handleTeamTwo: (updatedPlayer:object, index:number) => void = (updatedPlayer, index) => {
+        const teamCopy = [...newTeamTwo];        
+        teamCopy[index] = updatedPlayer;
+        setNewTeamTwo([...teamCopy]);
     };
 
     const handleGame: (e:any) => void = (e) => {
@@ -183,11 +178,11 @@ export default function FullGame() {
             duration : newDuration,
             win : newWinner,
             lost : newLoser,
-            team1 : teamOneArr,
-            team2 : teamTwoArr,
+            team1 : newTeamOne,
+            team2 : newTeamTwo,
             gameId : id
         };
-
+        
           const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
             method: 'POST',
             body: JSON.stringify(updatedGame),
@@ -307,19 +302,19 @@ export default function FullGame() {
                 </div>
                 <div className='team-list'>
                     <h3>Team 1</h3>
-                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[0]} playerNum={1} required={true} />
-                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[1]} playerNum={2} />
-                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[2]} playerNum={3} />
-                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[3]} playerNum={4} />
-                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[4]} playerNum={5} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[0]} playerNum={1} setTeam={setNewTeamOne} required={true} />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[1]} playerNum={2} setTeam={setNewTeamOne}  />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[2]} playerNum={3} setTeam={setNewTeamOne}  />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[3]} playerNum={4} setTeam={setNewTeamOne}  />
+                    <AddPlayer handleTeam={handleTeamOne} player={teamOneArr[4]} playerNum={5} setTeam={setNewTeamOne}  />
                 </div>
                 <div className='team-list'>
                     <h3>Team 2</h3>
-                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[0]} playerNum={6} />
-                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[1]} playerNum={7} />
-                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[2]} playerNum={8} />
-                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[3]} playerNum={9} />
-                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[4]} playerNum={10} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[0]} playerNum={6} setTeam={setNewTeamTwo}  />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[1]} playerNum={7} setTeam={setNewTeamTwo} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[2]} playerNum={8} setTeam={setNewTeamTwo} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[3]} playerNum={9} setTeam={setNewTeamTwo} />
+                    <AddPlayer handleTeam={handleTeamTwo} player={teamTwoArr[4]} playerNum={10} setTeam={setNewTeamTwo} />
                 </div>
                 <div className="button-container">
                     <button onClick={handleCancel}>Cancel</button>

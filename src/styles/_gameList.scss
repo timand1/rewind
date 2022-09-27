@@ -20,6 +20,7 @@
         
         select {
             @include variables.selectContainer();
+            @include variables.selectDesign();
             width: 40vw;
             font-size: 1.2em;
         }

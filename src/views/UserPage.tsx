@@ -132,7 +132,7 @@ function UserPage() {
         setting : filterSetting
       };
       dispatch(gameActions.filterUserGames(filterSearch));
-      dispatch(userActions.allUsers(value))
+      dispatch(userActions.allUsers(value));
     } 
 
     const handleGameSetting: (e:any) => void = (e) => {

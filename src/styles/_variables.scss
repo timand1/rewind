@@ -73,6 +73,12 @@ $mobile-card-width: 90vw;
     }
 }
 
+@mixin selectDesign() {
+    background-color: $secondary-bg;
+    padding: 0.4em;
+    box-shadow: 2px 4px 0px rgba(0, 0, 0, 0.34);
+}
+
 @mixin loader() {
     position: fixed;
     left: 0; 
