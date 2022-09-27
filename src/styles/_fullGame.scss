@@ -40,7 +40,7 @@
         .team-headline {
             border-bottom: 1px solid variables.$font-color;
         }
-        
+
         .team-list {
             @include variables.flexContainer();
             .teams {
@@ -104,6 +104,9 @@
                         }
                     }
                 }
+            }
+            .button-container {
+                margin-bottom: 2em;
             }
         }
     }
