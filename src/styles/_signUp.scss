@@ -1,8 +1,8 @@
 @use 'variables';
 @use 'buttons';
-@use "sass:color";
+@use 'sass:color';
 
-.landingpage {
+.signup {
     height: 100%;
     @include variables.flexContainer();
     align-items: center;
@@ -33,21 +33,9 @@
             outline: none;
         }
     }
-    .sign-up {
-        font-size: 0.8em;
-
-        span {
-            color: steelblue;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-    }
-    p:last-of-type {
-        color: color.scale(variables.$font-color, $blackness: 80%);
-    }
     button {
         @include buttons.button();
-        margin-top: 3em;
+        margin: 2em 0;
     }
     h3 {
         cursor: pointer;
@@ -55,7 +43,7 @@
 }
 
 @media screen and (min-width: 786px) {
-    .landingpage {
+    .signup {
         input {
             max-width: 30vw;
         }
@@ -63,7 +51,7 @@
 }
 
 @media screen and (max-width: 360px) {
-    .landingpage {
+    .signup {
         h2 {
             font-size: 1.6em;
         }

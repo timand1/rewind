@@ -1,4 +1,4 @@
-import '../styles/_landingPage.scss';
+import '../styles/_signUp.scss';
 import logo from '../assets/logo.svg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ function SignUp() {
     
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleUsername: (e:any) => void = (e) => { 
       setLoginUsername(e.target.value);
@@ -19,7 +20,8 @@ function SignUp() {
 
     async function signUp() {      
       if(loginUsername.length > 2 && loginPassword.length > 2) {
-        
+        setLoading(true);
+
         const account: object = {
           username: loginUsername,
           password: loginPassword
@@ -34,13 +36,18 @@ function SignUp() {
         if (data.success) {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.accountId);
+          setLoading(false);
           navigate(`/user/${loginUsername}`);
         };
       };
     };
 
     return (
-      <div className="landingpage">
+      <div className="signup">
+        {loading ? 
+          <div className='loading'></div>
+          : ''
+        }
         <img src={logo} alt="rewind logo" />
         <h2>Your journey starts now</h2>
         <div className='input-container'>
