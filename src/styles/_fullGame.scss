@@ -19,6 +19,8 @@
             @include variables.flexContainer(row);
             justify-content: space-between;
             .change-game {
+                width: 2em;
+                height: 2em;
                 cursor: pointer;
             }
         }
