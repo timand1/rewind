@@ -212,6 +212,20 @@ export default function FullGame() {
         };
     };
 
+    let winner: string = '-';
+    if(chosenGame?.win == 'team1') {
+        winner = 'Team 1';
+    } else if(chosenGame?.win == 'team2') {
+        winner = 'Team 2';
+    };
+
+    let loser: string = '-';
+    if(chosenGame?.lost == 'team1') {
+        loser = 'Team 1';
+    } else if(chosenGame?.lost == 'team2') {
+        loser = 'Team 2';
+    };
+
     return (         
         <section className='full-game'>
             <Nav />
@@ -230,18 +244,20 @@ export default function FullGame() {
                     <p>Date : {chosenGame?.date.slice(2)}</p>
                 </div>
                 <div className="game-info">
-                    {chosenGame?.win ? <p>Winner : {chosenGame?.win}</p> : <p>Winner : -</p>}
-                    {chosenGame?.lost ? <p>Loser : {chosenGame?.lost}</p> : ''}
+                    <p>Winner : {winner}</p>
+                    <p>Loser : {loser}</p>
                 </div>
-                <div className='team-list'>
-                    <h3>Team 1</h3>
+                    <h3 className='team-headline'>Team 1</h3>
+                    <div className='team-list'>
                     {teamOneEl}
                 </div>
                 {checkTeamTwo ? 
-                    <div className='team-list'>
-                        <h3>Team 2</h3>
-                        {teamTwoEl}
-                    </div>
+                    <>
+                        <h3 className='team-headline'>Team 2</h3>
+                        <div className='team-list'>
+                            {teamTwoEl}
+                        </div>
+                    </>
                 : ''}
             </section>
             :

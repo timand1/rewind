@@ -1,7 +1,7 @@
 @use 'variables';
 
 .player-info {
-    @include variables.evenListColor();
+    @include variables.oddListColor();
     @include variables.flexContainer(row);
     justify-content: space-between;
     gap: 2em;
@@ -10,6 +10,6 @@
 
 @media screen and (min-width: 786px) {
     .player-info {
-        @include variables.evenListColor(variables.$primary-bg);
+        @include variables.oddListColor(variables.$primary-bg);
     }
 }

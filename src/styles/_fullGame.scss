@@ -37,13 +37,12 @@
             }
         }
 
+        .team-headline {
+            border-bottom: 1px solid variables.$font-color;
+        }
+        
         .team-list {
             @include variables.flexContainer();
-            h3 {
-                border-bottom: 1px solid variables.$font-color;
-                padding-bottom: 1em;
-                margin-bottom: 1em;
-            }
             .teams {
                 @include variables.flexContainer();
                 padding: 0.8em 0;
