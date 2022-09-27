@@ -27,6 +27,7 @@ function LandingPage() {
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
 
     const handleUsername: (e:any) => void = (e) => { 
       setLoginUsername(e.target.value);
@@ -70,7 +71,9 @@ function LandingPage() {
           localStorage.setItem('accountKey', data.key.accountId);
           await getGames(); 
           navigate(`/user/${loginUsername}`);
-        };
+        } else {
+          setError(true)
+        }
       };
     };
 
@@ -102,6 +105,7 @@ function LandingPage() {
         <div className='input-container'>
             <label htmlFor="password">Password</label>
             <input onKeyUp={(e) => {handlePassword(e)}} type="password" name="password" id="password" required />
+            {error ? <p className='error'>Wrong username or password</p> : ''}
         </div>
         <p className='sign-up'>No account? <span onClick={handleSignUp}>Sign Up</span></p>
         <button onClick={login}>Login</button>

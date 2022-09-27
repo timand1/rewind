@@ -1,0 +1,158 @@
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"hampus","player-1-info":"info lite"},
+    {"player-2":"emelie","player-2-info":"info"},
+    {"player-3":"felicia","player-3-info":"sämst"}
+    ],"team2":[
+        {"player-6":"william","player-6-info":"info"}
+        ,{"player-7":"tim","player-7-info":"bäst"}
+    ]
+    ,"win":"team2",
+    "lost":"team1",
+    "date":"2013-06-08",
+    "duration":"18:06",
+    "gameId":"941",
+    "_id":"1Pw1zufo7h49jUil"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"Är bäst"}
+    ],
+    "team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2021-09-06",
+    "duration":"17:23",
+    "gameId":"1682",
+    "_id":"34bKqdpaqlMvS0Vq"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"Tim spelade tappert med William afkade mid"}
+    ,{"player-2":"emelie","player-2-info":"Afkade mid då hard support inte fyllde bottle varje minut"}
+    ],
+    "team2":[],
+    "win":"",
+    "lost":"team1",
+    "date":"2022-09-06",
+    "duration":"16:48",
+    "gameId":"145",
+    "_id":"98nWJXTU6X451dgb"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"william","player-1-info":"Är bäst"}
+    ],
+    "team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2022-09-06",
+    "duration":"17:23",
+    "gameId":"938",
+    "_id":"BSbLdsZuHcbbkzLQ"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"qwe"}
+    ],
+    "team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2012-09-12",
+    "duration":"19:33",
+    "gameId":"1316",
+    "_id":"G95SXv2E0fAzeFTV"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"Är bäst"}
+    ],
+    "team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2022-09-06",
+    "duration":"17:23",
+    "gameId":"373",
+    "_id":"Y79B40oq6HgNdIFt"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"qwe"}
+    ],
+    "team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2022-09-12",
+    "duration":"19:33",
+    "gameId":"867",
+    "_id":"ZaprQLwgeqbCxih0"
+}
+{"game":"Dota 2","team1":[
+    {"player-1":"william"}
+    ],"team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2022-09-14",
+    "duration":"20:05",
+    "gameId":"704",
+    "_id":
+    "iFJ2LGnXTKN7LmVs"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"qwe"}
+    ],"team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2020-09-12",
+    "duration":"19:33",
+    "gameId":"1743",
+    "_id":"qKWBeBw9GfzmPyZX"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"emelie","player-1-info":"info lite"}
+    ,{"player-2":"tim",
+    "player-2-info":"info"}
+    ,{"player-3":"felicia"
+    ,"player-3-info":"sämst"}
+    ],
+    "team2":[
+    {"player-6":"william","player-6-info":"info"}
+    ,{"player-7":"hampus","player-7-info":"bäst"}
+    ],
+    "win":"team2",
+    "lost":"team1"
+    ,"date":"2022-06-08",
+    "duration":"18:06",
+    "gameId":"666",
+    "_id":"t68HYqKpImyEJcBb"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"tim","player-1-info":"Är bäst"}
+    ],
+    "team2":[],
+    "win":"team1",
+    "lost":"",
+    "date":"2022-09-06",
+    "duration":"17:23",
+    "gameId":"15882",
+    "_id":"zN0BaG83oOZgOdiO"
+}
+{"game":"Dota 2",
+"team1":[
+    {"player-1":"hampus","player-1-info":"info lite"},
+    {"player-2":"emelie","player-2-info":"info"},
+    {"player-3":"felicia","player-3-info":"sämst"}],
+    "team2":[
+    {"player-6":"william","player-6-info":"info"},
+    {"player-7":"tim","player-7-info":"bäst"}
+    ],
+    "win":"team2",
+    "lost":"team1",
+    "date":"2013-06-08",
+    "duration":"18:06",
+    "gameId":"944",
+    "_id":"1Pw1zufo7h49jUil"
+}

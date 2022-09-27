@@ -14,11 +14,11 @@ export default function DisplayTeams(props: AddPlayerProps) {
 
     const [updatedPlayer, setUpdatedPlayer] = useState<object>(props.player)
     const handleInput: (e:any) => void = (e) => {
-        let test:any = updatedPlayer
+        let playerCopy:any = updatedPlayer
         if(e.target.name.includes('info')) {            
-            test[`player-${props.playerNum}-info`] = e.target.value;
+            playerCopy[`player-${props.playerNum}-info`] = e.target.value;
         } else {
-            test[`player-${props.playerNum}`] = e.target.value;
+            playerCopy[`player-${props.playerNum}`] = e.target.value;
         };
 
         setUpdatedPlayer(updatedPlayer);

@@ -32,6 +32,11 @@
             border-radius: 0.4em;
             outline: none;
         }
+        .error {
+            color: variables.$error-color;
+            text-align: center;
+            margin-top: 1em;
+        }
     }
     .sign-up {
         font-size: 0.8em;

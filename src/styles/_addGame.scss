@@ -67,10 +67,13 @@
         }
         .toggle-team {
             background-color: variables.$secondary-bg;
+            text-align: center;
             padding: 1em 2em;
+            min-width: 200px;
             border-radius: 0.5em;
             align-self: center;
             box-shadow: 4px 8px 6px variables.$shadow-color;
+            cursor: pointer;
         }
         .divider {
             height: 0.2em;

@@ -8,6 +8,7 @@ function SignUp() {
     
     const [loginUsername, setLoginUsername] = useState<string>('');
     const [loginPassword, setLoginPassword] = useState<string>('');
+    const [error, setError] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleUsername: (e:any) => void = (e) => { 
@@ -38,7 +39,9 @@ function SignUp() {
           localStorage.setItem('accountKey', data.accountId);
           setLoading(false);
           navigate(`/user/${loginUsername}`);
-        };
+        } else {
+          setError(true)
+        }
       };
     };
 
@@ -57,6 +60,7 @@ function SignUp() {
         <div className='input-container'>
             <label htmlFor="password">Password</label>
             <input onKeyUp={(e) => {handlePassword(e)}} type="password" name="password" id="password" required />
+            {error ? <p className='error'>Account already exists</p> : ''}
         </div>
         <button onClick={signUp}>Create Account</button>
       </div>
