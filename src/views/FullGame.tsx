@@ -11,11 +11,6 @@ type MyParams = {
     id: string;
   };
 
-interface TeamArray {
-    name: string;
-    info: string;
-};
-
 interface UpdatedGame {
     game: string;
     date: string;

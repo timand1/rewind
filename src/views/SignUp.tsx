@@ -6,26 +6,26 @@ import { useNavigate } from 'react-router-dom';
 function SignUp() {
     const navigate = useNavigate();
     
-    const [loginUsername, setLoginUsername] = useState<string>('');
-    const [loginPassword, setLoginPassword] = useState<string>('');
+    const [signUpUsername, setSignUpUsername] = useState<string>('');
+    const [signUpPassword, setSignUpPassword] = useState<string>('');
     const [error, setError] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleUsername: (e:any) => void = (e) => { 
-      setLoginUsername(e.target.value);
+      setSignUpUsername(e.target.value);
     };
     
     const handlePassword: (e:any) => void = (e) => { 
-      setLoginPassword(e.target.value);
+      setSignUpPassword(e.target.value);
     };
 
     async function signUp() {      
-      if(loginUsername.length > 2 && loginPassword.length > 2) {
+      if(signUpUsername.length > 2 && signUpPassword.length > 2) {
         setLoading(true);
 
         const account: object = {
-          username: loginUsername,
-          password: loginPassword
+          username: signUpUsername,
+          password: signUpPassword
         };
 
         const response = await fetch('https://wool-fir-ping.glitch.me/api/signup', {
@@ -38,7 +38,7 @@ function SignUp() {
           localStorage.setItem('user', data.key.username);
           localStorage.setItem('accountKey', data.accountId);
           setLoading(false);
-          navigate(`/user/${loginUsername}`);
+          navigate(`/user/${signUpUsername}`);
         } else {
           setError(true)
         }
