@@ -72,7 +72,15 @@ function AddGame() {
     const handleTeamOne: (player:object, index: number) => void = (player, index) => {      
         const teamOneCopy = [...teamOne];
         teamOneCopy[index] = player;
-
+        for(let i = 0; i < teamOneCopy.length; i++) {
+            if(teamOneCopy[i] == undefined) {
+                teamOneCopy[i]= {
+                    [`player-${i+1}`] : '-',
+                    [`player-${i+1}-info`] : '-',
+                };
+            };
+        };
+        
         setTeamOne(teamOneCopy);
     };
 
@@ -80,6 +88,15 @@ function AddGame() {
         const teamTwoCopy = [...teamTwo];
         teamTwoCopy[index] = player;
 
+        for(let i = 0; i < teamTwoCopy.length; i++) {
+            if(teamTwoCopy[i] == undefined) {
+                teamTwoCopy[i]= {
+                    [`player-${i+6}`] : '-',
+                    [`player-${i+6}-info`] : '-',
+                };
+            };
+        };
+        
         setTeamTwo(teamTwoCopy);
     };
 
