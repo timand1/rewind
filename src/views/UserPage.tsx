@@ -20,6 +20,7 @@ interface FilterProps {
   game: string;
   setting: string;
   sortBy?: string;
+  sort?: boolean;
 }
 
 function UserPage() {
@@ -31,6 +32,8 @@ function UserPage() {
     const [loading, setLoading] = useState<boolean>(true);
     const [chosenGame, setChosenGame] = useState<string>('all');
     const [filterSetting, setFilterSetting] = useState<string>('all'); 
+    const [sortByDate, setSortByDate] = useState<boolean>(false);
+    const [sortByDuration, setSortByDuration] = useState<boolean>(false);
     const [userTen, setUserTen] = useState<User>({
       name: username,
       win: 0,
@@ -159,21 +162,25 @@ function UserPage() {
     };
 
     const sortDate: () => void = () => { 
+      setSortByDate(!sortByDate);
       const searchObj: FilterProps = {
         username : username,
         game: chosenGame,
         setting : filterSetting,
-        sortBy: 'date'
+        sortBy: 'date',
+        sort: sortByDate
       }
       dispatch(gameActions.sortByTimeUser(searchObj));
     };
 
     const sortDuration: () => void = () => { 
+      setSortByDuration(!sortByDuration);
       const searchObj: FilterProps = {
         username : username,
         game: chosenGame,
         setting : filterSetting,
-        sortBy: 'duration'
+        sortBy: 'duration',
+        sort: sortByDuration
       };
       dispatch(gameActions.sortByTimeUser(searchObj));
     };

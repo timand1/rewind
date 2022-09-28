@@ -17,7 +17,10 @@ function Leaderboard() {
     const [searched, setSearched] = useState<boolean>(false);
     const [filterParams, setFilterParams] = useState<string>('all');
     const [loading, setLoading] = useState<boolean>(false);
-    
+    const [sortName, setSortName] = useState<boolean>(false);
+    const [sortWins, setSortWins] = useState<boolean>(false);
+    const [sortLoss, setSortLoss] = useState<boolean>(false);
+    const [sortWinRate, setSortWinRate] = useState<boolean>(false);
     useEffect(() => {
       getGames();
       async function getGames() {
@@ -60,20 +63,24 @@ function Leaderboard() {
       };
     };
     
-    const handleName: () => void = () => {       
-      dispatch(userActions.sortByName());
+    const handleName: () => void = () => {  
+      setSortName(!sortName)     
+      dispatch(userActions.sortByName(sortName));
     };
     
     const handleWin: () => void = () => { 
-      dispatch(userActions.sortByWin());
+      setSortWins(!sortWins);
+      dispatch(userActions.sortByWin(sortWins));
     };
     
     const handleLoss: () => void = () => { 
-      dispatch(userActions.sortByLoss());
+      setSortLoss(!sortLoss);
+      dispatch(userActions.sortByLoss(sortLoss));
     };
 
     const handleWinRate: () => void = () => { 
-      dispatch(userActions.sortByWinRate());
+      setSortWinRate(!sortWinRate)
+      dispatch(userActions.sortByWinRate(sortWinRate));
     };
 
     const resetSearch: () => void = () => { 

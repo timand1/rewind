@@ -9,8 +9,8 @@ const getAllGames = createAction('Get all games');
 const filterUserGames = createAction<object>('Filter games');
 const filterGames = createAction<object>('Get no win or ten last user games');
 const filteredGames = createAction<string>('Get matches filtered by game');
-const sortByDate = createAction<string>('Sort games by date');
-const sortByDuration = createAction<string>('Sort games by duration');
+const sortByDate = createAction<object>('Sort games by date');
+const sortByDuration = createAction<object>('Sort games by duration');
 const sortByTimeUser = createAction<object>('Sort user games by date or duration');
 
 const actions = { setAllGames, getUserGames, getAllGames, filterUserGames, filterGames, filteredGames, sortByDate, sortByDuration, sortByTimeUser };
@@ -155,11 +155,15 @@ const reducer = createReducer(initialState, {
       const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
       let arrCopy: Games[] = [...allGames];
 
-      if(action.payload != 'all') {
+      if(action.payload.game != 'all') {
         arrCopy = arrCopy.filter(game => game.game == action.payload);
       };
-      
-      arrCopy.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+
+      if(action.payload.sortBy) {
+        arrCopy.sort((a, b) => (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0));
+      } else {
+        arrCopy.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+      }
 
       return arrCopy;
     }, 
@@ -167,12 +171,16 @@ const reducer = createReducer(initialState, {
       const allGames:Games[] = JSON.parse(localStorage.getItem('games') || '');
       let arrCopy: Games[] = [...allGames];
 
-      if(action.payload != 'all') {
+      if(action.payload.game != 'all') {
         arrCopy = arrCopy.filter(game => game.game == action.payload);
       };
-      
-      arrCopy.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0));
-      
+
+      if(action.payload.sortBy) {
+        arrCopy.sort((a, b) => (a.duration < b.duration) ? 1 : ((b.duration < a.duration) ? -1 : 0));
+      } else {
+        arrCopy.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0));
+      }
+
       return arrCopy;
     },
     [sortByTimeUser.toString()]: ( state, action) => {
@@ -197,9 +205,17 @@ const reducer = createReducer(initialState, {
       };
 
       if(action.payload.sortBy == 'date') {
-        newGamesArray = newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+        if(action.payload.sort) {
+          newGamesArray = newGamesArray.sort((a, b) => (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0));
+        } else {
+          newGamesArray = newGamesArray.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+        };
       } else if(action.payload.sortBy == 'duration') {
-        newGamesArray = newGamesArray.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0));
+          if(action.payload.sort) {
+            newGamesArray = newGamesArray.sort((a, b) => (a.duration < b.duration) ? 1 : ((b.duration < a.duration) ? -1 : 0));
+          } else {
+            newGamesArray = newGamesArray.sort((a, b) => (a.duration > b.duration) ? 1 : ((b.duration > a.duration) ? -1 : 0));
+          };
       };
 
       if(action.payload.setting == 'last-ten') {

@@ -9,12 +9,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import {actions as gameActions} from '../features/gameReducer';
 
+interface SortOptionsProps {
+  game: string;
+  sortBy: boolean;
+}
+
 function GamesList() {
     const dispatch = useDispatch();
 
     const [gameFilter, setGameFilter] = useState<string>('all');
     const [info, setInfo] = useState<boolean>(false);   
     const [loading, setLoading] = useState<boolean>(false);
+    const [sortByDate, setSortByDate] = useState<boolean>(false);
+    const [sortByDuration, setSortByDuration] = useState<boolean>(false);
 
     const handleInfo: () => void = () => { 
       setInfo(!info);
@@ -52,11 +59,23 @@ function GamesList() {
     };
 
     const sortDate: () => void = () => { 
-      dispatch(gameActions.sortByDate(gameFilter));
+      setSortByDate(!sortByDate);
+      const sortOptions: SortOptionsProps = {
+        game : gameFilter,
+        sortBy : sortByDate
+      };
+
+      dispatch(gameActions.sortByDate(sortOptions));
     };
 
     const sortDuration: () => void = () => { 
-      dispatch(gameActions.sortByDuration(gameFilter));
+      setSortByDuration(!sortByDuration);
+      const sortOptions: SortOptionsProps = {
+        game : gameFilter,
+        sortBy : sortByDuration
+      };
+
+      dispatch(gameActions.sortByDuration(sortOptions));
     };
     
     const gameElement = gamesList.map((game, index) =>  <DisplayGame key={index} game={game} /> );

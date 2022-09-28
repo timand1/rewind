@@ -3,11 +3,11 @@ import { User, Games } from '../models/data';
 const initialState : User[] = [];
 
 
-const sortByWinRate = createAction('Sort winrate');
+const sortByWinRate = createAction<boolean>('Sort winrate');
 const allUsers = createAction<string>('All user');
-const sortByName = createAction('Sort name');
-const sortByWin = createAction('Sort win');
-const sortByLoss = createAction('Sort loss');
+const sortByName = createAction<boolean>('Sort name');
+const sortByWin = createAction<boolean>('Sort win');
+const sortByLoss = createAction<boolean>('Sort loss');
 const searchUser = createAction<string>('Search user');
 
 const actions = { sortByWinRate, sortByName, sortByWin, sortByLoss, searchUser, allUsers };
@@ -15,26 +15,42 @@ const actions = { sortByWinRate, sortByName, sortByWin, sortByLoss, searchUser, 
 const reducer = createReducer(initialState, {
     [sortByWinRate.toString()]: ( state, action) => {
         const arrCopy: User[] = [...state];
-        arrCopy.sort((a, b) => (a.winRate < b.winRate) ? 1 : ((b.winRate < a.winRate) ? -1 : 0));
+        if(action.payload) {
+            arrCopy.sort((a, b) => (a.winRate > b.winRate) ? 1 : ((b.winRate > a.winRate) ? -1 : 0));
+        } else {
+            arrCopy.sort((a, b) => (a.winRate < b.winRate) ? 1 : ((b.winRate < a.winRate) ? -1 : 0));
+        };
 
         return arrCopy;
 
     },
     [sortByName.toString()]: ( state, action) => {
         const arrCopy: User[] = [...state];
-        arrCopy.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        if(action.payload) {
+            arrCopy.sort((a, b) => (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0));
+        } else {
+            arrCopy.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        };
 
         return arrCopy;
     },
     [sortByWin.toString()]: ( state, action) => {
         const arrCopy: User[] = [...state];
-        arrCopy.sort((a, b) => (a.win < b.win) ? 1 : ((b.win < a.win) ? -1 : 0));
+        if(action.payload) {
+            arrCopy.sort((a, b) => (a.win > b.win) ? 1 : ((b.win > a.win) ? -1 : 0));
+        } else {
+            arrCopy.sort((a, b) => (a.win < b.win) ? 1 : ((b.win < a.win) ? -1 : 0));
+        };
 
         return arrCopy;
     },
     [sortByLoss.toString()]: ( state, action) => {
         const arrCopy: User[] = [...state];
-        arrCopy.sort((a, b) => (a.lost < b.lost) ? 1 : ((b.lost < a.lost) ? -1 : 0));
+        if(action.payload) {
+            arrCopy.sort((a, b) => (a.lost > b.lost) ? 1 : ((b.lost > a.lost) ? -1 : 0));
+        } else {
+            arrCopy.sort((a, b) => (a.lost < b.lost) ? 1 : ((b.lost < a.lost) ? -1 : 0));
+        };
 
         return arrCopy;
     },
