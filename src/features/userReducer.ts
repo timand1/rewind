@@ -71,6 +71,8 @@ const reducer = createReducer(initialState, {
         const userList: Array<any> = [];
         
         for (const game of arrCopy) {         
+            console.log(game);
+            
             game.team1.forEach(player => {
                 userList.push(Object.values(player)[0]);
             });

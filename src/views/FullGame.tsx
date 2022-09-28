@@ -49,6 +49,8 @@ export default function FullGame() {
                     setNewDuration(data.game[0].duration);
                     setNewWinner(data.game[0].win);
                     setNewLoser(data.game[0].lost);
+                    setNewTeamOne(data.game[0].team1);
+                    setNewTeamTwo(data.game[0].team2);
                 }                
             };
         };
@@ -75,15 +77,14 @@ export default function FullGame() {
         checkTeamTwo = chosenGame.team2.length > 0 ? true : false;
         teamOneEl = chosenGame.team1.map((player, index) => <DisplayTeams key={index} player={player} />);
         teamTwoEl = chosenGame.team2.map((player, index) => <DisplayTeams key={index} player={player} />);
+        
 
-
-        for(let i = 0; i < chosenGame.team1.length ; i ++) {
+        for(let i = 0; i < chosenGame.team1.length ; i++) {
             const playerValue = {
                 [`player-${i + 1}`] : Object.values(chosenGame.team1[i])[0],
                 [`player-${i + 1}-info`]: Object.values(chosenGame.team1[i])[1]
             };
     
-            
             teamOneArr.push(playerValue)
         };
         for(let j = 0; j < 5 - chosenGame.team1.length; j++) {
