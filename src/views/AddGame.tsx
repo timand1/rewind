@@ -20,7 +20,7 @@ function AddGame() {
     const [date, setDate] = useState<string>('');
     const [duration, setDuration] = useState<string>('');
     const [addedImage, setAddedImage] = useState<string>('');
-    const [addedGame, setAddedGame] = useState<boolean>(true);
+    const [addedGame, setAddedGame] = useState<boolean>(false);
 
     const handleSubmit: (e:any) => void = (e) => {
         e.preventDefault();
