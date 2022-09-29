@@ -312,7 +312,7 @@ export default function FullGame() {
                             {newImage.length > 1 ? <p onClick={removeImage}>Remove image</p> : ''}
                         </div>
                         <input type="file" name="gameImage" id='gameImage' accept="image/jpeg, image/png, image/jpg" hidden onChange={(e) => {handleImage(e)}} />
-                        {newImage.length > 1 ? <img src={newImage} alt="game image" style={{height: "100px", width:"100px"}}/> : 'No Image'} 
+                        {newImage.length > 1 ? <img className='game-image' src={newImage} alt="game image" /> : 'No Image'} 
                     </div>
                 </div>
                 <div className='team-list'>

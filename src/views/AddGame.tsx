@@ -142,6 +142,10 @@ function AddGame() {
         setAddedGame(false);
     };
 
+    const removeImage: () => void = () => {
+        setAddedImage('');
+    };
+
     return (
       <div className="add-game">
         <Nav />
@@ -176,12 +180,12 @@ function AddGame() {
                 <input type="time" step={1} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
             </div>
             <div className='form-container'>
-                    <p>Image</p>
-                <div>  
-                    <label htmlFor="gameImage" id='gameImageLabel'>Add image</label>
-                    <input type="file" name="gameImage" id='gameImage' accept="image/jpeg, image/png, image/jpg" hidden onChange={(e) => {handleImage(e)}} />
-                    {addedImage ? <img src={addedImage} alt="game image" style={{height: "100px", width:"100px"}}/> : ''}
-                </div>
+                    <div className="add-image">
+                        <label htmlFor="gameImage" id='gameImageLabel'>Add image</label>
+                        {addedImage.length > 1 ? <p onClick={removeImage}>Remove image</p> : ''}
+                    </div>
+                        <input type="file" name="gameImage" id='gameImage' accept="image/jpeg, image/png, image/jpg" hidden onChange={(e) => {handleImage(e)}} />
+                        {addedImage.length > 1 ? <img className='game-image' src={addedImage} alt="game image" /> : 'No Image'} 
             </div>
             <div className='divider'></div>
             <div className="teams">

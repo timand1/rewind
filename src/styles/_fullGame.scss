@@ -35,7 +35,7 @@
                 gap: 0.4em;
 
                 select, input {
-                    min-width: 35vw;
+                    width: clamp(30vw, 12em, 35vw);
                 }
             }
             .image-container {
@@ -61,7 +61,8 @@
                 }
             }
             .game-image {
-                max-width: 30vw;
+                width: clamp(30vw, 12em, 35vw);
+                box-shadow: 0 0 1em black;
             }
             #gameImageLabel {
                 @include variables.selectDesign();
@@ -87,7 +88,7 @@
                     justify-content: space-between;
                     gap: 0.6em;
                     input, textarea {
-                        max-width: 35vw;
+                        width: clamp(30vw, 12em, 35vw);
                     }
                 }
             }
@@ -122,12 +123,12 @@
                         min-width: clamp(2vw, 5em, 10vw);
                     }
                     input, select {
-                        min-width: clamp(7vw, 13em, 20vw);
+                        width: clamp(7vw, 13em, 20vw);
                         font-size: 1em;
                     }
                 }
                 .game-image {
-                    max-width: 20vw;
+                    width: clamp(20vw, 20em, 35vw);
                 }
             }
             .team-list {
@@ -136,7 +137,7 @@
                         flex-direction: row;
                         gap: 2em;
                         input, textarea {
-                            min-width: clamp(7vw, 13em, 20vw);
+                            width: clamp(7vw, 13em, 20vw);
                             font-size: 1em;
                         }
                     }

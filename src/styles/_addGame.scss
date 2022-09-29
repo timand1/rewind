@@ -62,15 +62,37 @@
             @include variables.flexContainer(row);
             justify-content: space-between;
             textarea, input, select {
-                max-width: 35vw;
+                width: clamp(30vw, 12em, 35vw);
             }
-            #gameImageLabel {
-                @include variables.selectDesign();
-                background-color: color.scale(variables.$secondary-bg, $lightness: 30%);
-                cursor: pointer;
-            }
-            div {
+            .add-image {
                 @include variables.flexContainer();
+                gap: 1em;
+
+                #gameImageLabel {
+                    @include variables.selectDesign();
+                    background-color: color.scale(variables.$secondary-bg, $lightness: 30%);
+                    cursor: pointer;
+                }
+                div {
+                    @include variables.flexContainer();
+                }
+                
+                p {
+                    background-color: variables.$primary-bg;
+                    font-size: 0.8em;
+                    cursor: pointer;
+                    transition: all 400ms;
+                    box-shadow: 4px 4px 0px black;
+                    padding: 0.4em;
+                    &:hover {
+                        color: color.scale(variables.$font-color, $blackness: 30%);
+                        box-shadow: 2px 2px 0px color.scale(variables.$primary-bg, $lightness: 30%);
+                    }
+                }
+            }
+            img {
+                box-shadow: 0 0 1em black;
+                width: clamp(30vw, 12em, 35vw);
             }
         }
         .toggle-team {
@@ -84,7 +106,7 @@
             cursor: pointer;
         }
         .divider {
-            height: 0.2em;
+            height: 0.4em;
             width: 100%;
             background-color: variables.$font-color;
         }
@@ -99,6 +121,7 @@
 @media screen and (min-width: 786px) {
     .add-game {
         form {
+            height: 100%;
             .teams {
                 @include variables.flexContainer(row); 
                 justify-content: space-between;
@@ -112,13 +135,16 @@
                 }
                 .team-divider {
                     width: 0.1em;
-                    height: 500px;
+                    height: 100%;
                 }
             }
             .form-container {
                 textarea, input, select {
-                    min-width: clamp(7vw, 13em, 20vw);
+                    width: clamp(7vw, 13em, 20vw);
                     font-size: 1em;
+                }
+                img {
+                    width: clamp(20vw, 20em, 35vw);
                 }
             }
         }
