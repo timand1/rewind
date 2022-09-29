@@ -1,6 +1,6 @@
 import '../styles/_signUp.scss';
 import logo from '../assets/logo.svg';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
@@ -11,11 +11,11 @@ function SignUp() {
     const [error, setError] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleUsername: (e:any) => void = (e) => { 
+    const handleUsername: (e: ChangeEvent<HTMLInputElement>) => void = (e) => { 
       setSignUpUsername(e.target.value);
     };
     
-    const handlePassword: (e:any) => void = (e) => { 
+    const handlePassword: (e: ChangeEvent<HTMLInputElement>) => void = (e) => { 
       setSignUpPassword(e.target.value);
     };
 
@@ -55,11 +55,11 @@ function SignUp() {
         <h2>Your journey starts now</h2>
         <div className='input-container'>
             <label htmlFor="username">Username</label>
-            <input onKeyUp={(e) => {handleUsername(e)}} type="text" name="username" id="username" required />
+            <input onChange={(e) => {handleUsername(e)}} type="text" name="username" id="username" required />
         </div>
         <div className='input-container'>
             <label htmlFor="password">Password</label>
-            <input onKeyUp={(e) => {handlePassword(e)}} type="password" name="password" id="password" required />
+            <input onChange={(e) => {handlePassword(e)}} type="password" name="password" id="password" required />
             {error ? <p className='error'>Account already exists</p> : ''}
         </div>
         <button onClick={signUp}>Create Account</button>

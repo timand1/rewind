@@ -2,7 +2,8 @@ import '../styles/_leaderboard.scss';
 import searchIcon from '../assets/search-icon.svg';
 import Nav from '../components/Nav';
 import DisplayUser from '../components/DisplayUser';
-import { useEffect, useState } from 'react';
+import { User } from '../models/data';
+import { useEffect, useState, ChangeEvent, KeyboardEvent } from 'react';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -40,15 +41,15 @@ function Leaderboard() {
       };
     }, []);
     
-    const users:Array<any> = useSelector((state: RootState) => state.users);   
+    const users:User[] = useSelector((state: RootState) => state.users);   
     
     let userElement = users.map((user, index) =>  <DisplayUser key={index} user={user} />);
 
-    const handleInput: (e:any) => void = (e) => {  
+    const handleInput: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {  
       setSearchInput(e.target.value);
     };
 
-    const handleEnter: (e:any) => void = (e) => {
+    const handleEnter: (e: KeyboardEvent) => void = (e) => {
       if(e.key == 'Enter') {       
         handleSearch();
       };
@@ -89,7 +90,7 @@ function Leaderboard() {
       dispatch(userActions.allUsers('all'));
     };
    
-    const handleGame: (e:any) => void = (e) => { 
+    const handleGame: (e:ChangeEvent<HTMLSelectElement>) => void = (e) => { 
       setFilterParams(e.target.value);
         dispatch(userActions.allUsers(e.target.value));
     };

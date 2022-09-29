@@ -57,7 +57,7 @@ const reducer = createReducer(initialState, {
     [searchUser.toString()]: ( state, action) => {
         const arrCopy: User[] = [...state];
         
-        const searchedUsers = arrCopy.filter(user => user.name.toLowerCase() == action.payload)
+        const searchedUsers: User[] = arrCopy.filter(user => user.name.toLowerCase() == action.payload)
         
         return searchedUsers;
     },
@@ -68,8 +68,8 @@ const reducer = createReducer(initialState, {
             arrCopy = arrCopy.filter(game => game.game == action.payload);
         };
         
-        const userList: Array<any> = [];
-        
+        const userList: string[] = [];
+
         for (const game of arrCopy) {                     
             game.team1.forEach(player => {
                 userList.push(Object.values(player)[0]);
@@ -78,12 +78,13 @@ const reducer = createReducer(initialState, {
                 userList.push(Object.values(player)[0]);
               });
         };
+
         const uniqueUsers = userList.filter((user, index) => userList.indexOf(user) === index);
         const userGameList: User[] = [];
         
-        uniqueUsers.forEach(user => {
+        uniqueUsers.forEach((user : string) => {
             const newGamesArray: Games[] = [];
-
+            
             for (const game of arrCopy) {
                 game.team1.forEach(player => {
                     if(Object.values(player).indexOf(user) > -1) {
@@ -110,9 +111,9 @@ const reducer = createReducer(initialState, {
                         win = win + 1;
                     };
                   });
-            }  ; 
+            }; 
             const winRate: number = (win / amountOfGames ) * 100;
-
+                
             const userObj: User = {
                 name: user,
                 win: win,
@@ -125,7 +126,7 @@ const reducer = createReducer(initialState, {
 
         localStorage.setItem('users', JSON.stringify(userGameList));
 
-        userGameList.sort((a, b) => (a.win < b.win) ? 1 : ((b.win < a.win) ? -1 : 0))
+        userGameList.sort((a, b) => (a.win < b.win) ? 1 : ((b.win < a.win) ? -1 : 0));
     
         return userGameList;        
     }

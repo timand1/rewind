@@ -4,6 +4,7 @@ import { Games } from '../models/data';
 import DisplayGame from '../components/DisplayGame';
 import infoIcon from '../assets/info.svg';
 import infoActiveIcon from '../assets/infoActive.svg';
+import { ChangeEvent } from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
@@ -45,11 +46,11 @@ function GamesList() {
       };
     }, []);
 
-    const activeInfo:any = info ? infoActiveIcon : infoIcon;
+    const activeInfo: string = info ? infoActiveIcon : infoIcon;
 
     const gamesList:Array<Games> = useSelector((state: RootState) => state.games)  
 
-    const handleGame: (e:any) => void = (e) => { 
+    const handleGame: (e: ChangeEvent<HTMLSelectElement>) => void = (e) => { 
       setGameFilter(e.target.value);
       if(e.target.value == 'all') {
         dispatch(gameActions.getAllGames());

@@ -1,6 +1,6 @@
 import '../styles/_landingPage.scss';
 import logo from '../assets/logo.svg';
-import {  useState, useEffect } from 'react';
+import {  useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {actions as gameActions} from '../features/gameReducer';
@@ -29,13 +29,15 @@ function LandingPage() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
 
-    const handleUsername: (e:any) => void = (e) => { 
+    const handleUsername: (e: ChangeEvent<HTMLInputElement>) => void = (e) => { 
       setLoginUsername(e.target.value);
     };
     
-    const handlePassword: (e:any) => void = (e) => { 
+    const handlePassword: (e: ChangeEvent<HTMLInputElement>) => void = (e) => { 
       setLoginPassword(e.target.value);
+    };
 
+    const handleEnter: (e: KeyboardEvent) => void = (e) => { 
       if(e.key == 'Enter') {
         login();
       };
@@ -100,11 +102,11 @@ function LandingPage() {
         <h2>Login</h2>
         <div className='input-container'>
             <label htmlFor="username">Username</label>
-            <input onKeyUp={(e) => {handleUsername(e)}} type="text" name="username" id="username" required />
+            <input onChange={(e) => {handleUsername(e)}} type="text" name="username" id="username" required />
         </div>
         <div className='input-container'>
             <label htmlFor="password">Password</label>
-            <input onKeyUp={(e) => {handlePassword(e)}} type="password" name="password" id="password" required />
+            <input onChange={(e) => {handlePassword(e)}} onKeyUp={handleEnter} type="password" name="password" id="password" required />
             {error ? <p className='error'>Wrong username or password</p> : ''}
         </div>
         <p className='sign-up'>No account? <span onClick={handleSignUp}>Sign Up</span></p>

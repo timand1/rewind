@@ -25,10 +25,12 @@ export default function Nav() {
     const handleHome: () => void = () => {
         navigate('/');
         setMenuOpen(false);
-        const root:any = document.querySelector('#root');
-        root.scrollIntoView({
-            behavior: 'smooth'
-          });
+        const root: HTMLElement | null = document.querySelector('#root');
+        if(root) {
+            root.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     };
 
     const handleAccount: () => void = () => {

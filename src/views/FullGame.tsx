@@ -5,7 +5,7 @@ import DisplayTeams from '../components/DisplayTeams';
 import AddPlayer from '../components/AddPlayer';
 import { Games } from '../models/data';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 
 type MyParams = {
     id: string;
@@ -140,16 +140,16 @@ export default function FullGame() {
         setNewGame(e.target.value);  
         
     };
-    const handleDate: (e:any) => void = (e) => {
+    const handleDate: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
         setNewDate(e.target.value);
     };
-    const handleDuration: (e:any) => void = (e) => {
+    const handleDuration: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
         setNewDuration(e.target.value);
     };
-    const handleWinner: (e:any) => void = (e) => {
+    const handleWinner: (e: ChangeEvent<HTMLSelectElement>) => void = (e) => {
         setNewWinner(e.target.value);
     };
-    const handleLoser: (e:any) => void = (e) => {
+    const handleLoser: (e: ChangeEvent<HTMLSelectElement>) => void = (e) => {
         setNewLoser(e.target.value);
     };
 

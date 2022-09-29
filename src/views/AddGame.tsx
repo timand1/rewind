@@ -1,7 +1,7 @@
 import '../styles/_addGame.scss';
 import Nav from '../components/Nav';
 import PlayerInput from '../components/PlayerInput';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import {actions as gameActions} from '../features/gameReducer';
 
@@ -65,7 +65,7 @@ function AddGame() {
         };
       };
     
-    const handleGame: (e:any) => void = (e) => {
+    const handleGame: (e: ChangeEvent<HTMLSelectElement>) => void = (e) => {
         setGame(e.target.value);
     };
 
@@ -108,19 +108,19 @@ function AddGame() {
         };
     };
 
-    const handleDate: (e:any) => void = (e) => {
+    const handleDate: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
         setDate(e.target.value);
     };
 
-    const handleDuration: (e:any) => void = (e) => {
+    const handleDuration: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
         setDuration(e.target.value);
     };
 
-    const handleShowTeams: (e:any) => void = (e) => {
+    const handleShowTeams: () => void = () => {
         setShowTeamTwo(!showTeamTwo);
     };
 
-    const handleAdded: (e:any) => void = (e) => {
+    const handleAdded: () => void = () => {
         setAddedGame(false);
         setShowTeamTwo(false);
     };
@@ -154,6 +154,8 @@ function AddGame() {
                 <label htmlFor="player">Date</label>
                 <input type="date" name="date" id="date" onChange={(e) => {handleDate(e)}} required/>
             </div>
+            {/* <input type="file" name="" id="fileId" onChange={(e) => {handleImage(e)}} />
+            <img src={image} alt="" style={{height: "100px", width:"100px"}} /> */}
             <div className='form-container'>
                 <label htmlFor="player">Duration</label>
                 <input type="time" step={2} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>

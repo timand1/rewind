@@ -85,7 +85,7 @@ function UserPage() {
       setInfo(!info);
     };
 
-    const activeInfo:any = info ? infoActiveIcon : infoIcon;
+    const activeInfo:string = info ? infoActiveIcon : infoIcon;
     
     let gamesList:Array<Games> = useSelector((state: RootState) => state.games);
     
@@ -122,7 +122,7 @@ function UserPage() {
       }
     }, [chosenGame, filterSetting]);
 
-    const users:Array<User> = useSelector((state: RootState) => state.users);
+    const users:User[]= useSelector((state: RootState) => state.users);
     const chosenUser = users.filter(user => user.name == username)[0];
     
     const handleGame: (e:any) => void = (e) => { 
