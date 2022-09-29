@@ -164,6 +164,10 @@ export default function FullGame() {
         }
     };
 
+    const removeImage: () => void = () => {
+        setNewImage('');
+    };
+
     async function updateGame() {
 
         setLoading(true);
@@ -303,7 +307,10 @@ export default function FullGame() {
                 </div>
                 <div className="game-info">
                     <div className='image-container'>
-                        <label htmlFor="gameImage" id='gameImageLabel'>Update image</label>
+                        <div className="add-image">
+                            <label htmlFor="gameImage" id='gameImageLabel'>Update image</label>
+                            {newImage.length > 1 ? <p onClick={removeImage}>Remove image</p> : ''}
+                        </div>
                         <input type="file" name="gameImage" id='gameImage' accept="image/jpeg, image/png, image/jpg" hidden onChange={(e) => {handleImage(e)}} />
                         {newImage.length > 1 ? <img src={newImage} alt="game image" style={{height: "100px", width:"100px"}}/> : 'No Image'} 
                     </div>

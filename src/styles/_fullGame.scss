@@ -31,7 +31,7 @@
             justify-content: space-between;
             padding: 0 1em;
             div {
-                @include variables.flexContainer(column);
+                @include variables.flexContainer();
                 gap: 0.4em;
 
                 select, input {
@@ -42,6 +42,23 @@
                 width: 100%;
                 flex-direction: row;
                 justify-content: space-between;
+
+                .add-image {
+                    @include variables.flexContainer();
+                    gap: 1em;
+                    p {
+                        background-color: variables.$primary-bg;
+                        font-size: 0.8em;
+                        cursor: pointer;
+                        transition: all 400ms;
+                        box-shadow: 4px 4px 0px black;
+                        padding: 0.4em;
+                        &:hover {
+                            color: color.scale(variables.$font-color, $blackness: 30%);
+                            box-shadow: 2px 2px 0px color.scale(variables.$primary-bg, $lightness: 30%);
+                        }
+                    }
+                }
             }
             .game-image {
                 max-width: 30vw;
