@@ -1,7 +1,8 @@
 import '../styles/_displayTeams.scss';
+import { playerObj } from '../models/data'
 
 interface DisplayTeamProps {
-    player: object;
+    player: playerObj;
 }
 
 

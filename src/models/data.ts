@@ -1,12 +1,18 @@
 export interface Games {
     game: string,
     duration: string,
-    team1: Array<object>,
-    team2: Array<object>,
+    team1: playerObj[],
+    team2: playerObj[],
     date: string,
     win: string,
     lost: string,
-    gameId: string
+    gameId: string,
+    image: string
+}
+
+export interface playerObj {
+    player : string;
+    info: string;
 }
 
 export interface User {

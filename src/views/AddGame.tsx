@@ -1,6 +1,7 @@
 import '../styles/_addGame.scss';
 import Nav from '../components/Nav';
 import PlayerInput from '../components/PlayerInput';
+import { playerObj, Games } from '../models/data';
 import { useState, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import {actions as gameActions} from '../features/gameReducer';
@@ -11,29 +12,45 @@ function AddGame() {
     const [showTeamTwo, setShowTeamTwo] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [teamOne, setTeamOne] = useState<Array<object>>([]);
-    const [teamTwo, setTeamTwo] = useState<Array<object>>([]);
+    const [teamOne, setTeamOne] = useState<playerObj[]>([]);
+    const [teamTwo, setTeamTwo] = useState<playerObj[]>([]);
     const [game, setGame] = useState<string>('');
     const [winner, setWinner] = useState<string>('');
     const [loser, setLoser] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [duration, setDuration] = useState<string>('');
-    const [addedGame, setAddedGame] = useState<boolean>(false);
+    const [addedImage, setAddedImage] = useState<string>('');
+    const [addedGame, setAddedGame] = useState<boolean>(true);
 
     const handleSubmit: (e:any) => void = (e) => {
         e.preventDefault();
         setShowTeamTwo(false);
         setAddedGame(true);
-        
-        const newGame: object = {
+
+        const teamOneCopy = [...teamOne];
+        for(let i = teamOneCopy.length - 1; i >= 0; i--) {
+            if(teamOneCopy[i] == undefined || teamOneCopy[i].player == '') {
+                teamOneCopy.splice(i, 1)
+            };
+        };
+
+        const teamTwoCopy = [...teamTwo];
+        for(let i = teamTwoCopy.length - 1; i >= 0; i--) {
+            if(teamTwoCopy[i] == undefined || teamTwoCopy[i].player == '') {
+                teamTwoCopy.splice(i, 1)
+            };
+        };
+
+        const newGame: Games = {
             game: game,
-            team1: teamOne,
-            team2: teamTwo,
+            team1: teamOneCopy,
+            team2: teamTwoCopy,
             win: winner,
             lost: loser,
             date: date,
             duration: duration,
-            gameId: (Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000)).toString()
+            gameId: (Math.floor(Math.random() * 1000) + Math.floor(Math.random() * 1000)).toString(),
+            image: addedImage
         };
 
         addGame(newGame);
@@ -69,33 +86,16 @@ function AddGame() {
         setGame(e.target.value);
     };
 
-    const handleTeamOne: (player:object, index: number) => void = (player, index) => {      
+    const handleTeamOne: (player:playerObj, index: number) => void = (player, index) => {      
         const teamOneCopy = [...teamOne];
         teamOneCopy[index] = player;
-        for(let i = 0; i < teamOneCopy.length; i++) {
-            if(teamOneCopy[i] == undefined) {
-                teamOneCopy[i]= {
-                    [`player-${i+1}`] : '-',
-                    [`player-${i+1}-info`] : '-',
-                };
-            };
-        };
         
         setTeamOne(teamOneCopy);
     };
 
-    const handleTeamTwo: (player:object, index: number) => void = (player, index) => {    
+    const handleTeamTwo: (player:playerObj, index: number) => void = (player, index) => {    
         const teamTwoCopy = [...teamTwo];
         teamTwoCopy[index] = player;
-
-        for(let i = 0; i < teamTwoCopy.length; i++) {
-            if(teamTwoCopy[i] == undefined) {
-                teamTwoCopy[i]= {
-                    [`player-${i+6}`] : '-',
-                    [`player-${i+6}-info`] : '-',
-                };
-            };
-        };
         
         setTeamTwo(teamTwoCopy);
     };
@@ -118,11 +118,28 @@ function AddGame() {
 
     const handleShowTeams: () => void = () => {
         setShowTeamTwo(!showTeamTwo);
+        if(showTeamTwo) {
+            setTeamTwo([]);
+        };
     };
+
+    const handleImage: (e:ChangeEvent<HTMLInputElement>) => void = (e) => {
+        if(e.target.files) {
+            let file: Blob = e.target.files[0];
+    
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                const imageString = reader.result;
+                if(typeof imageString == 'string') {
+                    setAddedImage(imageString);
+                }
+            };
+        }
+     }
 
     const handleAdded: () => void = () => {
         setAddedGame(false);
-        setShowTeamTwo(false);
     };
 
     return (
@@ -143,7 +160,7 @@ function AddGame() {
             <h1>Add game</h1>
             <div className='form-container'>
                 <label htmlFor="game">Game</label>
-                <select onChange={(e) => {handleGame(e)}} name="game" id="game" defaultValue='DEFAULT'>
+                <select onChange={(e) => {handleGame(e)}} name="game" id="game" defaultValue='DEFAULT' required>
                     <option value="DEFAULT">-- Choose a game --</option>
                     <option value="Dota 2">Dota 2</option>
                     <option value="World of Warcraft">World of Warcraft</option>
@@ -154,11 +171,17 @@ function AddGame() {
                 <label htmlFor="player">Date</label>
                 <input type="date" name="date" id="date" onChange={(e) => {handleDate(e)}} required/>
             </div>
-            {/* <input type="file" name="" id="fileId" onChange={(e) => {handleImage(e)}} />
-            <img src={image} alt="" style={{height: "100px", width:"100px"}} /> */}
             <div className='form-container'>
                 <label htmlFor="player">Duration</label>
-                <input type="time" step={2} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
+                <input type="time" step={1} defaultValue='00:00:00' name="duration" id="duration" onChange={(e) => {handleDuration(e)}} required/>
+            </div>
+            <div className='form-container'>
+                    <p>Image</p>
+                <div>  
+                    <label htmlFor="gameImage" id='gameImageLabel'>Add image</label>
+                    <input type="file" name="gameImage" id='gameImage' accept="image/jpeg, image/png, image/jpg" hidden onChange={(e) => {handleImage(e)}} />
+                    {addedImage ? <img src={addedImage} alt="game image" style={{height: "100px", width:"100px"}}/> : ''}
+                </div>
             </div>
             <div className='divider'></div>
             <div className="teams">

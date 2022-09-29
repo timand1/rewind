@@ -6,6 +6,10 @@ import { useDispatch } from 'react-redux';
 import {actions as gameActions} from '../features/gameReducer';
 import {actions as userActions} from '../features/userReducer';
 
+interface AccountProps {
+  username: string;
+  password: string;
+};
 
 function LandingPage() {
     const navigate = useNavigate();
@@ -57,7 +61,7 @@ function LandingPage() {
     async function login() {
       setLoading(true);
       if(loginUsername.length > 2 && loginPassword.length > 2) {
-        const account: object = {
+        const account: AccountProps = {
           username: loginUsername,
           password: loginPassword
         };
@@ -80,12 +84,12 @@ function LandingPage() {
     };
 
     async function getGames() {
-      const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
+      const response = await fetch('http://localhost:8001/api/games', {
       headers: {'Content-Type': 'application/json'}
       });
       const data = await response.json();
       
-      if (data.success) {
+      if (data.success) {        
         localStorage.setItem('games', JSON.stringify(data.matches));
         dispatch(gameActions.setAllGames(data.matches));
         setLoading(false);

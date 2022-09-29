@@ -64,6 +64,14 @@
             textarea, input, select {
                 max-width: 35vw;
             }
+            #gameImageLabel {
+                @include variables.selectDesign();
+                background-color: color.scale(variables.$secondary-bg, $lightness: 30%);
+                cursor: pointer;
+            }
+            div {
+                @include variables.flexContainer();
+            }
         }
         .toggle-team {
             background-color: variables.$secondary-bg;

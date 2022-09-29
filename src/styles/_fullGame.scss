@@ -1,5 +1,6 @@
 @use 'variables';
 @use 'buttons';
+@use 'sass:color';
 
 .full-game {
     margin: 0 auto;
@@ -36,6 +37,20 @@
                 select, input {
                     min-width: 35vw;
                 }
+            }
+            .image-container {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .game-image {
+                max-width: 30vw;
+            }
+            #gameImageLabel {
+                @include variables.selectDesign();
+                background-color: color.scale(variables.$secondary-bg, $lightness: 30%);
+                height: fit-content;
+                cursor: pointer;
             }
         }
 
@@ -93,6 +108,9 @@
                         min-width: clamp(7vw, 13em, 20vw);
                         font-size: 1em;
                     }
+                }
+                .game-image {
+                    max-width: 20vw;
                 }
             }
             .team-list {

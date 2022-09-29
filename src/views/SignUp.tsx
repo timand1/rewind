@@ -3,6 +3,11 @@ import logo from '../assets/logo.svg';
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+interface AccountProps {
+  username: string;
+  password: string;
+};
+
 function SignUp() {
     const navigate = useNavigate();
     
@@ -23,7 +28,7 @@ function SignUp() {
       if(signUpUsername.length > 2 && signUpPassword.length > 2) {
         setLoading(true);
 
-        const account: object = {
+        const account: AccountProps = {
           username: signUpUsername,
           password: signUpPassword
         };

@@ -3,25 +3,13 @@ import change from '../assets/change.svg';
 import Nav from '../components/Nav';
 import DisplayTeams from '../components/DisplayTeams';
 import AddPlayer from '../components/AddPlayer';
-import { Games } from '../models/data';
+import { Games, playerObj } from '../models/data';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, ChangeEvent } from 'react';
 
 type MyParams = {
     id: string;
-  };
-
-interface UpdatedGame {
-    game: string;
-    date: string;
-    duration : string;
-    win : string;
-    lost : string;
-    team1 : object[];
-    team2 : object[];
-    gameId? : string;
 };
-
 
 export default function FullGame() { 
     const { id } = useParams<keyof MyParams>() as MyParams;
@@ -51,6 +39,7 @@ export default function FullGame() {
                     setNewLoser(data.game[0].lost);
                     setNewTeamOne(data.game[0].team1);
                     setNewTeamTwo(data.game[0].team2);
+                    setNewImage(data.game[0].image);
                 }                
             };
         };
@@ -62,16 +51,17 @@ export default function FullGame() {
     const [newDuration, setNewDuration] = useState<string>(chosenGame?.duration || '');
     const [newWinner, setNewWinner] = useState<string>(chosenGame?.win || '');
     const [newLoser, setNewLoser] = useState<string>(chosenGame?.lost || '');
-    const [newTeamOne, setNewTeamOne] = useState<Array<object>>(chosenGame?.team1 || []);
-    const [newTeamTwo, setNewTeamTwo] = useState<Array<object>>(chosenGame?.team2 || []);
+    const [newTeamOne, setNewTeamOne] = useState<playerObj[]>(chosenGame?.team1 || []);
+    const [newTeamTwo, setNewTeamTwo] = useState<playerObj[]>(chosenGame?.team2 || []);
+    const [newImage, setNewImage] = useState<string>(chosenGame?.image || '');
     const [changeGame, setChangeGame] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     
-    let teamOneEl: any;
-    let teamTwoEl: any;
+    let teamOneEl: JSX.Element[] | null = null;
+    let teamTwoEl: JSX.Element[] | null = null;
     let checkTeamTwo: boolean = false;
-    const teamOneArr: Array<any> = [];
-    const teamTwoArr: Array<any> = [];
+    const teamOneArr: playerObj[] = [];
+    const teamTwoArr: playerObj[] = [];
     
     if(chosenGame) {
         checkTeamTwo = chosenGame.team2.length > 0 ? true : false;
@@ -80,41 +70,38 @@ export default function FullGame() {
         
 
         for(let i = 0; i < chosenGame.team1.length ; i++) {
-            const playerValue = {
-                [`player-${i + 1}`] : Object.values(chosenGame.team1[i])[0],
-                [`player-${i + 1}-info`]: Object.values(chosenGame.team1[i])[1]
+            const playerValue: playerObj = {
+                player : Object.values(chosenGame.team1[i])[0],
+                info : Object.values(chosenGame.team1[i])[1]
             };
     
             teamOneArr.push(playerValue)
         };
         for(let j = 0; j < 5 - chosenGame.team1.length; j++) {
-            const addedIndex = chosenGame.team1.length + 1
             const playerValue = {
-                [`player-${j + addedIndex}`] : '',
-                [`player-${j + addedIndex}-info`] : ''
+                player : '',
+                info : ''
             };
             teamOneArr.push(playerValue);
         };
     
         for(let i = 0; i < chosenGame.team2.length ; i ++) {
-            const playerValue = {
-                [`player-${i + 6}`] : Object.values(chosenGame.team2[i])[0],
-                [`player-${i + 6}-info`]: Object.values(chosenGame.team2[i])[1]
+            const playerValue: playerObj = {
+                player : Object.values(chosenGame.team2[i])[0],
+                info: Object.values(chosenGame.team2[i])[1]
             };
     
             
             teamTwoArr.push(playerValue);
         };
         for(let j = 0; j < 5 - chosenGame.team2.length; j++) {
-            const addedIndex = chosenGame.team2.length + 6;
-            const playerValue = {
-                [`player-${j + addedIndex}`] : '',
-                [`player-${j + addedIndex}-info`] : ''
+            const playerValue: playerObj = {
+                player : '',
+                info : ''
             };
             teamTwoArr.push(playerValue);
         };
-    }
-    
+    };    
 
     const handleChange: () => void = () => {
         setChangeGame(true);
@@ -124,19 +111,29 @@ export default function FullGame() {
         setChangeGame(false);
     };
 
-    const handleTeamOne: (updatedPlayer:object, index:number) => void = (updatedPlayer, index) => {
-        const teamCopy = [...newTeamOne];        
+    const handleTeamOne: (updatedPlayer:playerObj, index:number) => void = (updatedPlayer, index) => {
+        const teamCopy = [...newTeamOne];          
         teamCopy[index] = updatedPlayer;
+
+        if(updatedPlayer.player == '' && updatedPlayer.info == '') {
+            teamCopy.splice(index, 1);
+        };
+
         setNewTeamOne([...teamCopy]);
     };
     
-    const handleTeamTwo: (updatedPlayer:object, index:number) => void = (updatedPlayer, index) => {
-        const teamCopy = [...newTeamTwo];        
+    const handleTeamTwo: (updatedPlayer:playerObj, index:number) => void = (updatedPlayer, index) => {
+        const teamCopy = [...newTeamOne];          
         teamCopy[index] = updatedPlayer;
+        
+        if(updatedPlayer.player == '' && updatedPlayer.info == '') {
+            teamCopy.splice(index, 1);
+        };
+        
         setNewTeamTwo([...teamCopy]);
     };
 
-    const handleGame: (e:any) => void = (e) => {
+    const handleGame: (e: ChangeEvent<HTMLSelectElement>) => void = (e) => {
         setNewGame(e.target.value);  
         
     };
@@ -153,22 +150,24 @@ export default function FullGame() {
         setNewLoser(e.target.value);
     };
 
+    const handleImage: (e:ChangeEvent<HTMLInputElement>) => void = (e) => {
+        if(e.target.files) {
+            let file: Blob = e.target.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                const imageString = reader.result;
+                if(typeof imageString == 'string') {
+                    setNewImage(imageString);
+                }
+            }; 
+        }
+    };
 
     async function updateGame() {
-        for(let i = 0; i < teamOneArr.length; i++) {           
-            if(teamOneArr[i][`player-${i+1}`] == '') {
-                teamOneArr.splice(i);
-            };
-        };
-        
-        for(let j = 0; j < teamTwoArr.length; j++) {                       
-            if(teamTwoArr[j][`player-${j+6}`] == '') {
-                teamTwoArr.splice(j);
-            };
-        };
 
         setLoading(true);
-        const updatedGame: UpdatedGame = {
+        const updatedGame: Games = {
             game: newGame,
             date: newDate,
             duration : newDuration,
@@ -176,19 +175,21 @@ export default function FullGame() {
             lost : newLoser,
             team1 : newTeamOne,
             team2 : newTeamTwo,
-            gameId : id
+            gameId : id,
+            image : newImage
         };
         
-          const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
+        const response = await fetch(`http://localhost:8001/api/games/${id}`, {
             method: 'POST',
             body: JSON.stringify(updatedGame),
             headers: { 'Content-Type': 'application/json' }
-          });
-          const data = await response.json();
-          if (data.success) {
+        });
+
+        const data = await response.json();
+        if (data.success) {
             setChangeGame(false)
             await getGame();            
-          };
+        };
     };
 
     async function getGame() {
@@ -237,6 +238,10 @@ export default function FullGame() {
                 <div className="game-info">
                     <p>Winner : {winner}</p>
                     <p>Loser : {loser}</p>
+                </div>
+                <div className="game-info">
+                    <p>Image</p>
+                    {chosenGame?.image ? <img className='game-image' src={newImage} alt="game image" /> : 'No Image'} 
                 </div>
                     <h3 className='team-headline'>Team 1</h3>
                     <div className='team-list'>
@@ -294,6 +299,13 @@ export default function FullGame() {
                             <option value="team1">Team 1</option>
                             <option value="team2">Team 2</option>
                         </select>
+                    </div>
+                </div>
+                <div className="game-info">
+                    <div className='image-container'>
+                        <label htmlFor="gameImage" id='gameImageLabel'>Update image</label>
+                        <input type="file" name="gameImage" id='gameImage' accept="image/jpeg, image/png, image/jpg" hidden onChange={(e) => {handleImage(e)}} />
+                        {newImage.length > 1 ? <img src={newImage} alt="game image" style={{height: "100px", width:"100px"}}/> : 'No Image'} 
                     </div>
                 </div>
                 <div className='team-list'>
