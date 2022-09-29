@@ -84,7 +84,7 @@ function LandingPage() {
     };
 
     async function getGames() {
-      const response = await fetch('http://localhost:8001/api/games', {
+      const response = await fetch('https://wool-fir-ping.glitch.me/api/games', {
       headers: {'Content-Type': 'application/json'}
       });
       const data = await response.json();

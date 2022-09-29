@@ -179,7 +179,7 @@ export default function FullGame() {
             image : newImage
         };
         
-        const response = await fetch(`http://localhost:8001/api/games/${id}`, {
+        const response = await fetch(`https://wool-fir-ping.glitch.me/api/games/${id}`, {
             method: 'POST',
             body: JSON.stringify(updatedGame),
             headers: { 'Content-Type': 'application/json' }
