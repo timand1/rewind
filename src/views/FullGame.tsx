@@ -109,6 +109,7 @@ export default function FullGame() {
 
     const handleCancel: () => void = () => {
         setChangeGame(false);
+        setNewImage(chosenGame?.image)
     };
 
     const handleTeamOne: (updatedPlayer:playerObj, index:number) => void = (updatedPlayer, index) => {
@@ -245,7 +246,7 @@ export default function FullGame() {
                 </div>
                 <div className="game-info">
                     <p>Image</p>
-                    {chosenGame?.image ? <img className='game-image' src={newImage} alt="game image" /> : 'No Image'} 
+                    {newImage.length > 1 ? <img className='game-image' src={newImage} alt="game image" /> : 'No Image'} 
                 </div>
                     <h3 className='team-headline'>Team 1</h3>
                     <div className='team-list'>
