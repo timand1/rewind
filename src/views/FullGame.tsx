@@ -109,7 +109,7 @@ export default function FullGame() {
 
     const handleCancel: () => void = () => {
         setChangeGame(false);
-        setNewImage(chosenGame?.image)
+        setNewImage(chosenGame?.image || '')
     };
 
     const handleTeamOne: (updatedPlayer:playerObj, index:number) => void = (updatedPlayer, index) => {
